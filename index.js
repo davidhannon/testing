@@ -7,7 +7,7 @@ const app = ex( );
 let host = `localhost`;
 let port = 5010;
 
-const server = app.use( static( "build/bundled" ) )
+const server = app.use( static( "build/unbundled" ) )
   .all( '*', logHost, ( req, res ) => res.redirect( '/' ) ).listen( port, host );
 
 server.on( "listening", z => console.log( `Server listening on http://${server.address().address}:${server.address().port}` ) ).on( "error", err => console.error( err ) );
