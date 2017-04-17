@@ -1,0 +1,33 @@
+{
+  /**
+   * Application configuration section
+   * http://pm2.keymetrics.io/docs/usage/application-declaration/
+   */
+  apps: [
+    {
+      name: "CareCard",
+      script: "index.js",
+      exec_mode: "cluster_mode",
+      instances: 1,
+      env_production: {
+        NODE_ENV: "production"
+      },
+      post_update: [ "npm i" ]
+    }
+  ],
+
+  /**
+   * Deployment section
+   * http://pm2.keymetrics.io/docs/usage/deployment/
+   */
+  deploy: {
+    production: {
+      user: "martial",
+      host: "republic-first.us-east1-c.ethershaft",
+      ref: "origin/master",
+      repo: "git@gitlab.com:Ethershaft.Clients/Martial.git",
+      path: "/home/martial/code/martial",
+      "post-deploy": "npm install ; npm run bundle; pm2 startOrRestart ecosystem.json"
+    }
+  }
+}

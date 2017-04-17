@@ -1,0 +1,7 @@
+{
+  "name": "carecard",
+  "short_name": "carecard",
+  "description": "Ethershaft&#39;s build of the CareCard MVP",
+  "start_url": "/",
+  "display": "standalone"
+}
