@@ -25,8 +25,8 @@
       user: "martial",
       host: "republic-first.us-east1-c.ethershaft",
       ref: "origin/master",
-      repo: "git@gitlab.com:Ethershaft.Clients/Martial.git",
-      path: "/home/martial/code/martial",
+      repo: "git@gitlab.com:Ethershaft.Clients/CareCard.git",
+      path: "/home/martial/code/care_card",
       "post-deploy": "npm install ; npm run bundle; pm2 startOrRestart ecosystem.json"
     }
   }

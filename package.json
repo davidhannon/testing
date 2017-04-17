@@ -1,0 +1,15 @@
+{
+  "name": "carecard",
+  "version": "1.0.0",
+  "description": "Ethershaft&#39;s build of the CareCard MVP",
+  "main": "index.js",
+  "scripts": {
+    "build": "polymer build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martial James Jefferson <martial.jefferson@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
