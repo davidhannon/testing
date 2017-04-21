@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
 
@@ -10,7 +10,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 
-<dom-module id="features-section">
+</head><body><dom-module id="features-section">
   <template>
     <style>
       :host {
@@ -41,8 +41,7 @@
         justify-content: center;
         /*max-width: 1200px;*/
         margin: 0 auto;
-        width: 100%;
-        padding: 0;
+        /*width: 100%;*/
      }
      
      .feature-list, .card-preview {
@@ -120,14 +119,14 @@
 
       <div class="card-preview">
         <h1>Real savings. Zero Hassle</h1>
-        <img src="./graphics/preview-card.png"></img>
+        <img src="./graphics/preview-card.png">
       </div>
       <div class="feature-list">
         <h1>How carecard works</h1>
         <ul>
           <li>
             <div class="icon">
-              <img src="./graphics/search icon.svg"></img>
+              <img src="./graphics/search icon.svg">
             </div>
             <div class="description">
               <h2>Search</h2>
@@ -136,7 +135,7 @@
           </li>
           <li>
             <div class="icon">
-              <img src="./graphics/printer.svg"></img>
+              <img src="./graphics/printer.svg">
             </div>
             <div class="description">
               <h2>Print free carecard</h2>
@@ -145,7 +144,7 @@
           </li>
           <li>
             <div class="icon">
-              <img src="./graphics/save.svg"></img>
+              <img src="./graphics/save.svg">
             </div>
             <div class="description">
               <h2>Save</h2>
@@ -159,26 +158,5 @@
 
   </template>
 
-  <script>
-    Polymer({
-
-      is: 'features-section',
-
-      properties: {
-
-      },
-      observers: [
-
-      ],
-
-      attached: function() {
-        console.log("features section loaded")
-      },
-
-      _equal: function(value1, value2) {
-        return value1 === value2;
-      }
-
-    });
-  </script>
-</dom-module>
+  <script>Polymer({is:"features-section",properties:{},observers:[],attached:function(){console.log("features section loaded")},_equal:function(e,o){return e===o}});</script>
+</dom-module></body></html>
