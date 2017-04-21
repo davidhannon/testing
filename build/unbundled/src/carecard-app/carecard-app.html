@@ -1,4 +1,5 @@
-<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<html><head><link rel="stylesheet" href="../../bower_components/bootstrap-grid-only/css/grid12.css">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
@@ -23,6 +24,15 @@
 </head><body><dom-module id="carecard-app">
   <template>
     <style>
+      .get-carecard-button {
+        background-color: #ee5c56;
+        color: #ffffff;
+        -webkit-appearance: none;
+        border-radius: 40px;
+        border: 1px solid;
+        padding: 14px 35px;
+        font-size: 26px;
+      }
       :host {
         display: block;
         --app-primary-color: #ee5c56;
@@ -45,7 +55,7 @@
       app-toolbar.menu-bar {
         color: var(--app-primary-color);
       }
-      
+
       app-drawer {
         --app-drawer-content-container: {
           background-color: var(--app-primary-color);
@@ -92,7 +102,7 @@
         @apply(--layout-center-center);
         box-sizing: border-box;
       }
-      
+
       .nav-title-toolbar {
         color: #fff;
         width: 100vw;
@@ -111,7 +121,7 @@
       span.accent {
         color: var(--app-primary-color);
       }
-      
+
       .category-page {
         min-height: 100vh;
       }
@@ -134,11 +144,22 @@
           padding: 70px 20px;
       }
 
+      section#splash2 {
+          background-color: var(--section-bg-grey);
+      }
+
       section#splash .input-container {
+        text-align: center;
+      }
+      section#splash2 .input-container {
         text-align: center;
       }
 
       section#splash .input-container input {
+        padding: 14px 14px;
+        font-size: 14px;
+      }
+      section#splash2 .input-container input {
         padding: 14px 14px;
         font-size: 14px;
       }
@@ -153,8 +174,21 @@
         color: #FFF;
         padding: 14px 35px;
       }
+      section#splash2 .input-container input[type="button"] {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: var(--app-secondary-color);
+        border-radius: 6px;
+        border: 1px solid;
+        color: #FFF;
+        padding: 14px 35px;
+      }
 
       section#splash .input-container input.med {
+        width: 25%;
+      }
+      section#splash2 .input-container input.med {
         width: 25%;
       }
 
@@ -163,7 +197,7 @@
         font-family: "Lato";
         padding: 10px 20px 70px 20px;
       }
-      
+
       section#discounts table {
         margin: 0 auto;
       }
@@ -197,7 +231,7 @@
         font-family: "Lato";
         font-weight: 900;
       }
-      
+
       /* ----- « About » ----- */
       section#about {
         padding: 100px 20px;
@@ -238,40 +272,43 @@
         section#splash {
           margin: 20px;
         }
+        section#splash2 {
+          margin: 20px;
+        }
 
       }
     </style>
-    
+
     <app-location route="{{route}}" use-hash-as-path=""></app-location>
     <app-route route="{{route}}" pattern="/:category" data="{{categoryData}}" tail="{{subRoute}}"></app-route>
     <app-route route="{{subRoute}}" pattern="/:page" data="{{pageData}}" tail="{{subsubRoute}}"></app-route>
     <app-route route="{{subsubRoute}}" pattern="/:id" data="{{idData}}"></app-route>
 
-    
+
     <app-scrollpos-control selected="[[categoryData.category]]/[[pageData.page]]" reset="[[_equal(pageData.page, 'detail')]]"></app-scrollpos-control>
 
-    
 
 
-  
+
+
   <app-header-layout fullbleed="">
 
     <app-header fixed="" effects="fade-background" class="main-header">
 
-      
-      
-        
-        
 
-        
-        
-          
-        
-      
 
-      
+
+
+
+
+
+
+
+
+
+
       <app-toolbar class="title-toolbar main-title-toolbar">
-        
+
         <div class="title">
           <h2><span class="accent">care</span>card</h2>
         </div>
@@ -338,28 +375,53 @@
       <h3>No Fees. No registration. No claim forms.</h3>
       <span>We've partnered with over 60,000 pharmacies to bring you the lowest prescription prices. Regardless of your medical background or history. Simply present your carecard to the pharmacist to receive the most savings.</span>
     </section>
+    <div class="container">
+      <section id="splash2">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <img src="../carecard-app/img/carecard-form-img.png" alt="CareCard Family" width="100%">
+            </div>
+            <div class="col-md-6"><br><br>
+              <img src="../carecard-app/img/smiley.png" alt="Smiley" width="10%" style="margin-left:45%;">
+              <h2>For the entire family...even your pets!</h2><br><br>
+              <form id="get-carecard">
+                <div class="input-container">
+                  <input class="fname" name="firstName" placeholder="First*" style="width: 45%;">
+                  <input class="lname" name="lastName" placeholder="Last*" style="width: 45%;"><br>
+                  <input class="address1" name="address1" placeholder="Address 1*" style="width: 90.5%;"><br>
+                  <input class="address2" name="address2" placeholder="Address 2*" style="width: 90.5%;"><br>
+                  <input class="email" name="email" placeholder="Email*" style="width: 90.5%;"><br>
+                  <input class="zip" name="zipcode" placeholder="Zip*" style="width: 90.5%;"><br><br>
+                  <button class="get-carecard-button" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
     <footer>
-      
       <h2><span class="accent">care</span>card</h2>
       <span>Copyright © 2017 CareCard Inc.</span>
     </footer>
 
-    
+
     <iron-pages selected="[[pageData.page]]" attr-for-selected="name" fallback-selection="home">
       <iron-pages name="home" selected="[[categoryData.category]]" attr-for-selected="name">
         <template>
           <h1>Your source for free prescription savings</h1>
         </template>
   </iron-pages>
-  
+
   <iron-pages name="list" selected="[[categoryData.category]]" attr-for-selected="name">
 
     <template is="dom-repeat" items="[[articles]]" as="category">
-              
+
               <template is="dom-if" if="[[_equal(category, categoryData.category.name)]]">
                 <section class="category-page" name="[[category.name]]">
-  
-                  
+
+
                   <two-columns-grid column-width="396" gutter="4">
                     <template is="dom-repeat" items="[[category.items]]" as="article">
                       <a is="article-headline" href="#/[[category.name]]/detail/[[article.id]]" article="[[article]]"></a>
@@ -372,7 +434,7 @@
 
   </iron-pages>
 
-  
+
   <template is="dom-if" if="[[_equal(pageData.page, 'detail')]]">
             <article-detail name="detail" article="[[article]]"></article-detail>
           </template>
