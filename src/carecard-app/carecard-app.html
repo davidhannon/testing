@@ -19,6 +19,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
+<link rel="import" href="./footer.html">
 <link rel="import" href="../sections/features.html">
 
 <dom-module id="carecard-app">
@@ -30,13 +31,13 @@
         --app-secondary-color: #525262;
         --section-bg-grey: #f1f1f1;
         --paper-icon-button-ink-color:var(--app-secondary-color);
-        font-family: "Lato";
+        font-family: "Montserrat";
         background-color: var(--section-bg-grey);
       }
 
       h1, h2, h3, h4, h5 {
-        font-family: "Lato";
-        font-weight: 900;
+        font-family: "Montserrat";
+        font-weight: 600;
       }
 
       h2 {
@@ -161,7 +162,7 @@
 
       /* ----- « Discounts » ----- */
       section#discounts {
-        font-family: "Lato";
+        font-family: "Montserrat";
         padding: 10px 20px 70px 20px;
       }
       
@@ -186,7 +187,7 @@
 
       section#discounts table td a {
         color: var(--app-primary-color);
-        font-weight: 900;
+        font-weight: 600;
       }
 
       /* ----- « Call to Action Banner » ----- */
@@ -195,8 +196,8 @@
         color: #FFF;
         padding: 5px 20px;
         text-align: center;
-        font-family: "Lato";
-        font-weight: 900;
+        font-family: "Montserrat";
+        font-weight: 600;
       }
       
       /* ----- « About » ----- */
@@ -208,14 +209,6 @@
       section#about span {
         display: inline-block;
         max-width: 650px;
-      }
-      /* ----- « Footer » ----- */
-
-      footer {
-        background-color: #525262;
-        color: #FFF;
-        padding: 70px 20px;
-        text-align: center;
       }
 
       @media (max-width: 580px) {
@@ -242,7 +235,6 @@
 
       }
     </style>
-    <!--<h2>[[productName]]</h2>-->
     <app-location route="{{route}}" use-hash-as-path></app-location>
     <app-route
         route="{{route}}"
@@ -353,11 +345,7 @@
       <h3>No Fees. No registration. No claim forms.</h3>
       <span>We've partnered with over 60,000 pharmacies to bring you the lowest prescription prices. Regardless of your medical background or history. Simply present your carecard to the pharmacist to receive the most savings.</span>
     </section>
-    <footer>
-      <!--<h2>[[productName]]</h2>-->
-      <h2><span class='accent'>care</span>card</h2>
-      <span>Copyright &copy; 2017 CareCard Inc.</span>
-    </footer>
+    <carecard-footer></carecard-footer>
 
     <!-- list/detail pages -->
     <iron-pages selected="[[pageData.page]]" attr-for-selected="name" fallback-selection="home">

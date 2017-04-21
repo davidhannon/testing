@@ -19,17 +19,15 @@
         --app-secondary-color: #525262;
         --section-bg-grey: #f1f1f1;
         --paper-icon-button-ink-color:var(--app-secondary-color);
-        font-family: "Lato";
+        font-family: "Montserrat";
         background-color: var(--section-bg-grey);
         max-width: 100vw;
         /*overflow: hidden;*/
       }
 
-
-
       h1, h2, h3, h4, h5 {
-        font-family: "Lato";
-        font-weight: 900;
+        font-family: "Montserrat";
+        font-weight: 600;
       }
 
      h1 {
@@ -48,6 +46,7 @@
      
      .feature-list, .card-preview {
        flex: 1 1 50%;
+       padding: 100px 40px 70px 40px;
      }
      
      .feature-list {
@@ -67,6 +66,7 @@
      }
 
      .feature-list h2 {
+       color: var(--app-primary-color);
        margin: 0;
      }
 
@@ -89,7 +89,8 @@
      }
 
      .card-preview img {
-       width: 400px;
+       width: 100%;
+       max-width: 400px;
        height: auto;
        margin: 0 auto;
        display: block;
@@ -107,6 +108,9 @@
 
       /* narrow layout */
       @media (max-width: 808px) {
+        .container {
+          flex-direction: column;
+        }
 
 
       }
