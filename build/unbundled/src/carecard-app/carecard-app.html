@@ -24,6 +24,14 @@
 </head><body><dom-module id="carecard-app">
   <template>
     <style>
+      .inp1 {
+        width: 45%;
+        margin-bottom: 4px;
+      }
+      .inp2 {
+        width: 90.2%;
+        margin-bottom: 4px;
+      }
       .get-carecard-button {
         background-color: #ee5c56;
         color: #ffffff;
@@ -161,7 +169,7 @@
       }
       section#splash2 .input-container input {
         padding: 14px 14px;
-        font-size: 14px;
+        font-size: 24px;
       }
 
       section#splash .input-container input[type="button"] {
@@ -258,7 +266,6 @@
           font-size: 40px;
           padding-bottom: 16px;
         }
-
       }
 
       /* narrow layout */
@@ -275,7 +282,6 @@
         section#splash2 {
           margin: 20px;
         }
-
       }
     </style>
 
@@ -375,31 +381,33 @@
       <h3>No Fees. No registration. No claim forms.</h3>
       <span>We've partnered with over 60,000 pharmacies to bring you the lowest prescription prices. Regardless of your medical background or history. Simply present your carecard to the pharmacist to receive the most savings.</span>
     </section>
-    <div class="container">
-      <section id="splash2">
+
+    <div class="container-fluid">
+      <section id="splash2" style="bottom:0; top:0; right:0;">
         <div class="row">
-          <div class="col-md-12">
-            <div class="col-md-6">
+          <div class="col-md-12" style="padding:0;">
+            <div class="col-md-6" style="padding:0;">
               <img src="../carecard-app/img/carecard-form-img.png" alt="CareCard Family" width="100%">
             </div>
-            <div class="col-md-6"><br><br>
+            <div class="col-md-6" style="padding:0;"><br><br>
               <img src="../carecard-app/img/smiley.png" alt="Smiley" width="10%" style="margin-left:45%;">
-              <h2>For the entire family...even your pets!</h2><br><br>
+              <h2 style="font-size: 36px;">For the entire family...even your pets!</h2><br><br>
               <form id="get-carecard">
                 <div class="input-container">
-                  <input class="fname" name="firstName" placeholder="First*" style="width: 45%;">
-                  <input class="lname" name="lastName" placeholder="Last*" style="width: 45%;"><br>
-                  <input class="address1" name="address1" placeholder="Address 1*" style="width: 90.5%;"><br>
-                  <input class="address2" name="address2" placeholder="Address 2*" style="width: 90.5%;"><br>
-                  <input class="email" name="email" placeholder="Email*" style="width: 90.5%;"><br>
-                  <input class="zip" name="zipcode" placeholder="Zip*" style="width: 90.5%;"><br><br>
-                  <button class="get-carecard-button" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button>
+                  <input class="fname inp1" name="firstName" placeholder="First*">
+                  <input class="lname inp1" name="lastName" placeholder="Last*"><br>
+                  <input class="address1 inp2" name="address1" placeholder="Address 1*"><br>
+                  <input class="address2 inp2" name="address2" placeholder="Address 2*"><br>
+                  <input class="email inp2" name="email" placeholder="Email*"><br>
+                  <input class="zip inp2" name="zipcode" placeholder="Zip*"><br><br>
+                  <button class="get-carecard-button" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button><br><br>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </section>
+
     </div>
     <footer>
       <h2><span class="accent">care</span>card</h2>
