@@ -32,6 +32,7 @@
         --app-primary-color: #ee5c56;
         --app-secondary-color: #525262;
         --section-bg-grey: #f1f1f1;
+        --section-bg-teal: rgba(132,207,244,0.2);
         --paper-icon-button-ink-color:var(--app-secondary-color);
         font-family: "Montserrat";
         background-color: var(--section-bg-grey);
@@ -49,7 +50,7 @@
       app-toolbar.menu-bar {
         color: var(--app-primary-color);
       }
-      
+
       app-drawer {
         --app-drawer-content-container: {
           background-color: var(--app-primary-color);
@@ -58,7 +59,7 @@
       }
 
       app-header {
-        background-color: var(--section-bg-grey);
+        background-color: var(--section-bg-teal);
         --app-header-background-rear-layer: {
           background-color: #FFF;
         }
@@ -96,7 +97,7 @@
         @apply(--layout-center-center);
         box-sizing: border-box;
       }
-      
+
       .nav-title-toolbar {
         color: #fff;
         width: 100vw;
@@ -115,7 +116,7 @@
       span.accent {
         color: var(--app-primary-color);
       }
-      
+
       .category-page {
         min-height: 100vh;
       }
@@ -125,7 +126,16 @@
         @apply(--shadow-elevation-2dp);
         cursor: pointer;
       }
-
+      #leaves {
+        position: absolute;
+        top: 0;
+        right: -150px;
+      }
+      #fruit {
+        position: absolute;
+        top: 80px;
+        left: -175px;
+      }
       article-detail {
         max-width: 736px;
         margin: 64px auto;
@@ -134,7 +144,7 @@
       }
 
       section#splash {
-          background-color: var(--section-bg-grey);
+          background-color: var(--section-bg-teal);
           padding: 70px 20px;
       }
 
@@ -167,7 +177,7 @@
         font-family: "Montserrat";
         padding: 10px 20px 70px 20px;
       }
-      
+
       section#discounts table {
         margin: 0 auto;
       }
@@ -201,7 +211,7 @@
         font-family: "Montserrat";
         font-weight: 600;
       }
-      
+
       /* ----- « About » ----- */
       section#about {
         padding: 100px 20px;
@@ -294,6 +304,8 @@
     </app-header>
 
     <section id="splash">
+      <img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">
+      <img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">
       <h2>Your source for free prescription savings</h2>
       <form>
         <div class="input-container">
@@ -371,7 +383,7 @@
               <!-- category page (lazy-loaded) -->
               <template is="dom-if" if="[[_equal(category, categoryData.category.name)]]">
                 <section class="category-page" name="[[category.name]]">
-  
+
                   <!-- 2-columns grid -->
                   <two-columns-grid column-width="396" gutter="4">
                     <template is="dom-repeat" items="[[category.items]]" as="article">
