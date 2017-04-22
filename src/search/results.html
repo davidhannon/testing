@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../bower_components/google-map/google-map.html">
+<link rel="import" href="../../bower_components/google-map/google-map-marker.html">
+
+<dom-module id="search-results">
+  <template>
+    <style>
+        google-map {
+    height: 600px;
+  }
+    </style>
+
+    <google-map latitude="41.3212912" longitude="-72.9283391" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers>
+      <google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>
+      <!--<google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>-->
+    </google-map>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'search-results',
+
+      properties: {
+
+      },
+      observers: [
+
+      ],
+
+      attached: function() {
+        console.log("search results loaded")
+      },
+
+      _equal: function(value1, value2) {
+        return value1 === value2;
+      }
+
+    });
+  </script>
+</dom-module>
