@@ -14,13 +14,15 @@
 </head><body><dom-module id="carecard-signup">
   <template>
     <style>
-            .inp1 {
+      .inp1 {
         width: 45%;
         margin-bottom: 4px;
+        color: #a0a0a0;
       }
       .inp2 {
-        width: 90.2%;
+        width: 90.3%;
         margin-bottom: 4px;
+        color: #a0a0a0;
       }
       .get-carecard-button {
         background-color: #ee5c56;
@@ -30,6 +32,8 @@
         border: 1px solid;
         padding: 14px 35px;
         font-size: 26px;
+        font-weight: bold;
+        margin-top: 5%;
       }
       :host {
         display: block;
@@ -274,33 +278,32 @@
         }
       }
     </style>
-<div class="container-fluid">
-  <section id="splash2" style="bottom:0; top:0; right:0">
-    <div class="row">
-      <div class="col-md-12" style="padding:0">
-        <div class="col-md-6" style="padding:0">
-          <img src="./graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
-        </div>
-        <div class="col-md-6" style="padding:0"><br><br>
-          <img src="./graphics/smiley.png" alt="Smiley" width="10%" style="margin-left:45%">
-          <h2 style="font-size: 36px">For the entire family...even your pets!</h2><br><br>
-          <form id="get-carecard">
-            <div class="input-container">
-              <input class="fname inp1" name="firstName" placeholder="First*">
-              <input class="lname inp1" name="lastName" placeholder="Last*"><br>
-              <input class="address1 inp2" name="address1" placeholder="Address 1*"><br>
-              <input class="address2 inp2" name="address2" placeholder="Address 2*"><br>
-              <input class="email inp2" name="email" placeholder="Email*"><br>
-              <input class="zip inp2" name="zipcode" placeholder="Zip*"><br><br>
-              <button class="get-carecard-button" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button><br><br>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div>
+    <section id="splash2">
+          <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12" style="padding:0">
+                  <div class="col-md-6" style="padding:0">
+                    <img src="./graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
+                  </div>
+                  <div class="col-md-6" style="padding:0"><br><br>
+                    <img src="./graphics/smiley.png" alt="Smiley" width="10%" style="margin-top:15%;margin-left:45%">
+                    <h2 style="margin-top: 5%; font-size: 2em">For the entire family...even your pets!</h2><br><br>
+                    <form id="get-carecard">
+                      <div class="input-container">
+                        <input class="fname inp1" name="firstName" placeholder="First*">
+                        <input class="lname inp1" name="lastName" placeholder="Last*"><br>
+                        <input class="address1 inp2" name="address1" placeholder="Address 1*"><br>
+                        <input class="address2 inp2" name="address2" placeholder="Address 2*"><br>
+                        <input class="email inp2" name="email" placeholder="Email*"><br>
+                        <input class="zip inp2" name="zipcode" placeholder="Zip*"><br><br>
+                        <button class="get-carecard-button" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button><br><br>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+          </div>
+    </section>
 
   </template>
 

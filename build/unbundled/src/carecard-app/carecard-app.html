@@ -21,6 +21,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
 <link rel="import" href="./footer.html">
 <link rel="import" href="../sections/features.html">
+<link rel="import" href="../sections/partners.html">
 <link rel="import" href="../sections/signup.html">
 
 </head><body><dom-module id="carecard-app">
@@ -206,9 +207,15 @@
         padding: 100px 20px;
         text-align: center;
       }
-
+      
+      section#about h2 {
+        margin: 0 auto 20px auto;
+        max-width: 650px;
+      }
+      
       section#about span {
-        display: inline-block;
+        display: block;
+        margin: 0 auto;
         max-width: 650px;
       }
 
@@ -329,10 +336,11 @@
       <h1>Start Saving now for free -- no sign up or credit card required</h1>
     </section>
     <section id="about">
-      <h3>Your card is pre-activated with our savings when you receive it.</h3>
-      <h3>No Fees. No registration. No claim forms.</h3>
-      <span>We've partnered with over 60,000 pharmacies to bring you the lowest prescription prices. Regardless of your medical background or history. Simply present your carecard to the pharmacist to receive the most savings.</span>
+      <h2>Your card is accepted at all major chains as well as most independent pharmacies.</h2>
+      <span>Your card is pre-activated with our savings when you receive it.</span>
+      <span>No Fees. No registration. No claim forms.</span>
     </section>
+    <partners-section></partners-section>
     <carecard-signup></carecard-signup>
     <carecard-footer></carecard-footer>
 
