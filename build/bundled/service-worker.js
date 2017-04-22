@@ -29,7 +29,7 @@
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/index.html","fd002cc50f8fa1a8da94e6b04601bdc3"]];
+var PrecacheConfig = [["/index.html","1f4c26a19dfaabaac68aece195a390ed"],["/src/carecard-app/carecard-app.html","d4e7efc26fd62772c67278a65a767c96"],["/src/carecard-app/footer.html","6cd7bc05fe2da97d3172440dc6625b24"],["/src/sections/features.html","c81df75b37020390f159e3fee1dc82eb"],["/src/sections/signup.html","e9752d791c3da13319f4c4de68eb8ef1"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1--' + (self.registration ? self.registration.scope : '') + '-';
 
