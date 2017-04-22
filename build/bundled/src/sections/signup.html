@@ -62,12 +62,12 @@
         --app-secondary-color: #525262;
         --section-bg-grey: #f1f1f1;
         --paper-icon-button-ink-color:var(--app-secondary-color);
-        font-family: "Lato";
+        font-family: "Montserrat";
         background-color: var(--section-bg-grey);
       }
 
       h1, h2, h3, h4, h5 {
-        font-family: "Lato";
+        font-family: "Montserrat";
         font-weight: 600;
       }
 
@@ -154,7 +154,11 @@
         @apply(--shadow-elevation-2dp);
         cursor: pointer;
       }
-
+      #signup-image {
+        max-height: auto;
+        overflow: hidden;
+        position: relative;
+      }
       article-detail {
         max-width: 736px;
         margin: 64px auto;
@@ -217,7 +221,7 @@
 
       /* ----- « Discounts » ----- */
       section#discounts {
-        font-family: "Lato";
+        font-family: "Montserrat";
         padding: 10px 20px 70px 20px;
       }
 
@@ -251,7 +255,7 @@
         color: #FFF;
         padding: 5px 20px;
         text-align: center;
-        font-family: "Lato";
+        font-family: "Montserrat";
         font-weight: 900;
       }
 
@@ -304,7 +308,7 @@
               <div class="row">
                 <div class="col-md-12" style="padding:0">
                   <div class="col-md-6" style="padding:0">
-                    <img src="./graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
+                    <img id="signup-image" src="./graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
                   </div>
                   <div class="col-md-6" style="padding:0"><br><br>
                     <img src="./graphics/smiley.png" alt="Smiley" width="10%" style="margin-top:15%;margin-left:45%">
@@ -329,4 +333,5 @@
   </template>
 
   <script>Polymer({is:"carecard-signup",properties:{},observers:[],attached:function(){console.log("signup section loaded")},_equal:function(e,o){return e===o}});</script>
-</dom-module></body></html>
+</dom-module>
+</body></html>

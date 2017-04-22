@@ -29,7 +29,7 @@
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/index.html","1f4c26a19dfaabaac68aece195a390ed"],["/src/carecard-app/carecard-app.html","66dcc968f6bb48a33ea1664c9ae89f2d"],["/src/carecard-app/footer.html","6cd7bc05fe2da97d3172440dc6625b24"],["/src/sections/features.html","c81df75b37020390f159e3fee1dc82eb"],["/src/sections/signup.html","4476658ff1c75d85bbf283608e388ed3"]];
+var PrecacheConfig = [["/index.html","1f4c26a19dfaabaac68aece195a390ed"],["/src/carecard-app/carecard-app.html","2f84ae2f49871226f88151e66841f0ca"],["/src/carecard-app/footer.html","996ab366f139bee9e05be1657873c554"],["/src/sections/features.html","cabef52875e354922ca7f1b900825387"],["/src/sections/signup.html","2eaa3514398901258dc08618815d1866"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1--' + (self.registration ? self.registration.scope : '') + '-';
 

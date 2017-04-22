@@ -1443,11 +1443,11 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
        text-align: center;
        color: var(--app-secondary-color);
      }
-     
+
     footer h2 {
       font-size: 20px;
     }
-    
+
      footer h2.logo {
        font-size: 50px;
        letter-spacing: 0.05em;
@@ -1461,13 +1461,13 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
      span.accent {
        color: var(--app-primary-color);
      }
-     
+
      .container {
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
      }
-     
+
       /* ----- « Footer » ----- */
 
       footer {
@@ -1505,7 +1505,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         footer {
           padding: 10px;
         }
-        
+
         footer ul {
           align-items: flex-start;
           flex-flow: column-reverse;
@@ -1541,7 +1541,8 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
   </template>
 
   <script>Polymer({is:"carecard-footer",properties:{},observers:[],attached:function(){console.log("carecard footer loaded")},_equal:function(e,o){return e===o}});</script>
-</dom-module><script>!function(){"use strict";Polymer({is:"iron-location",properties:{path:{type:String,notify:!0,value:function(){return window.decodeURIComponent(window.location.pathname)}},query:{type:String,notify:!0,value:function(){return window.location.search.slice(1)}},hash:{type:String,notify:!0,value:function(){return window.decodeURIComponent(window.location.hash.slice(1))}},dwellTime:{type:Number,value:2e3},urlSpaceRegex:{type:String,value:""},_urlSpaceRegExp:{computed:"_makeRegExp(urlSpaceRegex)"},_lastChangedAt:{type:Number},_initialized:{type:Boolean,value:!1}},hostAttributes:{hidden:!0},observers:["_updateUrl(path, query, hash)"],attached:function(){this.listen(window,"hashchange","_hashChanged"),this.listen(window,"location-changed","_urlChanged"),this.listen(window,"popstate","_urlChanged"),this.listen(document.body,"click","_globalOnClick"),this._lastChangedAt=window.performance.now()-(this.dwellTime-200),this._initialized=!0,this._urlChanged()},detached:function(){this.unlisten(window,"hashchange","_hashChanged"),this.unlisten(window,"location-changed","_urlChanged"),this.unlisten(window,"popstate","_urlChanged"),this.unlisten(document.body,"click","_globalOnClick"),this._initialized=!1},_hashChanged:function(){this.hash=window.decodeURIComponent(window.location.hash.substring(1))},_urlChanged:function(){this._dontUpdateUrl=!0,this._hashChanged(),this.path=window.decodeURIComponent(window.location.pathname),this.query=window.location.search.substring(1),this._dontUpdateUrl=!1,this._updateUrl()},_getUrl:function(){var n=window.encodeURI(this.path).replace(/\#/g,"%23").replace(/\?/g,"%3F"),t="";this.query&&(t="?"+this.query.replace(/\#/g,"%23"));var e="";return this.hash&&(e="#"+window.encodeURI(this.hash)),n+t+e},_updateUrl:function(){if(!this._dontUpdateUrl&&this._initialized&&(this.path!==window.decodeURIComponent(window.location.pathname)||this.query!==window.location.search.substring(1)||this.hash!==window.decodeURIComponent(window.location.hash.substring(1)))){var n=this._getUrl(),t=new URL(n,window.location.protocol+"//"+window.location.host).href,e=window.performance.now(),i=this._lastChangedAt+this.dwellTime>e;this._lastChangedAt=e,i?window.history.replaceState({},"",t):window.history.pushState({},"",t),this.fire("location-changed",{},{node:window})}},_globalOnClick:function(n){if(!n.defaultPrevented){var t=this._getSameOriginLinkHref(n);t&&(n.preventDefault(),t!==window.location.href&&(window.history.pushState({},"",t),this.fire("location-changed",{},{node:window})))}},_getSameOriginLinkHref:function(n){if(0!==n.button)return null;if(n.metaKey||n.ctrlKey)return null;for(var t=Polymer.dom(n).path,e=null,i=0;i<t.length;i++){var o=t[i];if("A"===o.tagName&&o.href){e=o;break}}if(!e)return null;if("_blank"===e.target)return null;if(("_top"===e.target||"_parent"===e.target)&&window.top!==window)return null;var a,h=e.href;a=null!=document.baseURI?new URL(h,document.baseURI):new URL(h);var r;if(window.location.origin?r=window.location.origin:(r=window.location.protocol+"//"+window.location.hostname,window.location.port&&(r+=":"+window.location.port)),a.origin!==r)return null;var l=a.pathname+a.search+a.hash;if(this._urlSpaceRegExp&&!this._urlSpaceRegExp.test(l))return null;var d=new URL(l,window.location.href).href;return d},_makeRegExp:function(n){return RegExp(n)}})}();</script><script>"use strict";Polymer({is:"iron-query-params",properties:{paramsString:{type:String,notify:!0,observer:"paramsStringChanged"},paramsObject:{type:Object,notify:!0,value:function(){return{}}},_dontReact:{type:Boolean,value:!1}},hostAttributes:{hidden:!0},observers:["paramsObjectChanged(paramsObject.*)"],paramsStringChanged:function(){this._dontReact=!0,this.paramsObject=this._decodeParams(this.paramsString),this._dontReact=!1},paramsObjectChanged:function(){this._dontReact||(this.paramsString=this._encodeParams(this.paramsObject).replace(/%3F/g,"?").replace(/%2F/g,"/").replace(/'/g,"%27"))},_encodeParams:function(e){var t=[];for(var a in e){var r=e[a];""===r?t.push(encodeURIComponent(a)):r&&t.push(encodeURIComponent(a)+"="+encodeURIComponent(r.toString()))}return t.join("&")},_decodeParams:function(e){var t={};e=(e||"").replace(/\+/g,"%20");for(var a=e.split("&"),r=0;r<a.length;r++){var n=a[r].split("=");n[0]&&(t[decodeURIComponent(n[0])]=decodeURIComponent(n[1]||""))}return t}});</script><script>!function(){"use strict";Polymer.AppRouteConverterBehavior={properties:{route:{type:Object,notify:!0},queryParams:{type:Object,notify:!0},path:{type:String,notify:!0}},observers:["_locationChanged(path, queryParams)","_routeChanged(route.prefix, route.path)","_routeQueryParamsChanged(route.__queryParams)"],created:function(){this.linkPaths("route.__queryParams","queryParams"),this.linkPaths("queryParams","route.__queryParams")},_locationChanged:function(){this.route&&this.route.path===this.path&&this.queryParams===this.route.__queryParams||(this.route={prefix:"",path:this.path,__queryParams:this.queryParams})},_routeChanged:function(){this.route&&(this.path=this.route.prefix+this.route.path)},_routeQueryParamsChanged:function(t){this.route&&(this.queryParams=t)}}}();</script>
+</dom-module>
+<script>!function(){"use strict";Polymer({is:"iron-location",properties:{path:{type:String,notify:!0,value:function(){return window.decodeURIComponent(window.location.pathname)}},query:{type:String,notify:!0,value:function(){return window.location.search.slice(1)}},hash:{type:String,notify:!0,value:function(){return window.decodeURIComponent(window.location.hash.slice(1))}},dwellTime:{type:Number,value:2e3},urlSpaceRegex:{type:String,value:""},_urlSpaceRegExp:{computed:"_makeRegExp(urlSpaceRegex)"},_lastChangedAt:{type:Number},_initialized:{type:Boolean,value:!1}},hostAttributes:{hidden:!0},observers:["_updateUrl(path, query, hash)"],attached:function(){this.listen(window,"hashchange","_hashChanged"),this.listen(window,"location-changed","_urlChanged"),this.listen(window,"popstate","_urlChanged"),this.listen(document.body,"click","_globalOnClick"),this._lastChangedAt=window.performance.now()-(this.dwellTime-200),this._initialized=!0,this._urlChanged()},detached:function(){this.unlisten(window,"hashchange","_hashChanged"),this.unlisten(window,"location-changed","_urlChanged"),this.unlisten(window,"popstate","_urlChanged"),this.unlisten(document.body,"click","_globalOnClick"),this._initialized=!1},_hashChanged:function(){this.hash=window.decodeURIComponent(window.location.hash.substring(1))},_urlChanged:function(){this._dontUpdateUrl=!0,this._hashChanged(),this.path=window.decodeURIComponent(window.location.pathname),this.query=window.location.search.substring(1),this._dontUpdateUrl=!1,this._updateUrl()},_getUrl:function(){var n=window.encodeURI(this.path).replace(/\#/g,"%23").replace(/\?/g,"%3F"),t="";this.query&&(t="?"+this.query.replace(/\#/g,"%23"));var e="";return this.hash&&(e="#"+window.encodeURI(this.hash)),n+t+e},_updateUrl:function(){if(!this._dontUpdateUrl&&this._initialized&&(this.path!==window.decodeURIComponent(window.location.pathname)||this.query!==window.location.search.substring(1)||this.hash!==window.decodeURIComponent(window.location.hash.substring(1)))){var n=this._getUrl(),t=new URL(n,window.location.protocol+"//"+window.location.host).href,e=window.performance.now(),i=this._lastChangedAt+this.dwellTime>e;this._lastChangedAt=e,i?window.history.replaceState({},"",t):window.history.pushState({},"",t),this.fire("location-changed",{},{node:window})}},_globalOnClick:function(n){if(!n.defaultPrevented){var t=this._getSameOriginLinkHref(n);t&&(n.preventDefault(),t!==window.location.href&&(window.history.pushState({},"",t),this.fire("location-changed",{},{node:window})))}},_getSameOriginLinkHref:function(n){if(0!==n.button)return null;if(n.metaKey||n.ctrlKey)return null;for(var t=Polymer.dom(n).path,e=null,i=0;i<t.length;i++){var o=t[i];if("A"===o.tagName&&o.href){e=o;break}}if(!e)return null;if("_blank"===e.target)return null;if(("_top"===e.target||"_parent"===e.target)&&window.top!==window)return null;var a,h=e.href;a=null!=document.baseURI?new URL(h,document.baseURI):new URL(h);var r;if(window.location.origin?r=window.location.origin:(r=window.location.protocol+"//"+window.location.hostname,window.location.port&&(r+=":"+window.location.port)),a.origin!==r)return null;var l=a.pathname+a.search+a.hash;if(this._urlSpaceRegExp&&!this._urlSpaceRegExp.test(l))return null;var d=new URL(l,window.location.href).href;return d},_makeRegExp:function(n){return RegExp(n)}})}();</script><script>"use strict";Polymer({is:"iron-query-params",properties:{paramsString:{type:String,notify:!0,observer:"paramsStringChanged"},paramsObject:{type:Object,notify:!0,value:function(){return{}}},_dontReact:{type:Boolean,value:!1}},hostAttributes:{hidden:!0},observers:["paramsObjectChanged(paramsObject.*)"],paramsStringChanged:function(){this._dontReact=!0,this.paramsObject=this._decodeParams(this.paramsString),this._dontReact=!1},paramsObjectChanged:function(){this._dontReact||(this.paramsString=this._encodeParams(this.paramsObject).replace(/%3F/g,"?").replace(/%2F/g,"/").replace(/'/g,"%27"))},_encodeParams:function(e){var t=[];for(var a in e){var r=e[a];""===r?t.push(encodeURIComponent(a)):r&&t.push(encodeURIComponent(a)+"="+encodeURIComponent(r.toString()))}return t.join("&")},_decodeParams:function(e){var t={};e=(e||"").replace(/\+/g,"%20");for(var a=e.split("&"),r=0;r<a.length;r++){var n=a[r].split("=");n[0]&&(t[decodeURIComponent(n[0])]=decodeURIComponent(n[1]||""))}return t}});</script><script>!function(){"use strict";Polymer.AppRouteConverterBehavior={properties:{route:{type:Object,notify:!0},queryParams:{type:Object,notify:!0},path:{type:String,notify:!0}},observers:["_locationChanged(path, queryParams)","_routeChanged(route.prefix, route.path)","_routeQueryParamsChanged(route.__queryParams)"],created:function(){this.linkPaths("route.__queryParams","queryParams"),this.linkPaths("queryParams","route.__queryParams")},_locationChanged:function(){this.route&&this.route.path===this.path&&this.queryParams===this.route.__queryParams||(this.route={prefix:"",path:this.path,__queryParams:this.queryParams})},_routeChanged:function(){this.route&&(this.path=this.route.prefix+this.route.path)},_routeQueryParamsChanged:function(t){this.route&&(this.queryParams=t)}}}();</script>
 <dom-module id="app-location" assetpath="../../bower_components/app-route/">
   <template>
     <iron-location path="{{__path}}" query="{{__query}}" hash="{{__hash}}" url-space-regex="{{urlSpaceRegex}}">
@@ -1944,7 +1945,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
        text-align: center;
        color: var(--app-secondary-color);
      }
-     
+
      .container {
         background-color: var(--section-bg-grey);
         display: flex;
@@ -1954,17 +1955,17 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         width: 100%;
         padding: 0;
      }
-     
+
      .feature-list, .card-preview {
        flex: 1 1 50%;
        padding: 100px 40px 70px 40px;
      }
-     
+
      .feature-list {
        background-color: #FFF;
        text-align: center;
      }
-     
+
     .feature-list .icon {
       width: 50px;
       flex: 0 0 50px;
@@ -2070,7 +2071,8 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
   </template>
 
   <script>Polymer({is:"features-section",properties:{},observers:[],attached:function(){console.log("features section loaded")},_equal:function(e,o){return e===o}});</script>
-</dom-module><dom-module id="partners-section" assetpath="../sections/">
+</dom-module>
+<dom-module id="partners-section" assetpath="../sections/">
   <template>
     <style>
       :host {
@@ -2246,12 +2248,12 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         --app-secondary-color: #525262;
         --section-bg-grey: #f1f1f1;
         --paper-icon-button-ink-color:var(--app-secondary-color);
-        font-family: "Lato";
+        font-family: "Montserrat";
         background-color: var(--section-bg-grey);
       }
 
       h1, h2, h3, h4, h5 {
-        font-family: "Lato";
+        font-family: "Montserrat";
         font-weight: 600;
       }
 
@@ -2338,7 +2340,11 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         @apply(--shadow-elevation-2dp);
         cursor: pointer;
       }
-
+      #signup-image {
+        max-height: auto;
+        overflow: hidden;
+        position: relative;
+      }
       article-detail {
         max-width: 736px;
         margin: 64px auto;
@@ -2401,7 +2407,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
 
       /* ----- « Discounts » ----- */
       section#discounts {
-        font-family: "Lato";
+        font-family: "Montserrat";
         padding: 10px 20px 70px 20px;
       }
 
@@ -2435,7 +2441,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         color: #FFF;
         padding: 5px 20px;
         text-align: center;
-        font-family: "Lato";
+        font-family: "Montserrat";
         font-weight: 900;
       }
 
@@ -2488,7 +2494,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
               <div class="row">
                 <div class="col-md-12" style="padding:0">
                   <div class="col-md-6" style="padding:0">
-                    <img src="../sections/graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
+                    <img id="signup-image" src="../sections/graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
                   </div>
                   <div class="col-md-6" style="padding:0"><br><br>
                     <img src="../sections/graphics/smiley.png" alt="Smiley" width="10%" style="margin-top:15%;margin-left:45%">
@@ -2513,7 +2519,8 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
   </template>
 
   <script>Polymer({is:"carecard-signup",properties:{},observers:[],attached:function(){console.log("signup section loaded")},_equal:function(e,o){return e===o}});</script>
-</dom-module></div><dom-module id="carecard-app">
+</dom-module>
+</div><dom-module id="carecard-app">
   <template>
     <style>
       :host {
@@ -2521,6 +2528,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         --app-primary-color: #ee5c56;
         --app-secondary-color: #525262;
         --section-bg-grey: #f1f1f1;
+        --section-bg-teal: rgba(132,207,244,0.2);
         --paper-icon-button-ink-color:var(--app-secondary-color);
         font-family: "Montserrat";
         background-color: var(--section-bg-grey);
@@ -2538,7 +2546,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
       app-toolbar.menu-bar {
         color: var(--app-primary-color);
       }
-      
+
       app-drawer {
         --app-drawer-content-container: {
           background-color: var(--app-primary-color);
@@ -2547,7 +2555,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
       }
 
       app-header {
-        background-color: var(--section-bg-grey);
+        background-color: var(--section-bg-teal);
         --app-header-background-rear-layer: {
           background-color: #FFF;
         }
@@ -2585,7 +2593,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         @apply(--layout-center-center);
         box-sizing: border-box;
       }
-      
+
       .nav-title-toolbar {
         color: #fff;
         width: 100vw;
@@ -2604,7 +2612,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
       span.accent {
         color: var(--app-primary-color);
       }
-      
+
       .category-page {
         min-height: 100vh;
       }
@@ -2614,7 +2622,16 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         @apply(--shadow-elevation-2dp);
         cursor: pointer;
       }
-
+      #leaves {
+        position: absolute;
+        top: 0;
+        right: -150px;
+      }
+      #fruit {
+        position: absolute;
+        top: 80px;
+        left: -175px;
+      }
       article-detail {
         max-width: 736px;
         margin: 64px auto;
@@ -2623,7 +2640,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
       }
 
       section#splash {
-          background-color: var(--section-bg-grey);
+          background-color: var(--section-bg-teal);
           padding: 70px 20px;
       }
 
@@ -2656,7 +2673,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         font-family: "Montserrat";
         padding: 10px 20px 70px 20px;
       }
-      
+
       section#discounts table {
         margin: 0 auto;
       }
@@ -2690,7 +2707,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
         font-family: "Montserrat";
         font-weight: 600;
       }
-      
+
       /* ----- « About » ----- */
       section#about {
         padding: 100px 20px;
@@ -2770,6 +2787,8 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
     </app-header>
 
     <section id="splash">
+      <img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">
+      <img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">
       <h2>Your source for free prescription savings</h2>
       <form>
         <div class="input-container">
@@ -2847,7 +2866,7 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
               
               <template is="dom-if" if="[[_equal(category, categoryData.category.name)]]">
                 <section class="category-page" name="[[category.name]]">
-  
+
                   
                   <two-columns-grid column-width="396" gutter="4">
                     <template is="dom-repeat" items="[[category.items]]" as="article">
@@ -2874,4 +2893,5 @@ r=r.__importElement||r,r._apply();n&&e.updateNativeStyleProperties(document.docu
   </template>
 
   <script>Polymer({is:"carecard-app",properties:{productName:{type:String,value:"carecard"},articles:Object,route:Object,subRoute:Object,subsubRoute:Object,categoryData:Object,pageData:Object,idData:Object},observers:["_updateArticle(articles, categoryData.category, idData.id)"],attached:function(){this.async(function(){this.route.path||this.set("route.path","/")})},_equal:function(t,e){return t===e},_updateArticle:function(t,e,a){for(var r,c=0;r=t[c];c++)if(r.name===e)for(var i,o=0;i=r.items[o];o++)if(i.id===a)return void(this.article=i)},_drawerSelected:function(){this.$.drawer.persistent||this.$.drawer.close()}});</script>
-</dom-module></body></html>
+</dom-module>
+</body></html>
