@@ -3,7 +3,6 @@ const pkg = require( "./package.json" );
 const { name } = pkg;
 const { static, Router } = ex;
 const app = ex( );
-
 let host = `localhost`;
 let port = 5010;
 
