@@ -24,7 +24,7 @@
         margin-bottom: 4px;
         color: #a0a0a0;
       }
-      .get-carecard-button {
+      .get-carecard-btn {
         background-color: #ee5c56;
         color: #ffffff;
         -webkit-appearance: none;
@@ -265,7 +265,6 @@
           padding-bottom: 16px;
         }
       }
-
       /* narrow layout */
       @media (max-width: 808px) {
 
@@ -281,12 +280,29 @@
           margin: 20px;
         }
       }
+      @media (max-width: 1349px) {
+        section#splash2 .input-container input {
+          padding: 7px 7px;
+          font-size: 10px;
+        }
+        .get-carecard-btn {
+          padding: 7px 18px;
+          font-size: 16px;
+          margin-top: 3%;
+        }
+        .inp1 {
+          width: 35%;
+        }
+        .inp2 {
+          width: 70.3%;
+        }
+      }
     </style>
     <section id="splash2">
           <div class="container-fluid">
               <div class="row">
                 <div class="col-md-12" style="padding:0;">
-                  <div class="col-md-6" style="padding:0">
+                  <div class="col-md-6" style="padding:0;">
                     <img id="signup-image" src="./graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
                   </div>
                   <div class="col-md-6" style="padding:0;"><br><br>
@@ -300,7 +316,7 @@
                         <input class="address2 inp2" name="address2" placeholder="Address 2*"><br>
                         <input class="email inp2" name="email" placeholder="Email*"><br>
                         <input class="zip inp2" name="zipcode" placeholder="Zip*"><br><br>
-                        <button class="get-carecard-button" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button><br><br>
+                        <button class="get-carecard-btn" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button><br><br>
                       </div>
                     </form>
                   </div>
@@ -312,6 +328,7 @@
   </template>
 
   <script>
+
     Polymer({
 
       is: 'carecard-signup',
@@ -330,7 +347,7 @@
       _equal: function(value1, value2) {
         return value1 === value2;
       }
-
     });
+
   </script>
 </dom-module>
