@@ -20,6 +20,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
 <link rel="import" href="./footer.html">
+<link rel="import" href="../search/results.html">
 <link rel="import" href="../sections/features.html">
 <link rel="import" href="../sections/partners.html">
 <link rel="import" href="../sections/signup.html">
@@ -217,12 +218,12 @@
         padding: 100px 20px;
         text-align: center;
       }
-      
+
       section#about h2 {
         margin: 0 auto 20px auto;
         max-width: 650px;
       }
-      
+
       section#about span {
         display: block;
         margin: 0 auto;
@@ -250,7 +251,12 @@
         section#splash {
           margin: 20px;
         }
-
+        #leaves {
+          display: none;
+        }
+        #fruit {
+          display: none;
+        }
       }
     </style>
     <app-location route="{{route}}" use-hash-as-path=""></app-location>
@@ -298,7 +304,7 @@
         <div class="input-container">
           <input class="med" name="medication" placeholder="Type prescription name (ex.Lipitor)">
           <input class="zipcode" name="zipcode" placeholder="10022">
-          <input class="search" type="button" value="Search">
+          <input class="search" type="button" value="Search" onclick="searchResults.open()">
         </div>
       </form>
     </section>
@@ -343,6 +349,7 @@
         </tr>
       </tbody></table>
     </section>
+    <search-results></search-results>
     <features-section></features-section>
     <section id="cta-banner">
       <h1>Start Saving now for free -- no sign up or credit card required</h1>
