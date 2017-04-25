@@ -1,20 +1,110 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../bower_components/google-map/google-map.html">
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 
 <dom-module id="search-results">
   <template>
     <style>
-        google-map {
-    height: 600px;
-  }
-    </style>
+      :host {
+        font-family: "Montserrat";
+        --app-primary-color: #ee5c56;
+        --app-secondary-color: #525262;
+        --section-bg-grey: #f1f1f1;
+      }
+      
+      paper-dialog {
+        width: 100%;
+        max-width: 80vw;
+        font-family: "Montserrat";
+      }
 
-    <google-map latitude="41.3212912" longitude="-72.9283391" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers>
-      <google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>
-      <!--<google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>-->
-    </google-map>
+      paper-dialog .contents {
+        display: flex;
+      }
+
+      .title h2 {
+        /*padding-bottom: 40px;*/
+        font-size: 1.5em;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      span.accent {
+        color: var(--app-primary-color);
+      }
+      
+      .results-header {
+        align-items: center;
+        list-style: none;
+        display: flex;
+        padding: 0px;
+        margin-bottom: 0px;
+      }
+
+      .results-header li {
+        flex: 1 1 auto;
+        font-size: 1.5em;
+        font-weight: 600;
+        line-height: 2;
+      }
+      
+      .search-result-list {
+        flex: 0 1 30%;
+      }
+
+      .search-result-list label {
+        color: #a8a8b0;
+      }
+
+      .search-result-list-item {
+        /*padding: 16px 0px;*/
+      }
+      
+      .search-result-list-item h3 {
+        border-top: 1px solid var(--section-bg-grey);
+        margin: 0px;
+        padding: 0px;
+      }
+
+      google-map {
+        flex: 1 1 70%;
+        height: 600px;
+      }
+    </style>
+    <paper-dialog id="searchResults">
+      <div class="title">
+        <h2><span class='accent'>care</span>card</h2>
+      </div>
+      <div class="contents">
+        <div class="search-result-list">
+          <paper-input label="Type prescription name"></paper-input>
+          <label>Showing results for:</label>
+          <div id="medicationName">{{medName}}</div>
+          <ul class="results-header">
+            <li>Pharmacy</li>
+            <li>Savings</li>
+          </ul>
+          <iron-list items="[[results]]">
+                    <template>
+                      <div class="search-result-list-item">
+                        <h3>{{item.name}}</h3>
+                        <span>(0.3 Miles Away)</span>
+                      </div>
+                    </template>
+  </iron-list>
+  </div>
+  <google-map latitude="41.3212912" longitude="-72.9283391" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers>
+    <google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>
+    <!--<google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>-->
+  </google-map>
+
+  </div>
+  </paper-dialog>
   </template>
 
   <script>
@@ -23,7 +113,25 @@
       is: 'search-results',
 
       properties: {
-
+        medName: {
+          type: String,
+          value: () => "Lipitor"
+        },
+        results: {
+          type: Object,
+          value: () => {
+            let dummyData = [{
+              name: "Walgreens"
+            }, {
+              name: "CVS"
+            }, {
+              name: "Duane Reade"
+            }, {
+              name: "Est Est Est"
+            }];
+            return dummyData;
+          }
+        }
       },
       observers: [
 
