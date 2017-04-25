@@ -20,6 +20,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
 <link rel="import" href="./footer.html">
+<link rel="import" href="../search/results.html">
 <link rel="import" href="../sections/features.html">
 <link rel="import" href="../sections/partners.html">
 <link rel="import" href="../sections/signup.html">
@@ -316,7 +317,7 @@
         <div class="input-container">
           <input class="med" name="medication" placeholder="Type prescription name (ex.Lipitor)"/>
           <input class="zipcode" name="zipcode" placeholder="10022"/>
-          <input class="search" type="button" value="Search"/>
+          <input class="search" type="button" value="Search" onclick="searchResults.open()"/>
         </div>
       </form>
     </section>
@@ -361,6 +362,7 @@
         </tr>
       </table>
     </section>
+    <search-results></search-results>
     <features-section></features-section>
     <section id="cta-banner">
       <h1>Start Saving now for free -- no sign up or credit card required</h1>

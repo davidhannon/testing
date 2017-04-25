@@ -9,7 +9,11 @@
     "paper-fab": "PolymerElements/paper-fab#^1.2.1",
     "app-route": "PolymerElements/app-route#^1.0.0",
     "font-roboto": "PolymerElements/font-roboto#^1.0.2",
-    "bootstrap-grid-only": "^1.0.0"
+    "bootstrap-grid-only": "^1.0.0",
+    "google-map": "GoogleWebComponents/google-map#^1.2.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "iron-list": "PolymerElements/iron-list#^1.4.5",
+    "paper-input": "^1.1.24"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
