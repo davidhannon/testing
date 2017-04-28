@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../bower_components/google-map/google-map.html">
+<link rel="import" href="../../bower_components/google-map/google-map-search.html">
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 
 <dom-module id="search-results">
@@ -125,7 +126,7 @@
         height: 600px;
       }
     </style>
-    <paper-dialog id="searchResults" with-backdrop=true>
+    <paper-dialog id="searchResults" with-backdrop=true on-iron-overlay-opened="geocodeZip">
       <div class="title">
         <h2><span class='accent'>care</span>card</h2>
       </div>
@@ -157,9 +158,18 @@
                     </template>
   </iron-list>
   </div>
-  <google-map latitude="41.3212912" longitude="-72.9283391" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers>
-    <google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>
+  <google-map-search map="[[map]]" query="pharmacy" results="{{mapSearch}}">
+  </google-map-search>
+  <google-map map="{{map}}" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers disable-default-ui>
+    <!--<google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>-->
     <!--<google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>-->
+    <template is="dom-repeat" items="{{mapSearch}}" as="marker">
+      <google-map-marker latitude="{{marker.latitude}}"
+                         longitude="{{marker.longitude}}">
+        <h2>{{marker.name}}</h2>
+        <span>{{marker.formatted_address}}</span>
+      </google-map-marker>
+    </template>
   </google-map>
 
   </div>
@@ -192,6 +202,10 @@
             }];
             return dummyData;
           }
+        },
+        mapSearch: {
+          type: Object,
+          value: []
         }
       },
       observers: [
@@ -199,11 +213,54 @@
       ],
 
       attached: function() {
-        console.log("search results loaded")
+        console.log("search results loaded");
+        let map = document.querySelector("search-results google-map");
+        let mapComponent = this;
+        if (map) {
+          map.addEventListener("google-map-ready", (e) => {
+            console.log("google map is ready.");
+            mapComponent.geocodeZip();
+          })
+        }
       },
 
       _equal: function(value1, value2) {
         return value1 === value2;
+      },
+
+      geocodeZip: function() {
+        var geocoder = new google.maps.Geocoder();
+        let zipInput = document.querySelector("#splash input.zipcode") || null;
+        let zipCode = zipInput ? zipInput.value : "10012";
+        let map = document.querySelector("search-results google-map").map;
+        let searchComponent = document.querySelector("search-results google-map-search");
+        let {
+          latitude: searchLatitude,
+          longitude: searchLongitude
+        } = searchComponent;
+
+        geocoder.geocode({
+            address: zipCode
+          },
+          function(results, status) {
+            if (status == 'OK') {
+              let {
+                latitude,
+                longitude
+              } = results[0].geometry.location;
+              map.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+              });
+              searchLatitude = latitude;
+              searchLongitude = longitude;
+              searchComponent.search("pharmacies");
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
+          }
+        );
       }
 
     });
