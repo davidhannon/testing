@@ -1,3 +1,5 @@
+// import twilio/SMS functions
+require( "./twilio" );
 const soap = require( 'soap-as-promised' );
 const rxAPI = `https://mws.envisionrx.com/rxfunctions.asmx?WSDL`;
 const BaseURL = 'http://mws.envisionrx.com/';
