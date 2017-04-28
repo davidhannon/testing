@@ -10,7 +10,7 @@
       exec_mode: "cluster_mode",
       instances: 1,
       interpreter: "/usr/bin/pm2",
-      interpreter_args: "serve . 5010".
+      interpreter_args: "serve . 5010",
       env_production: {
         NODE_ENV: "production"
       },
