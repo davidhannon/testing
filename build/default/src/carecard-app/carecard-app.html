@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
@@ -25,7 +25,7 @@
 <link rel="import" href="../sections/partners.html">
 <link rel="import" href="../sections/signup.html">
 
-<dom-module id="carecard-app">
+</head><body><dom-module id="carecard-app">
   <template>
     <style>
       :host {
@@ -261,34 +261,21 @@
         }
       }
     </style>
-    <app-location route="{{route}}" use-hash-as-path></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="/:category"
-        data="{{categoryData}}"
-        tail="{{subRoute}}"></app-route>
-    <app-route
-        route="{{subRoute}}"
-        pattern="/:page"
-        data="{{pageData}}"
-        tail="{{subsubRoute}}"></app-route>
-    <app-route
-        route="{{subsubRoute}}"
-        pattern="/:id"
-        data="{{idData}}"></app-route>
+    <app-location route="{{route}}" use-hash-as-path=""></app-location>
+    <app-route route="{{route}}" pattern="/:category" data="{{categoryData}}" tail="{{subRoute}}"></app-route>
+    <app-route route="{{subRoute}}" pattern="/:page" data="{{pageData}}" tail="{{subsubRoute}}"></app-route>
+    <app-route route="{{subsubRoute}}" pattern="/:id" data="{{idData}}"></app-route>
 
     <!-- manages page's scroll position -->
-    <app-scrollpos-control
-        selected="[[categoryData.category]]/[[pageData.page]]"
-        reset="[[_equal(pageData.page, 'detail')]]"></app-scrollpos-control>
+    <app-scrollpos-control selected="[[categoryData.category]]/[[pageData.page]]" reset="[[_equal(pageData.page, 'detail')]]"></app-scrollpos-control>
 
     <!--<app-drawer-layout drawer-width="288px" responsive-width="1280px">-->
 
 
   <!-- main panel -->
-  <app-header-layout fullbleed>
+  <app-header-layout fullbleed="">
 
-    <app-header fixed effects="fade-background" class="main-header">
+    <app-header fixed="" effects="fade-background" class="main-header">
 
       <!-- top toolbar -->
       <!--<app-toolbar class="menu-bar">-->
@@ -305,7 +292,7 @@
       <app-toolbar class="title-toolbar main-title-toolbar">
         <!--<paper-icon-button icon="menu" onclick="drawer.toggle()"></paper-icon-button>-->
         <div class="title">
-          <h2><span class='accent'>care</span>card</h2>
+          <h2><span class="accent">care</span>card</h2>
         </div>
       </app-toolbar>
 
@@ -317,16 +304,16 @@
       <h2>Your source for free prescription savings</h2>
       <form>
         <div class="input-container">
-          <input class="med" name="medication" placeholder="Type prescription name (ex.Lipitor)"/>
-          <input class="zipcode" name="zipcode" placeholder="10022"/>
-          <input class="search" type="button" value="Search" onclick="searchResults.open()"/>
+          <input class="med" name="medication" placeholder="Type prescription name (ex.Lipitor)">
+          <input class="zipcode" name="zipcode" placeholder="10022">
+          <input class="search" type="button" value="Search" onclick="searchResults.open()">
         </div>
       </form>
     </section>
     <section id="discounts">
       <h2>Trending Discounts</h2>
       <table>
-        <tr>
+        <tbody><tr>
           <th>Drug</th>
           <th>Uses</th>
           <th>Savings</th>
@@ -362,7 +349,7 @@
           <td>up to 75%</td>
           <td><a>Claim</a></td>
         </tr>
-      </table>
+      </tbody></table>
     </section>
     <features-section></features-section>
     <section id="cta-banner">
@@ -395,10 +382,7 @@
                   <!-- 2-columns grid -->
                   <two-columns-grid column-width="396" gutter="4">
                     <template is="dom-repeat" items="[[category.items]]" as="article">
-                      <a
-                          is="article-headline"
-                          href="#/[[category.name]]/detail/[[article.id]]"
-                          article="[[article]]"></a>
+                      <a is="article-headline" href="#/[[category.name]]/detail/[[article.id]]" article="[[article]]"></a>
                     </template>
     </two-columns-grid>
 
@@ -479,4 +463,4 @@
 
     });
   </script>
-</dom-module>
+</dom-module></body></html>

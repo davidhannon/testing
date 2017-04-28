@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
@@ -7,7 +7,7 @@
 <link rel="import" href="../../bower_components/google-map/google-map.html">
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 
-<dom-module id="search-results">
+</head><body><dom-module id="search-results">
   <template>
     <style>
       :host {
@@ -125,9 +125,9 @@
         height: 600px;
       }
     </style>
-    <paper-dialog id="searchResults" with-backdrop=true>
+    <paper-dialog id="searchResults" with-backdrop="true">
       <div class="title">
-        <h2><span class='accent'>care</span>card</h2>
+        <h2><span class="accent">care</span>card</h2>
       </div>
       <div class="contents">
         <div class="search-result-list">
@@ -157,7 +157,7 @@
                     </template>
   </iron-list>
   </div>
-  <google-map latitude="41.3212912" longitude="-72.9283391" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers>
+  <google-map latitude="41.3212912" longitude="-72.9283391" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers="">
     <google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>
     <!--<google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>-->
   </google-map>
@@ -208,4 +208,4 @@
 
     });
   </script>
-</dom-module>
+</dom-module></body></html>
