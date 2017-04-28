@@ -64,6 +64,23 @@
       .search-result-list-item {
         /*padding: 16px 0px;*/
       }
+
+      .search-result-list-item ul {
+        /*padding: 16px 0px;*/
+        display: flex;
+        list-style: none;
+        padding: 0;
+        width: 100%;
+      }
+
+      .search-result-list-item li {
+        flex: 1 1 auto;
+        align-items: center;
+      }
+
+      .search-result-list-item li.accent { 
+        color: var(--app-primary-color);
+      }
       
       .search-result-list-item h3 {
         border-top: 1px solid var(--section-bg-grey);
@@ -92,8 +109,16 @@
           <iron-list items="[[results]]">
                     <template>
                       <div class="search-result-list-item">
-                        <h3>{{item.name}}</h3>
-                        <span>(0.3 Miles Away)</span>
+                        <ul>
+                          <li>
+                            <h3>{{item.name}}</h3>
+                            <span>(0.3 Miles Away)</span>
+                          </li>
+                          <li class="accent">
+                            <h3>$14.04</h3>
+                            <span>With CareCard</span>
+                          </li>
+                        </ul>
                       </div>
                     </template>
   </iron-list>

@@ -10,6 +10,7 @@
   "author": "Martial James Jefferson <martial.jefferson@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "soap-as-promised": "^1.19.0"
   }
 }
