@@ -128,7 +128,7 @@
       }
     </style>
     <!--<paper-dialog id="searchResults" with-backdrop=true>-->
-    <paper-dialog id="searchResults" on-iron-overlay-opened="requestLocation">
+    <paper-dialog id="searchResults" on-iron-overlay-opened="openDialog">
       <div class="title">
         <h2><span class="accent">care</span>card</h2>
       </div>
@@ -188,7 +188,7 @@
         medName: {
           type: String,
           value: function() {
-            return "Lipitor";
+            return window.sessionStorage.getItem("medName") || "";
           }
         },
         results: {
@@ -222,16 +222,21 @@
 
       openDialog: function() {
         console.log("opening dialog");
-        this.paperDialog.open();
+        // this.paperDialog.open();
+        this.updateDrug();
+        this.requestLocation();
       },
 
       requestLocation: function() {
-        document.querySelector("app-header").hidden = true;
         let locator = document.querySelector("search-results geo-location") || null;
         if (locator) {
           locator.idle = false;
           locator.fetch();
         }
+      },
+
+      updateDrug: function() {
+        this.set("medName", window.sessionStorage.getItem("medName"));
       },
 
       geocodeZip: function() {

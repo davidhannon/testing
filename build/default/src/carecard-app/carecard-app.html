@@ -124,6 +124,11 @@
       .category-page {
         min-height: 100vh;
       }
+      paper-autocomplete {
+        margin: 0 auto;
+        max-width: 400px;
+        width: 80%;
+      }
 
       [is=article-headline] {
         @apply(--shadow-transition);
@@ -284,7 +289,7 @@
     </app-header>
 
     <!-- list/detail pages -->
-    <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="isActivated">
+    <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home">
     <div name="home">
     <section id="splash">
       <img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">
@@ -292,7 +297,8 @@
       <h2>Your source for free prescription savings</h2>
       <!--<form>-->
         <div class="input-container">
-          <paper-autocomplete class="med" id="med-search" name="medication" placeholder="Type prescription name (ex.Lipitor)" on-autocomplete-change="suggestMeds"></paper-autocomplete>
+          <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
+          <!--<paper-input class="med" id="med-search" name="medication" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds"></paper-input>-->
   <!--<input class="zipcode" name="zipcode" placeholder="10022"/>-->
         <a href="/#/search"><input class="search" type="button" value="Search" onclick="searchResults.open()"></a>
         </div>
@@ -349,10 +355,10 @@
     <span>No Fees. No registration. No claim forms.</span>
   </section>
   <partners-section></partners-section>
-  <!--<carecard-signup></carecard-signup>-->
+  <carecard-signup></carecard-signup>
   <carecard-footer></carecard-footer>
   </div>
-  <!--<search-results name="search" on-iron-activate="openDialog" on-iron-select="openDialog"></search-results>-->
+  <search-results name="search" on-iron-activate="openDialog" on-iron-select="openDialog"></search-results>
   </iron-pages>
   <!--<carecard-footer></carecard-footer>-->
 
@@ -382,7 +388,11 @@
 
         pageData: Object,
 
-        idData: Object
+        idData: Object,
+        medSuggestions: {
+          type: Object,
+          value: []
+        }
       },
 
       attached: function() {
@@ -393,26 +403,15 @@
         });
       },
       ready: function() {
-        document.querySelector('#med-search').addEventListener('autocomplete-change', this.suggestMeds);
+        // document.querySelector('#med-search').addEventListener('autocomplete-change', this.suggestMeds);
+        let elem = document.querySelector("carecard-app");
+        document.querySelector('paper-autocomplete').queryFn = e => elem.medSuggestions;
+
       },
 
       _equal: function(value1, value2) {
         return value1 === value2;
       },
-
-      _updateArticle: function(articles, category, id) {
-        for (var i = 0, cat; cat = articles[i]; i++) {
-          if (cat.name === category) {
-            for (var j = 0, article; article = cat.items[j]; j++) {
-              if (article.id === id) {
-                this.article = article;
-                return;
-              }
-            }
-          }
-        }
-      },
-
       isActivated: function(e) {
         let {
           detail: {
@@ -427,12 +426,33 @@
         }
       },
 
-      suggestMeds: function() {
-        console.log("Should autocomplete");
+      suggestMeds: function(e) {
+        let {
+          value: name
+        } = e.target;
+        if (name.length < 3) {
+          return false;
+        }
+        fetch(`http://carecard-beta.ethershaft.engineering/api/v1/drugs?name=${name}`).then(r => r.json()).then(this.updateSource).catch(console.error);
+      },
+
+      updateSource: function(response) {
+        if (Array.isArray(response) && response.length > 0) {
+          let input = document.querySelector("#med-search");
+          let elem = document.querySelector("carecard-app");
+          // input.clear();
+          input.suggestions(response);
+          // elem.splice("medSuggestions", 0, elem.medSuggestions.length);
+          // response.forEach(d => elem.push("medSuggestions", d));
+        }
       },
 
       _drawerSelected: function() {
         if (!this.$.drawer.persistent) this.$.drawer.close();
+      },
+      persistSearch: function(id, selection) {
+        // console.log(text);
+        window.sessionStorage.setItem("medName", selection.text)
       }
 
     });
