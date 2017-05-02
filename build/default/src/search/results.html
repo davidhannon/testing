@@ -82,6 +82,7 @@
       .search-result-list {
         flex: 0 1 35%;
         padding: 0 20px;
+        max-height: 600px;
       }
 
       .search-result-list label {
@@ -153,13 +154,13 @@
             <li>Pharmacy</li>
             <li>Savings</li>
           </ul>
-          <iron-list items="[[results]]" max-physical-count="5">
+          <iron-list items="[[pharmacies]]" max-physical-count="5">
                     <template>
                       <div class="search-result-list-item" style="height: 70px;">
                         <ul>
                           <li>
-                            <h3>{{item.name}}</h3>
-                            <span>(0.3 Miles Away)</span>
+                            <h3>{{item.PharmacyName}}</h3>
+                            <span>({{item.Distance}} Miles Away)</span>
                           </li>
                           <li class="accent">
                             <h3>$14.04</h3>
@@ -170,10 +171,8 @@
                     </template>
   </iron-list>
   </div>
-  <!--<google-map-search map="[[map]]" query="pharmacy" results="{{mapSearch}}" on-google-map-search-results="updateSearchResults">
-  </google-map-search>-->
-  <geo-location latitude="{{lat}}" longitude="{{lng}}" idle="true"></geo-location>
-  <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui="">
+  <geo-location latitude="{{lat}}" longitude="{{lng}}" idle="true" on-geo-response="fetchPharmacies"></geo-location>
+  <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui="" zoom="14">
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
   </google-map>
   <!-- <google-map map="{{map}}" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers disable-default-ui>
@@ -198,10 +197,14 @@
         medName: {
           type: String,
           value: function() {
-            return window.sessionStorage.getItem("medName") || "";
+            return window.sessionStorage.getItem("medName") || "Lipitor";
           }
         },
         results: {
+          type: Object,
+          value: []
+        },
+        pharmacies: {
           type: Object,
           value: []
         },
@@ -285,6 +288,21 @@
       },
       updateSearchResults: function(event, results) {
         this.results = results;
+      },
+
+      fetchPharmacies: function({
+        detail
+      }) {
+        let {
+          latitude,
+          longitude
+        } = detail;
+        fetch(`/api/v1/pharmacies?lat=${latitude}&lng=${longitude}`).then(r => r.json()).then(this.updatePharmacies.bind(this)).catch(console.error)
+      },
+
+      updatePharmacies: function(response) {
+        var elem = this;
+        response.forEach(r => elem.push("pharmacies", r));
       }
 
     });

@@ -39,9 +39,22 @@ async function getDrug( DrugName ) {
   return formatted;
 }
 
+async function getPharmacies( [ Latitude, Longitude ] ) {
+  await clientInitialized;
+  let { GetPharmaciesByLatLongResult: { Pharmacy: pharmacies } } = await ApiClient.GetPharmaciesByLatLong( { Latitude, Longitude, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
+  pharmacies.forEach( p => p.Distance = parseFloat( p.Distance ).toFixed( 2 ) )
+    // let formatted = drugs.map( d => ( { text: d.DrugName, value: d.GPI } ) )
+  return pharmacies;
+}
+
 router.get( '/drugs', ( req, res, next ) => {
   let { name } = req.query;
   getDrug( name ).then( drugs => res.send( drugs ) ).catch( next );
+} );
+
+router.get( '/pharmacies', ( req, res, next ) => {
+  let { lat, lng } = req.query;
+  getPharmacies( [ lat, lng ] ).then( pharms => res.send( pharms ) ).catch( next );
 } );
 
 
