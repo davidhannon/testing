@@ -128,6 +128,27 @@
         margin: 0 auto;
         max-width: 400px;
         width: 80%;
+        --paper-input-container-input: {
+          background-color: #FFF;
+          padding: 10px 20px;
+          --secondary-text-color: var(--app-secondary-color);
+        }
+        
+        --paper-input-container-color: {
+          color: var(--app-secondary-color);
+        }
+
+        --secondary-text-color: var(--app-secondary-color);
+        
+        --paper-input-container-underline: {
+            display: none
+          }
+        --paper-input-container-underline-focus: {
+            display: none
+          }
+        --paper-input-container-underline-disabled: {
+            display: none
+          }
       }
 
       [is=article-headline] {
@@ -292,14 +313,13 @@
     <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home">
     <div name="home">
     <section id="splash">
-      <img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">
-      <img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">
+      <!--<img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">-->
+      <!--<img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">-->
       <h2>Your source for free prescription savings</h2>
       <!--<form>-->
         <div class="input-container">
           <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
-          <!--<paper-input class="med" id="med-search" name="medication" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds"></paper-input>-->
-  <!--<input class="zipcode" name="zipcode" placeholder="10022"/>-->
+        <!--<input class="zipcode" name="zipcode" placeholder="10022"/>-->
         <a href="/#/search"><input class="search" type="button" value="Search" onclick="searchResults.open()"></a>
         </div>
   <!--</form>-->
