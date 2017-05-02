@@ -124,6 +124,7 @@
       .category-page {
         min-height: 100vh;
       }
+      
       paper-autocomplete {
         margin: 0 auto;
         max-width: 400px;
@@ -232,6 +233,10 @@
         font-weight: 600;
       }
 
+      features-section, partners-section, carecard-signup, carecard-footer {
+        display: block;
+      }
+
       /* ----- « Call to Action Banner » ----- */
       section#cta-banner {
         background-color: var(--app-primary-color);
@@ -313,79 +318,71 @@
 
     </app-header>
 
-    <!-- list/detail pages -->
     <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" >
-    <div name="home">
-    <section id="splash">
-      <!--<img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">-->
-      <!--<img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">-->
-      <h2>Your source for free prescription savings</h2>
-      <!--<form>-->
-        <div class="input-container">
-          <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
-        <!--<input class="zipcode" name="zipcode" placeholder="10022"/>-->
-        <a href="/#/search"><input class="search" type="button" value="Search" onclick="searchResults.open()" /></a>
-        </div>
-  <!--</form>-->
-  </section>
-  <section id="discounts">
-    <h2>Trending Discounts</h2>
-    <table>
-      <tr>
-        <th>Drug</th>
-        <th>Uses</th>
-        <th>Savings</th>
-        <th>Discount</th>
-      </tr>
-      <tr>
-        <td>Lipitor</td>
-        <td>High Cholestorol</td>
-        <td>up to 76%</td>
-        <td><a>Claim</a></td>
-      </tr>
-      <tr>
-        <td>Cialis</td>
-        <td>Erectile Dysfunction</td>
-        <td>up to 75%</td>
-        <td><a>Claim</a></td>
-      </tr>
-      <tr>
-        <td>Plan B</td>
-        <td>Birth Control</td>
-        <td>up to 73%</td>
-        <td><a>Claim</a></td>
-      </tr>
-      <tr>
-        <td>Viagra</td>
-        <td>Erectile Dysfunction</td>
-        <td>up to 73%</td>
-        <td><a>Claim</a></td>
-      </tr>
-      <tr>
-        <td>Tamiflu</td>
-        <td>Flu</td>
-        <td>up to 75%</td>
-        <td><a>Claim</a></td>
-      </tr>
-    </table>
-  </section>
-  <features-section></features-section>
-  <section id="cta-banner">
-    <h1>Start Saving now for free -- no sign up or credit card required</h1>
-  </section>
-  <section id="about">
-    <h2>Your card is accepted at all major chains as well as most independent pharmacies.</h2>
-    <span>Your card is pre-activated with our savings when you receive it.</span>
-    <span>No Fees. No registration. No claim forms.</span>
-  </section>
-  <partners-section></partners-section>
-  <carecard-signup></carecard-signup>
-  <carecard-footer></carecard-footer>
-  </div>
-  <search-results name="search" on-iron-activate="openDialog" on-iron-select="openDialog"></search-results>
-  </iron-pages>
-  <!--<carecard-footer></carecard-footer>-->
-
+      <div name="home">
+      <section id="splash">
+        <h2>Your source for free prescription savings</h2>
+          <div class="input-container">
+            <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
+          <a href="/#/search"><input class="search" type="button" value="Search" onclick="searchResults.open()" /></a>
+          </div>
+      </section>
+      <section id="discounts">
+        <h2>Trending Discounts</h2>
+        <table>
+          <tr>
+            <th>Drug</th>
+            <th>Uses</th>
+            <th>Savings</th>
+            <th>Discount</th>
+          </tr>
+          <tr>
+            <td>Lipitor</td>
+            <td>High Cholestorol</td>
+            <td>up to 76%</td>
+            <td><a>Claim</a></td>
+          </tr>
+          <tr>
+            <td>Cialis</td>
+            <td>Erectile Dysfunction</td>
+            <td>up to 75%</td>
+            <td><a>Claim</a></td>
+          </tr>
+          <tr>
+            <td>Plan B</td>
+            <td>Birth Control</td>
+            <td>up to 73%</td>
+            <td><a>Claim</a></td>
+          </tr>
+          <tr>
+            <td>Viagra</td>
+            <td>Erectile Dysfunction</td>
+            <td>up to 73%</td>
+            <td><a>Claim</a></td>
+          </tr>
+          <tr>
+            <td>Tamiflu</td>
+            <td>Flu</td>
+            <td>up to 75%</td>
+            <td><a>Claim</a></td>
+          </tr>
+        </table>
+      </section>
+      <features-section></features-section>
+      <section id="cta-banner">
+        <h1>Start Saving now for free -- no sign up or credit card required</h1>
+      </section>
+      <section id="about">
+        <h2>Your card is accepted at all major chains as well as most independent pharmacies.</h2>
+        <span>Your card is pre-activated with our savings when you receive it.</span>
+        <span>No Fees. No registration. No claim forms.</span>
+      </section>
+      <partners-section></partners-section>
+      <carecard-signup></carecard-signup>
+      <carecard-footer></carecard-footer>
+      </div>
+      <search-results name="search" on-iron-activate="openDialog" on-iron-select="openDialog"></search-results>
+    </iron-pages>
   </app-header-layout>
 
 

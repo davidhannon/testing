@@ -9,5 +9,7 @@
     "build": true,
     "bower_components": true,
     "test": true
-  }
+  },
+  "css.validate": false,
+  "html.format.contentUnformatted": "pre, style"
 }
