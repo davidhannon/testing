@@ -126,6 +126,16 @@
         flex: 1 1 65%;
         height: 600px;
       }
+
+      @media(max-width: 768px) {
+        #searchResults .contents {
+          flex-direction: column-reverse;
+        }
+        google-map {
+          height: 40vh;
+          max-height: 600px;
+        }
+      }
     </style>
     <!--<paper-dialog id="searchResults" with-backdrop=true>-->
     <paper-dialog id="searchResults" on-iron-overlay-opened="openDialog">

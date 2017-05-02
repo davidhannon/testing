@@ -283,7 +283,7 @@
         }
 
         section#splash {
-          margin: 20px;
+          /*margin: 20px;*/
         }
         #leaves {
           display: none;
@@ -318,7 +318,7 @@
 
     </app-header>
 
-    <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" >
+    <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="isActivated" >
       <div name="home">
       <section id="splash">
         <h2>Your source for free prescription savings</h2>
@@ -433,6 +433,7 @@
       _equal: function(value1, value2) {
         return value1 === value2;
       },
+
       isActivated: function(e) {
         let {
           detail: {
