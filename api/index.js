@@ -6,6 +6,10 @@ const Envision = require( "./envision" );
 const { Router } = require( 'express' );
 const router = new Router( );
 
+router.use( ( req, res, next ) => {
+  res.append( 'Access-Control-Allow-Origin', '*' );
+  next( );
+} )
 router.use( TwilioFns );
 router.use( Envision );
 

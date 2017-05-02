@@ -4,12 +4,13 @@
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/geo-location/geo-location.html">
 <link rel="import" href="../../bower_components/google-map/google-map.html">
 <link rel="import" href="../../bower_components/google-map/google-map-search.html">
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 
 <dom-module id="search-results">
-  <template is="dom-bind">
+  <template>
     <style>
       :host {
         font-family: "Montserrat";
@@ -126,7 +127,8 @@
         height: 600px;
       }
     </style>
-    <paper-dialog id="searchResults" with-backdrop=true on-iron-overlay-opened="geocodeZip">
+    <!--<paper-dialog id="searchResults" with-backdrop=true>-->
+    <paper-dialog id="searchResults" on-iron-overlay-opened="openDialog">
       <div class="title">
         <h2><span class='accent'>care</span>card</h2>
       </div>
@@ -158,19 +160,21 @@
                     </template>
   </iron-list>
   </div>
-  <google-map-search map="[[map]]" query="pharmacy" results="{{mapSearch}}" on-google-map-search-results="updateSearchResults">
-  </google-map-search>
-  <google-map map="{{map}}" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers disable-default-ui>
-    <!--<google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>-->
-    <!--<google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>-->
-    <template is="dom-repeat" items="[[results]]" as="marker" indexAs="{{marker.placeId}}">
+  <!--<google-map-search map="[[map]]" query="pharmacy" results="{{mapSearch}}" on-google-map-search-results="updateSearchResults">
+  </google-map-search>-->
+  <geo-location latitude="{{lat}}" longitude="{{lng}}" idle=true></geo-location>
+  <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui>
+    <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
+  </google-map>
+  <!-- <google-map map="{{map}}" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers disable-default-ui>
+  <template is="dom-repeat" items="[[results]]" as="marker" indexAs="{{marker.placeId}}">
       <google-map-marker latitude="[[marker.latitude]]"
                          longitude="[[marker.longitude]]" title="[[marker.name]]">
         <h2>[[marker.name]]</h2>
         <span>[[marker.formatted_address]]</span>
       </google-map-marker>
     </template>
-  </google-map>
+  </google-map>-->
 
   </div>
   </paper-dialog>
@@ -180,12 +184,11 @@
     Polymer({
 
       is: 'search-results',
-
       properties: {
         medName: {
           type: String,
           value: function() {
-            return "Lipitor";
+            return window.sessionStorage.getItem("medName") || "";
           }
         },
         results: {
@@ -208,13 +211,32 @@
         if (map) {
           map.addEventListener("google-map-ready", (e) => {
             console.log("google map is ready.");
-            mapComponent.geocodeZip();
+            // mapComponent.requestLocation();
           })
         }
       },
 
       _equal: function(value1, value2) {
         return value1 === value2;
+      },
+
+      openDialog: function() {
+        console.log("opening dialog");
+        // this.paperDialog.open();
+        this.updateDrug();
+        this.requestLocation();
+      },
+
+      requestLocation: function() {
+        let locator = document.querySelector("search-results geo-location") || null;
+        if (locator) {
+          locator.idle = false;
+          locator.fetch();
+        }
+      },
+
+      updateDrug: function() {
+        this.set("medName", window.sessionStorage.getItem("medName"));
       },
 
       geocodeZip: function() {

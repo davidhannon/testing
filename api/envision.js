@@ -30,11 +30,13 @@ async function initializeClient( ) {
   }
 }
 
-initializeClient( );
+let clientInitialized = initializeClient( );
 
 async function getDrug( DrugName ) {
-  let { GetDrugByNameResult: drugs } = await ApiClient.GetDrugByName( { DrugName, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
-  return drugs;
+  await clientInitialized;
+  let { GetDrugByNameResult: { Drug: drugs } } = await ApiClient.GetDrugByName( { DrugName, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
+  let formatted = drugs.map( d => ( { text: d.DrugName, value: d.GPI } ) )
+  return formatted;
 }
 
 router.get( '/drugs', ( req, res, next ) => {
