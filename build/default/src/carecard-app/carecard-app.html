@@ -433,7 +433,7 @@
         if (name.length < 3) {
           return false;
         }
-        fetch(`http://carecard-beta.ethershaft.engineering/api/v1/drugs?name=${name}`).then(r => r.json()).then(this.updateSource).catch(console.error);
+        fetch(`https://carecard-beta.ethershaft.engineering/api/v1/drugs?name=${name}`).then(r => r.json()).then(this.updateSource).catch(console.error);
       },
 
       updateSource: function(response) {
