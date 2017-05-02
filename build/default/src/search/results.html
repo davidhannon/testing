@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 
 </head><body><dom-module id="search-results">
-  <template>
+  <template is="dom-bind">
     <style>
       :host {
         font-family: "Montserrat";
@@ -141,7 +141,7 @@
             <li>Pharmacy</li>
             <li>Savings</li>
           </ul>
-          <iron-list items="[[results]]">
+          <iron-list items="[[results]]" max-physical-count="5">
                     <template>
                       <div class="search-result-list-item" style="height: 70px;">
                         <ul>
@@ -158,15 +158,15 @@
                     </template>
   </iron-list>
   </div>
-  <google-map-search map="[[map]]" query="pharmacy" results="{{mapSearch}}">
+  <google-map-search map="[[map]]" query="pharmacy" results="{{mapSearch}}" on-google-map-search-results="updateSearchResults">
   </google-map-search>
   <google-map map="{{map}}" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers="" disable-default-ui="">
     <!--<google-map-marker latitude="41.3212912" longitude="-72.9283391" draggable="true" title="New Haven"></google-map-marker>-->
     <!--<google-map-marker latitude="37.777" longitude="-122.38911"></google-map-marker>-->
-    <template is="dom-repeat" items="{{mapSearch}}" as="marker">
-      <google-map-marker latitude="{{marker.latitude}}" longitude="{{marker.longitude}}">
-        <h2>{{marker.name}}</h2>
-        <span>{{marker.formatted_address}}</span>
+    <template is="dom-repeat" items="[[results]]" as="marker" indexas="{{marker.placeId}}">
+      <google-map-marker latitude="[[marker.latitude]]" longitude="[[marker.longitude]]" title="[[marker.name]]">
+        <h2>[[marker.name]]</h2>
+        <span>[[marker.formatted_address]]</span>
       </google-map-marker>
     </template>
   </google-map>
@@ -189,18 +189,7 @@
         },
         results: {
           type: Object,
-          value: function() {
-            var dummyData = [{
-              "name": "Walgreens"
-            }, {
-              "name": "CVS"
-            }, {
-              "name": "Duane Reade"
-            }, {
-              "name": "Rite-Aid"
-            }];
-            return dummyData;
-          }
+          value: []
         },
         mapSearch: {
           type: Object,
@@ -260,6 +249,9 @@
             }
           }
         );
+      },
+      updateSearchResults: function(event, results) {
+        this.results = results;
       }
 
     });

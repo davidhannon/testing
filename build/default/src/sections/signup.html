@@ -9,7 +9,9 @@
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
-<link rel="stylesheet" href="../../bower_components/bootstrap-grid-only/css/grid12.css">
+<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+<script type="text/javascript" src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head><body><dom-module id="carecard-signup">
   <template>
@@ -34,6 +36,36 @@
         font-size: 26px;
         font-weight: bold;
         margin-top: 5%;
+      }
+      .get-carecard-info {
+        background-color: #ffffff;
+        color: #ee5c56;
+        -webkit-appearance: none;
+        border-radius: 8px;
+        border: 5px solid;
+        padding: 14px 35px;
+        font-size: 22px;
+        font-weight: bold;
+        margin-top: 5%;
+      }
+      .get-carecard-info:hover {
+        background-color: #ee5c56;
+        color: #ffffff;
+        -webkit-appearance: none;
+        border-radius: 8px;
+        border: 5px solid;
+        padding: 14px 35px;
+        font-size: 22px;
+        font-weight: bold;
+        margin-top: 5%;
+      }
+      #close-x {
+        position: absolute;
+        top: -20px;
+        left: -20px;
+      }
+      #carecardOptions {
+        padding-top: 100px;
       }
       :host {
         display: block;
@@ -316,7 +348,7 @@
                         <input class="address2 inp2" name="address2" placeholder="Address 2*"><br>
                         <input class="email inp2" name="email" placeholder="Email*"><br>
                         <input class="zip inp2" name="zipcode" placeholder="Zip*"><br><br>
-                        <button class="get-carecard-btn" type="submit" form="get-carecard" value="Submit">Get my free carecard!</button><br><br>
+                        <button type="button" value="Submit" class="btn btn-primary get-carecard-btn" form="get-carecard" data-toggle="modal" data-target="#carecardOptions">Get my free carecard!</button>
                       </div>
                     </form>
                   </div>
@@ -324,7 +356,24 @@
               </div>
           </div>
     </section>
-
+    <div id="carecardOptions" class="modal fade" data-backdrop="false">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <span id="close-x" data-dismiss="modal" aria-label="Close">
+            <img src="./graphics/x.png" alt="x" width="50px">
+          </span>
+            <div class="title">
+              <h2><span class="accent">care</span>card</h2>
+            </div>
+          <h2>Select how you'd like to receive your carecard</h2>
+          <div class="text-center">
+            <button class="get-carecard-info" type="button"><span class="glyphicon glyphicon-print"></span> Print Now</button>
+            <button class="get-carecard-info" type="button"><span class="glyphicon glyphicon-envelope"></span> Email</button>
+            <button class="get-carecard-info" type="button"><span class="glyphicon glyphicon-phone"></span> Text</button><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -348,7 +397,6 @@
         return value1 === value2;
       }
     });
-
   </script>
 </dom-module>
 </body></html>
