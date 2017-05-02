@@ -42,6 +42,7 @@ async function getDrug( DrugName ) {
 async function getPharmacies( [ Latitude, Longitude ] ) {
   await clientInitialized;
   let { GetPharmaciesByLatLongResult: { Pharmacy: pharmacies } } = await ApiClient.GetPharmaciesByLatLong( { Latitude, Longitude, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
+  pharmacies.forEach( p => p.PharmacyName = p.PharmacyName.toLowerCase( ) )
   pharmacies.forEach( p => p.Distance = parseFloat( p.Distance ).toFixed( 2 ) )
     // let formatted = drugs.map( d => ( { text: d.DrugName, value: d.GPI } ) )
   return pharmacies;
