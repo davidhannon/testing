@@ -141,7 +141,7 @@
       }
     </style>
     <!--<paper-dialog id="searchResults" with-backdrop=true>-->
-    <paper-dialog id="searchResults" on-iron-overlay-opened="openDialog">
+    <paper-dialog id="searchResults" no-cancel-on-esc-key=true no-cancel-on-outside-click=true on-iron-overlay-opened="openDialog">
       <div class="title">
         <h2><span class='accent'>care</span>card</h2>
       </div>
@@ -157,25 +157,28 @@
             <li>Savings</li>
           </ul>
           <iron-list items="[[pharmacies]]" max-physical-count=5>
-                    <template>
-                      <div class="search-result-list-item" style="height: 70px;">
-                        <ul>
-                          <li>
-                            <h3>{{item.PharmacyName}}</h3>
-                            <span>({{item.Distance}} Miles Away)</span>
-                          </li>
-                          <li class="accent">
-                            <h3>$14.04</h3>
-                            <span>With CareCard</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </template>
+            <template>
+              <div class="search-result-list-item" style="height: 70px;">
+                <ul>
+                  <li>
+                    <h3>{{item.PharmacyName}}</h3>
+                    <span>({{item.Distance}} Miles Away)</span>
+                  </li>
+                  <li class="accent">
+                    <h3>$14.04</h3>
+                    <span>With CareCard</span>
+                  </li>
+                </ul>
+              </div>
+            </template>
   </iron-list>
   </div>
   <geo-location latitude="{{lat}}" longitude="{{lng}}" idle=true on-geo-response="fetchPharmacies"></geo-location>
   <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
+    <template is="dom-repeat" items="[[pharmacies]]">
+      <google-map-marker latitude="{{item.Latitude}}" longitude="{{item.Longitude}}" title="{{item.PharmacyName}}"></google-map-marker>
+    </template>
   </google-map>
   <!-- <google-map map="{{map}}" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" fit-to-markers disable-default-ui>
   <template is="dom-repeat" items="[[results]]" as="marker" indexAs="{{marker.placeId}}">
