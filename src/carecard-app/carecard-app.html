@@ -208,6 +208,15 @@
         font-family: "Montserrat";
       }
 
+      section#discounts .graphic-view img {
+        display: block;
+        height: auto;
+        max-height: 400px;
+        width: 100%;
+        position: relative;
+        object-fit: contain;
+      }
+
       @media(min-width: 768px){
         section#discounts {
           display: flex;
@@ -232,16 +241,18 @@
         section#discounts .table-view {
           min-height: min-content;
         }
-        
+
         section#discounts .graphic-view img {
           display: block;
           height: 100%;
+          max-height: 100%;
           width: 100%;
           position: relative;
           object-fit: contain;
         }
+        
       }
-
+      
       section#discounts .table-view {
         padding: 10px 20px 70px 20px;
       }
