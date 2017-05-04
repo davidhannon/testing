@@ -206,6 +206,43 @@
       /* ----- « Discounts » ----- */
       section#discounts {
         font-family: "Montserrat";
+      }
+
+      @media(min-width: 768px){
+        section#discounts {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+        }
+
+        section#discounts > div {
+          box-sizing: border-box;
+          min-width: 50%;
+          flex: 1 1 50%;
+          max-height: 387px;
+        }
+
+        section#discounts .graphic-view {
+          width: 100%;
+          height: auto;
+          max-height: 100%;
+        }
+
+        section#discounts .table-view {
+          min-height: min-content;
+        }
+        
+        section#discounts .graphic-view img {
+          display: block;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          object-fit: contain;
+        }
+      }
+
+      section#discounts .table-view {
         padding: 10px 20px 70px 20px;
       }
 
@@ -321,6 +358,8 @@
     <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="isActivated" >
       <div name="home">
       <section id="splash">
+        <img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">
+        <img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">
         <h2>Your source for free prescription savings</h2>
           <div class="input-container">
             <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
@@ -328,45 +367,50 @@
           </div>
       </section>
       <section id="discounts">
-        <h2>Trending Discounts</h2>
-        <table>
-          <tr>
-            <th>Drug</th>
-            <th>Uses</th>
-            <th>Savings</th>
-            <th>Discount</th>
-          </tr>
-          <tr>
-            <td>Lipitor</td>
-            <td>High Cholestorol</td>
-            <td>up to 76%</td>
-            <td><a>Claim</a></td>
-          </tr>
-          <tr>
-            <td>Cialis</td>
-            <td>Erectile Dysfunction</td>
-            <td>up to 75%</td>
-            <td><a>Claim</a></td>
-          </tr>
-          <tr>
-            <td>Plan B</td>
-            <td>Birth Control</td>
-            <td>up to 73%</td>
-            <td><a>Claim</a></td>
-          </tr>
-          <tr>
-            <td>Viagra</td>
-            <td>Erectile Dysfunction</td>
-            <td>up to 73%</td>
-            <td><a>Claim</a></td>
-          </tr>
-          <tr>
-            <td>Tamiflu</td>
-            <td>Flu</td>
-            <td>up to 75%</td>
-            <td><a>Claim</a></td>
-          </tr>
-        </table>
+        <div class="table-view">
+          <h2>Trending Discounts</h2>
+          <table>
+            <tr>
+              <th>Drug</th>
+              <th>Uses</th>
+              <th>Savings</th>
+              <th>Discount</th>
+            </tr>
+            <tr>
+              <td>Lipitor</td>
+              <td>High Cholestorol</td>
+              <td>up to 76%</td>
+              <td><a>Claim</a></td>
+            </tr>
+            <tr>
+              <td>Cialis</td>
+              <td>Erectile Dysfunction</td>
+              <td>up to 75%</td>
+              <td><a>Claim</a></td>
+            </tr>
+            <tr>
+              <td>Plan B</td>
+              <td>Birth Control</td>
+              <td>up to 73%</td>
+              <td><a>Claim</a></td>
+            </tr>
+            <tr>
+              <td>Viagra</td>
+              <td>Erectile Dysfunction</td>
+              <td>up to 73%</td>
+              <td><a>Claim</a></td>
+            </tr>
+            <tr>
+              <td>Tamiflu</td>
+              <td>Flu</td>
+              <td>up to 75%</td>
+              <td><a>Claim</a></td>
+            </tr>
+          </table>
+        </div>
+        <div class="graphic-view">
+          <img src="../sections/graphics/static-map-graphic.jpg"/>
+        </div>
       </section>
       <features-section></features-section>
       <section id="cta-banner">
