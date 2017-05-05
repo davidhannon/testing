@@ -1,7 +1,7 @@
 {
   "name": "carecard",
   "short_name": "carecard",
-  "description": "Ethershaft&#39;s build of the CareCard MVP",
+  "description": "Your source for free prescription savings.",
   "start_url": "/",
   "display": "standalone"
 }

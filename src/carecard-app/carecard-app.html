@@ -128,9 +128,13 @@
       }
       
       paper-autocomplete {
-        margin: 0 auto;
-        max-width: 400px;
+        margin: 0 10px;
+        max-width: 500px;
         width: 80%;
+        flex: 0 1 auto;
+        text-align: left;
+
+        /*width: auto;*/
         --paper-input-container-input: {
           background-color: #FFF;
           padding: 10px 20px;
@@ -283,6 +287,41 @@
         font-weight: 600;
       }
 
+      section#splash ul {
+        list-style: none;
+        line-height: 2;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: left;
+        padding-left: 0px;
+      }
+
+      section#splash .search-bar {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+
+      .search-bar > * {
+        flex: 0 1 auto;
+      }
+
+
+      section#splash label, section#splash li {
+        display: inline-block;
+        line-height: normal;
+        vertical-align: top;
+      }
+
+      section#splash label {
+        margin: 0 5px 0 0;
+      }
+
+      section#splash li {
+        color: var(--app-primary-color);
+      }
+
       features-section, partners-section, carecard-signup, carecard-footer {
         display: block;
       }
@@ -333,8 +372,21 @@
         }
 
         section#splash {
-          /*margin: 20px;*/
+          padding: 50px 20px;
         }
+
+        section#splash .search-bar {
+          display: block;
+        }
+
+        section#splash .search-bar button.search {
+          margin-bottom: 20px;
+        }
+
+        section#splash paper-autocomplete {
+          margin: 20px auto 10px auto;
+        }
+
         #leaves {
           display: none;
         }
@@ -354,8 +406,6 @@
     <app-scrollpos-control selected="[[categoryData.category]]"></app-scrollpos-control>
 
     <!--<app-drawer-layout drawer-width="288px" responsive-width="1280px">-->
-
-
   <!-- main panel -->
   <app-header-layout fullbleed>
     <app-header id="appHeader" fixed effects="fade-background" class="main-header">
@@ -373,10 +423,20 @@
       <section id="splash">
         <img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">
         <img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">
-        <h2>Your source for free prescription savings</h2>
+        <h2>Save up to 80% on prescriptions</h2>
           <div class="input-container">
-            <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
-            <input class="search" type="button" value="Search" on-tap="openSearch" />
+            <div class="search-bar">
+              <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float=true source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
+              <input class="search" type="button" value="Search" on-tap="openSearch" />
+            </div>
+            <ul class="top-discounts">
+              <label>Top Discounts:</label>
+              <li>Adderall</li>
+              <li>Cialis</li>
+              <li>Suboxone</li>
+              <li>Viagra</li>
+              <li>Vyanase</li>
+            </ul>
           </div>
       </section>
       <section id="discounts">
