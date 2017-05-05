@@ -1,15 +1,17 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/font-roboto/roboto.html">
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/iron-list/iron-list.html">
-<link rel="import" href="../../bower_components/geo-location/geo-location.html">
-<link rel="import" href="../../bower_components/google-map/google-map.html">
-<link rel="import" href="../../bower_components/google-map/google-map-search.html">
-<link rel="import" href="../../bower_components/google-map/google-map-marker.html">
-
 <dom-module id="search-results">
+  <link rel="import" href="../../bower_components/polymer/polymer.html">
+  <link rel="import" href="../../bower_components/font-roboto/roboto.html">
+  <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="../../bower_components/iron-list/iron-list.html">
+  <link rel="import" href="../../bower_components/geo-location/geo-location.html">
+  <link rel="import" href="../../bower_components/google-map/google-map.html">
+  <link rel="import" href="../../bower_components/google-map/google-map-search.html">
+  <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
+
+
   <template>
     <style>
       :host {
@@ -141,7 +143,7 @@
       }
     </style>
     <!--<paper-dialog id="searchResults" with-backdrop=true>-->
-    <paper-dialog id="searchResults" no-cancel-on-esc-key=true no-cancel-on-outside-click=true on-iron-overlay-opened="openDialog">
+    <paper-dialog id="searchResults" on-iron-overlay-opened="openDialog" with-backdrop=true>
       <div class="title">
         <h2><span class='accent'>care</span>card</h2>
       </div>
@@ -173,7 +175,8 @@
             </template>
   </iron-list>
   </div>
-  <geo-location latitude="{{lat}}" longitude="{{lng}}" idle=true on-geo-response="fetchPharmacies"></geo-location>
+  <paper-toast id="geoError" text="There was an error fetching your location" vertical-align="auto"></paper-toast>
+  <geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPharmacies" on-geo-error="handleGeolocationError" timeout="30000"></geo-location>
   <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
     <template is="dom-repeat" items="[[pharmacies]]">
@@ -215,6 +218,7 @@
       attached: function() {
         console.log("search results loaded");
         let map = document.querySelector("search-results google-map");
+        let locator = document.querySelector("search-results geo-location") || null;
         let mapComponent = this;
         if (map) {
           map.addEventListener("google-map-ready", (e) => {
@@ -222,6 +226,7 @@
             // mapComponent.requestLocation();
           })
         }
+        // locator && locator.addEventListener("geo-response", this.fetchPharmacies);
       },
 
       _equal: function(value1, value2) {
@@ -230,17 +235,22 @@
 
       openDialog: function() {
         console.log("opening dialog");
-        // this.paperDialog.open();
+        this.$.searchResults.open();
         this.updateDrug();
         this.requestLocation();
+        // this.fetchPharmacies();
       },
 
       requestLocation: function() {
         let locator = document.querySelector("search-results geo-location") || null;
         if (locator) {
-          locator.idle = false;
-          locator.fetch();
+          locator.set("idle", false);
+          let p = locator.fetch();
         }
+      },
+      handleGeolocationError: function(error) {
+        console.error(error);
+        this.$.geoError.open();
       },
 
       updateDrug: function() {
@@ -292,12 +302,13 @@
           latitude,
           longitude
         } = detail;
-        fetch(`/api/v1/pharmacies?lat=${latitude}&lng=${longitude}`).then(r => r.json()).then(this.updatePharmacies.bind(this)).catch(console.error)
+        let component = this;
+        fetch(`/api/v1/pharmacies?lat=${latitude}&lng=${longitude}`).then(r => r.json()).then(res => this.updatePharmacies(res)).catch(console.error)
       },
 
       updatePharmacies: function(response) {
-        var elem = this;
-        response.forEach(r => elem.push("pharmacies", r));
+        let component = this;
+        response.forEach(r => component.push("pharmacies", r));
       }
 
     });

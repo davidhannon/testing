@@ -11,6 +11,7 @@
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
+<!--<link rel="import" href="../../bower_components/paper-styles/typography.html">-->
 
 <link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
@@ -31,6 +32,16 @@
 <dom-module id="carecard-app">
   <template>
     <style>
+      body {
+        font-family: "Montserrat";
+      }
+      :root {
+        font-family: "Montserrat";
+        --paper-font-common-base: {
+          font-family: 'Montserrat', 'Lato', sans-serif;
+          -webkit-font-smoothing: antialiased;
+        };
+      }
       :host {
         display: block;
         --app-primary-color: #ee5c56;
@@ -42,6 +53,11 @@
         background-color: var(--section-bg-grey);
         max-width: 100vw;
         overflow-x: hidden;
+        --primary-font: 'Montserrat', 'Lato', sans-serif;
+        --paper-font-common-base: {
+          font-family: var(--primary-font);
+          -webkit-font-smoothing: antialiased;
+        };
       }
 
       h1, h2, h3, h4, h5 {
@@ -51,6 +67,10 @@
 
       h2 {
         text-align: center;
+      }
+
+      iron-input, paper-input {
+        font-family: var(--primary-font);
       }
 
       app-toolbar.menu-bar {
@@ -498,11 +518,10 @@
       <carecard-signup></carecard-signup>
       <carecard-footer></carecard-footer>
       </div>
-      <search-results name="search" on-iron-select="openDialog"></search-results>
     </iron-pages>
   </app-header-layout>
   <carecard-cta-dialog></carecard-cta-dialog>
-
+  <search-results name="search"></search-results>
 
   </template>
 
