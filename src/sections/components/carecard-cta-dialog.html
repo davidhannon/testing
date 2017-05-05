@@ -11,31 +11,34 @@
 <link rel="import" href="../../../bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../../../bower_components/gold-phone-input/gold-phone-input.html">
 
 <dom-module id="carecard-cta-dialog">
-  <!--<link rel="import" type="css" href="carecard-cta-dialog.css">-->
+  <link rel="import" type="css" href="./carecard-cta-dialog.css">
   <template>
     
-    <paper-dialog>
-      <h2>carecard</h2>
+    <paper-dialog opened=true with-backdrop=true>
+      <h2>care<span class="accent">card</span></h2>
       <h3>Select how you'd like to receive your carecard.</h3>
       
       <paper-tabs selected="{{selectedTab}}">
-        <paper-tab>Print Now</paper-tab>
+        <paper-tab disabled=true>Print Now</paper-tab>
         <paper-tab>Email</paper-tab>
         <paper-tab>Text</paper-tab>
       </paper-tabs>
       <iron-pages id="tabContent" selected="{{selectedTab}}" >
         <section name="print">Printable Graphic</section>
         <section name="email">
-          <paper-input label="Full Name*" required></paper-input>
-          <gold-email-input required></gold-email-input>
+          <div>
+            <paper-input id="name-input" label="Full Name*" no-label-float=true required></paper-input>
+            <gold-email-input label="Email*" no-label-float=true required></gold-email-input>
+          </div>
           <paper-button raised>Send free card</paper-button>
         </section>
         <section name="sms">
           <form is="iron-form" id="smsForm" method="get" action="/api/v1/sms">
-            <gold-phone-input name="phone" required></gold-phone-input>
+            <gold-phone-input name="phone" no-label-float=true required></gold-phone-input>
             <paper-button raised on-click="submitForm">Send free card</paper-button>
           </form>
         </section>
@@ -52,7 +55,7 @@
       properties: {
         selectedTab: {
           type: String,
-          value: 0
+          value: 2
         }
       },
       is: 'carecard-cta-dialog',
