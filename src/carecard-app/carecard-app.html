@@ -32,9 +32,6 @@
 <dom-module id="carecard-app">
   <template>
     <style>
-      body {
-        font-family: "Montserrat";
-      }
       :root {
         font-family: "Montserrat";
         --paper-font-common-base: {
@@ -42,6 +39,7 @@
           -webkit-font-smoothing: antialiased;
         };
       }
+
       :host {
         display: block;
         --app-primary-color: #ee5c56;
@@ -58,6 +56,8 @@
           font-family: var(--primary-font);
           -webkit-font-smoothing: antialiased;
         };
+        --secondary-text-color: #848383;
+        color: var(--app-secondary-color);
       }
 
       h1, h2, h3, h4, h5 {
@@ -234,6 +234,14 @@
         font-family: "Montserrat";
       }
 
+      section#discounts h2 {
+        margin: 40px auto;
+      }
+
+      section#discounts table td {
+        color: var(--secondary-text-color);
+      }
+
       section#discounts .graphic-view img {
         display: block;
         height: auto;
@@ -271,10 +279,10 @@
         section#discounts .graphic-view img {
           display: block;
           height: 100%;
-          max-height: 100%;
+          max-height: 580px;
           width: 100%;
           position: relative;
-          object-fit: contain;
+          object-fit: cover;
         }
         
       }
