@@ -6,6 +6,7 @@ let client = new Twilio( AccountId, Token );
 
 /* API Routing */
 const { Router } = require( 'express' );
+const bodyParser = require( 'body-parser' );
 let router = new Router( );
 
 const IntroMessage = `
@@ -18,8 +19,8 @@ const IntroMessage = `
 
   Questions? 1-877-684-0032`;
 
-router.use( "/sms", ( req, res, next ) => {
-  let { phone: phoneNumber } = req.query;
+router.use( "/sms", bodyParser.json( ), ( req, res, next ) => {
+  let { phone: phoneNumber } = req.body;
 
   client.messages.create( {
     from: "+16466811609",

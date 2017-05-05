@@ -376,7 +376,7 @@
         <h2>Your source for free prescription savings</h2>
           <div class="input-container">
             <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
-          <a href="/#/search"><input class="search" type="button" value="Search" onclick="searchResults.open()" /></a>
+            <input class="search" type="button" value="Search" on-tap="openSearch" />
           </div>
       </section>
       <section id="discounts">
@@ -438,7 +438,7 @@
       <carecard-signup></carecard-signup>
       <carecard-footer></carecard-footer>
       </div>
-      <search-results name="search" on-iron-activate="openDialog" on-iron-select="openDialog"></search-results>
+      <search-results name="search" on-iron-select="openDialog"></search-results>
     </iron-pages>
   </app-header-layout>
   <carecard-cta-dialog></carecard-cta-dialog>
@@ -533,6 +533,20 @@
       persistSearch: function(id, selection) {
         // console.log(text);
         window.sessionStorage.setItem("medName", selection.text)
+      },
+      openSearch: function() {
+        let pages = document.querySelector("iron-pages");
+        pages.select("search");
+
+        let searchResults = document.querySelector("search-results").querySelector("paper-dialog");
+        searchResults.open();
+      },
+      openCTADialog: function() {
+        let pages = document.querySelector("iron-pages");
+        pages.select("search");
+
+        let searchResults = document.querySelector("search-results").querySelector("paper-dialog");
+        searchResults.open();
       }
 
     });

@@ -18,7 +18,15 @@
   <link rel="import" type="css" href="./carecard-cta-dialog.css">
   <template>
     
-    <paper-dialog opened=true with-backdrop=true>
+    <iron-ajax id="sendSMSInfo"
+       auto
+       url="/api/v1/sms"
+       handle-as="json"
+       method="post"
+       content-type="application/json"
+       on-response="handleSMSResponse"></iron-ajax>
+    
+    <paper-dialog id="ctaInput" with-backdrop=true>
       <h2>care<span class="accent">card</span></h2>
       <h3>Select how you'd like to receive your carecard.</h3>
       
@@ -37,7 +45,7 @@
           <paper-button raised>Send free card</paper-button>
         </section>
         <section name="sms">
-          <form is="iron-form" id="smsForm" method="get" action="/api/v1/sms">
+          <form is="iron-form" id="smsForm" method="post" action="/api/v1/sms">
             <gold-phone-input name="phone" no-label-float=true required></gold-phone-input>
             <paper-button raised on-click="submitForm">Send free card</paper-button>
           </form>
@@ -68,7 +76,14 @@
             parentElement: form
           }
         } = ev;
-        form.submit();
+        // form.submit();
+        let formData = (new FormData(form));
+        this.$.sendSMSInfo.body = {
+          "phone": `${formData.get('phone')}`
+        };
+      },
+      handleSMSResponse: function() {
+        this.$.ctaInput.close();
       }
     });
   </script>
