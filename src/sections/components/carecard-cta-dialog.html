@@ -20,7 +20,6 @@
   <template>
     
     <iron-ajax id="sendSMSInfo"
-       auto
        url="/api/v1/sms"
        handle-as="json"
        method="post"
@@ -82,6 +81,7 @@
         this.$.sendSMSInfo.body = {
           "phone": `${formData.get('phone')}`
         };
+        this.$.sendSMSInfo.generateRequest();
       },
       handleSMSResponse: function() {
         this.$.ctaInput.close();

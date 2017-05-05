@@ -332,6 +332,7 @@
         display: inline-block;
         line-height: normal;
         vertical-align: top;
+        cursor: pointer;
       }
 
       section#splash label {
@@ -451,11 +452,11 @@
             </div>
             <ul class="top-discounts">
               <label>Top Discounts:</label>
-              <li>Adderall</li>
-              <li>Cialis</li>
-              <li>Suboxone</li>
-              <li>Viagra</li>
-              <li>Vyanase</li>
+              <li med>Adderall</li>
+              <li med>Cialis</li>
+              <li med>Suboxone</li>
+              <li med>Viagra</li>
+              <li med>Vyanase</li>
             </ul>
           </div>
       </section>
@@ -561,10 +562,11 @@
         });
       },
       ready: function() {
-        // document.querySelector('#med-search').addEventListener('autocomplete-change', this.suggestMeds);
         let elem = document.querySelector("carecard-app");
         document.querySelector('paper-autocomplete').queryFn = e => elem.medSuggestions;
-
+        elem.async(function() {
+          document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
+        });
       },
 
       _equal: function(value1, value2) {
@@ -599,10 +601,7 @@
         if (Array.isArray(response) && response.length > 0) {
           let input = document.querySelector("#med-search");
           let elem = document.querySelector("carecard-app");
-          // input.clear();
           input.suggestions(response);
-          // elem.splice("medSuggestions", 0, elem.medSuggestions.length);
-          // response.forEach(d => elem.push("medSuggestions", d));
         }
       },
 
@@ -610,7 +609,6 @@
         if (!this.$.drawer.persistent) this.$.drawer.close();
       },
       persistSearch: function(id, selection) {
-        // console.log(text);
         window.sessionStorage.setItem("medName", selection.text)
       },
       openSearch: function() {
@@ -620,7 +618,13 @@
         let searchResults = document.querySelector("search-results").querySelector("paper-dialog");
         searchResults.open();
       },
-      openCTADialog: function() {
+      openCTADialog: function(ev) {
+        let target = ev.target;
+        if (target.hasAttribute("med")) {
+          this.persistSearch(0, {
+            text: target.innerText
+          });
+        }
         let pages = document.querySelector("iron-pages");
         pages.select("search");
 

@@ -223,10 +223,8 @@
         if (map) {
           map.addEventListener("google-map-ready", (e) => {
             console.log("google map is ready.");
-            // mapComponent.requestLocation();
           })
         }
-        // locator && locator.addEventListener("geo-response", this.fetchPharmacies);
       },
 
       _equal: function(value1, value2) {
@@ -234,11 +232,9 @@
       },
 
       openDialog: function() {
-        console.log("opening dialog");
         this.$.searchResults.open();
         this.updateDrug();
         this.requestLocation();
-        // this.fetchPharmacies();
       },
 
       requestLocation: function() {
