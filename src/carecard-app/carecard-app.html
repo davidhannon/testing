@@ -474,31 +474,43 @@
               <td>Lipitor</td>
               <td>High Cholestorol</td>
               <td>up to 76%</td>
-              <td><a>Claim</a></td>
+              <td><a>Claim Now</a></td>
             </tr>
             <tr>
               <td>Cialis</td>
               <td>Erectile Dysfunction</td>
               <td>up to 75%</td>
-              <td><a>Claim</a></td>
+              <td><a>Claim Now</a></td>
             </tr>
             <tr>
               <td>Plan B</td>
               <td>Birth Control</td>
               <td>up to 73%</td>
-              <td><a>Claim</a></td>
+              <td><a>Claim Now</a></td>
             </tr>
             <tr>
               <td>Viagra</td>
               <td>Erectile Dysfunction</td>
               <td>up to 73%</td>
-              <td><a>Claim</a></td>
+              <td><a>Claim Now</a></td>
             </tr>
             <tr>
               <td>Tamiflu</td>
               <td>Flu</td>
               <td>up to 75%</td>
-              <td><a>Claim</a></td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Nexium</td>
+              <td>Heartburn</td>
+              <td>up to 73%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Yaz</td>
+              <td>Birth Control</td>
+              <td>up to 73%</td>
+              <td><a>Claim Now</a></td>
             </tr>
           </table>
         </div>
@@ -513,7 +525,7 @@
       <section id="about">
         <h2>Your card is accepted at all major chains as well as most independent pharmacies.</h2>
         <span>Your card is pre-activated with our savings when you receive it.</span>
-        <span>No Fees. No registration. No claim forms.</span>
+        <span>No Fees. No registration. No Claim Now forms.</span>
       </section>
       <partners-section></partners-section>
       <carecard-signup></carecard-signup>
@@ -566,6 +578,7 @@
         document.querySelector('paper-autocomplete').queryFn = e => elem.medSuggestions;
         elem.async(function() {
           document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
+          document.querySelectorAll("section#discounts table td a").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
         });
       },
 
