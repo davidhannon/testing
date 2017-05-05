@@ -1,9 +1,13 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+
 <link rel="import" href="../../../bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
@@ -13,7 +17,7 @@
   <!--<link rel="import" type="css" href="carecard-cta-dialog.css">-->
   <template>
     
-    <paper-dialog opened=true>
+    <paper-dialog>
       <h2>carecard</h2>
       <h3>Select how you'd like to receive your carecard.</h3>
       
@@ -32,7 +36,7 @@
         <section name="sms">
           <form is="iron-form" id="smsForm" method="get" action="/api/v1/sms">
             <gold-phone-input name="phone" required></gold-phone-input>
-            <paper-input type="submit" value="Send free card"></paper-input>
+            <paper-button raised on-click="submitForm">Send free card</paper-button>
           </form>
         </section>
       </iron-pages>
@@ -55,15 +59,13 @@
       attached: function() {
         console.log("Dialog ready");
       },
-      selectContent: function(a, b) {
-        console.log(a, b);
+      submitForm: function(ev) {
         let {
-          hash
-        } = this.$.selector;
-
-        let pages = this.$.tabContent;
-        console.log(hash);
-        pages.select(hash);
+          target: {
+            parentElement: form
+          }
+        } = ev;
+        form.submit();
       }
     });
   </script>
