@@ -25,6 +25,8 @@
 <link rel="import" href="../sections/features.html">
 <link rel="import" href="../sections/partners.html">
 <link rel="import" href="../sections/signup.html">
+<link rel="import" href="../sections/components/carecard-cta-dialog.html">
+
 
 <dom-module id="carecard-app">
   <template>
@@ -341,7 +343,7 @@
         }
       }
     </style>
-    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-location id="appLocation" route="{{route}}" use-hash-as-path></app-location>
     <app-route
         route="{{route}}"
         pattern="/:category"
@@ -438,6 +440,7 @@
       </div>
       <search-results name="search" on-iron-activate="openDialog" on-iron-select="openDialog"></search-results>
     </iron-pages>
+    <carecard-cta-dialog></carecard-cta-dialog>
   </app-header-layout>
 
 

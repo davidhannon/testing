@@ -1,0 +1,70 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../../bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/gold-phone-input/gold-phone-input.html">
+
+<dom-module id="carecard-cta-dialog">
+  <!--<link rel="import" type="css" href="carecard-cta-dialog.css">-->
+  <template>
+    
+    <paper-dialog opened=true>
+      <h2>carecard</h2>
+      <h3>Select how you'd like to receive your carecard.</h3>
+      
+      <paper-tabs selected="{{selectedTab}}">
+        <paper-tab>Print Now</paper-tab>
+        <paper-tab>Email</paper-tab>
+        <paper-tab>Text</paper-tab>
+      </paper-tabs>
+      <iron-pages id="tabContent" selected="{{selectedTab}}" >
+        <section name="print">Printable Graphic</section>
+        <section name="email">
+          <paper-input label="Full Name*" required></paper-input>
+          <gold-email-input required></gold-email-input>
+          <paper-button raised>Send free card</paper-button>
+        </section>
+        <section name="sms">
+          <form is="iron-form" id="smsForm" method="get" action="/api/v1/sms">
+            <gold-phone-input name="phone" required></gold-phone-input>
+            <paper-input type="submit" value="Send free card"></paper-input>
+          </form>
+        </section>
+      </iron-pages>
+
+      <paper-dialog-scrollable>
+        
+      </paper-dialog-scrollable>
+    </paper-dialog>
+    
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 0
+        }
+      },
+      is: 'carecard-cta-dialog',
+      attached: function() {
+        console.log("Dialog ready");
+      },
+      selectContent: function(a, b) {
+        console.log(a, b);
+        let {
+          hash
+        } = this.$.selector;
+
+        let pages = this.$.tabContent;
+        console.log(hash);
+        pages.select(hash);
+      }
+    });
+  </script>
+</dom-module>
