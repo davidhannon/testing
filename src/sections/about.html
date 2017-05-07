@@ -4,6 +4,7 @@
       :host {
         display: block;
         /*font-family: "Montserrat";*/
+        --primary-color: #ee5c56;
       }
       
       section#about {
@@ -33,6 +34,24 @@
       section#about li {
         text-align: left;
       }
+
+      paper-tabs {
+        border-bottom: 1px solid #EFEFEF;
+        --paper-tabs-selection-bar-color: var(--primary-color);
+        --paper-tabs-content: {
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      paper-tab {
+        flex: 0 1 auto;
+        --paper-tab-content: {
+          /*display: inline-block;*/
+          flex: 0 1 auto;
+        }
+      }
+
     </style>
     <section id="about">
       <paper-tabs selected="{{selectedTab}}">
