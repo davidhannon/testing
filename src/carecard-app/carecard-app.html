@@ -1,5 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
@@ -24,9 +23,11 @@
 <link rel="import" href="./footer.html">
 <link rel="import" href="../search/results.html">
 <link rel="import" href="../sections/features.html">
+<link rel="import" href="../sections/about.html">
 <link rel="import" href="../sections/partners.html">
 <link rel="import" href="../sections/signup.html">
 <link rel="import" href="../sections/components/carecard-cta-dialog.html">
+<link rel="import" href="../sections/components/carecard-cta-button.html">
 
 
 <dom-module id="carecard-app">
@@ -83,6 +84,11 @@
           background-color: var(--app-primary-color);
           overflow-x: hidden;
         };
+      }
+
+      carecard-cta-button {
+        position: absolute;
+        left: 30px;
       }
 
       app-header {
@@ -271,6 +277,7 @@
           width: 100%;
           height: auto;
           max-height: 100%;
+          @apply(--shadow-elevation-3dp);
         }
 
         section#discounts .table-view {
@@ -314,6 +321,10 @@
       section#discounts table td a {
         color: var(--app-primary-color);
         font-weight: 600;
+      }
+
+      section#discounts table td a:hover {
+        cursor: pointer;
       }
 
       section#splash ul {
@@ -364,23 +375,6 @@
         text-align: center;
         font-family: "Montserrat";
         font-weight: 600;
-      }
-
-      /* ----- « About » ----- */
-      section#about {
-        padding: 100px 20px;
-        text-align: center;
-      }
-
-      section#about h2 {
-        margin: 0 auto 20px auto;
-        max-width: 650px;
-      }
-
-      section#about span {
-        display: block;
-        margin: 0 auto;
-        max-width: 650px;
       }
 
       @media (max-width: 580px) {
@@ -441,6 +435,7 @@
     <app-header id="appHeader" fixed effects="fade-background" class="main-header">
 
       <app-toolbar class="title-toolbar main-title-toolbar">
+        <carecard-cta-button></carecard-cta-button>
         <div class="title">
           <h2><span class='accent'>care</span>card</h2>
         </div>
@@ -531,11 +526,7 @@
       <section id="cta-banner">
         <h1>Start Saving now for free -- no sign up or credit card required</h1>
       </section>
-      <section id="about">
-        <h2>Your card is accepted at all major chains as well as most independent pharmacies.</h2>
-        <span>Your card is pre-activated with our savings when you receive it.</span>
-        <span>No Fees. No registration. No Claim Now forms.</span>
-      </section>
+      <carecard-about></carecard-about>
       <partners-section></partners-section>
       <carecard-signup></carecard-signup>
       <carecard-footer></carecard-footer>

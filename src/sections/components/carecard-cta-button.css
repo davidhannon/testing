@@ -1,0 +1,17 @@
+paper-button {
+  background-color: #f05955;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  text-transform: lowercase;
+  color: #FFF;
+  padding: 10px 15px;
+  margin: 20px 0;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+paper-button:hover {
+  background-color: transparent;
+  border-color: #f05955;
+}

@@ -1,0 +1,73 @@
+<dom-module id="carecard-about">
+  <template>
+    <style>
+      :host {
+        display: block;
+        /*font-family: "Montserrat";*/
+      }
+      
+      section#about {
+        padding: 20px 20px 100px 20px;
+        text-align: center;
+      }
+
+      section#about h2 {
+        margin: 70px auto 20px auto;
+        max-width: 650px;
+      }
+
+      section#about h2:nth-of-type(2) {
+        margin-top: 40px auto 20px auto;
+      }
+
+      section#about span {
+        display: block;
+        margin: 0 auto;
+        max-width: 650px;
+      }
+
+      section#about ul {
+        display: inline-block;
+      }
+
+      section#about li {
+        text-align: left;
+      }
+    </style>
+    <section id="about">
+      <paper-tabs selected="{{selectedTab}}">
+        <paper-tab>Where CareCard</paper-tab>
+        <paper-tab>About CareCard</paper-tab>
+      </paper-tabs>
+      <iron-pages selected="{{selectedTab}}">
+        <section>
+          <h2>Your card is accepted at all major chains as well as most independent pharmacies.</h2>
+          <span>Your card is pre-activated with our savings when you receive it.</span>
+          <span>No Fees. No registration. No Claim Now forms.</span>
+        </section>
+        <section>
+          <h2>Built with Commitment</h2>
+          <span>We created Carecard to for Americans to save on their prescriptions. Prescription medications, like most products, are cheaper when purchased in bulk. By partnering with pharmacy suppliers, we're able to provide you savings on your prescriptions with our Carecard. By negotiating with pharmacies to provide low-cost medications, we bring discounted prices to consumers. You don’t have to sign up for anything, and there is no cost associated with using our cards or coupons.</span><br />
+          <span>No matter if you are insured, uninsured or have a high deductible, we offer the lowest prescription prices on thousands of medications.</span>
+          <h2>When to use Carecard:</h2>
+          <ul>
+            <li>When you have no insurance</li>
+            <li>When you are underinsured</li>
+            <li>When your deductible is too high</li>
+          </ul>
+        </section>
+      </iron-pages>
+    </section>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 0
+        }
+      },
+      is: 'carecard-about'
+    });
+  </script>
+</dom-module>
