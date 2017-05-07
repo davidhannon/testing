@@ -581,7 +581,7 @@
         let elem = document.querySelector("carecard-app");
         document.querySelector('paper-autocomplete').queryFn = e => elem.medSuggestions;
         elem.async(function() {
-          document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
+          document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
           document.querySelectorAll("section#discounts table td a").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
         });
       },
@@ -628,7 +628,13 @@
       persistSearch: function(id, selection) {
         window.sessionStorage.setItem("medName", selection.text)
       },
-      openSearch: function() {
+      openSearch: function(ev) {
+        let target = ev.target;
+        if (target.hasAttribute("med")) {
+          this.persistSearch(0, {
+            text: target.innerText
+          });
+        }
         let pages = document.querySelector("iron-pages");
         pages.select("search");
 
@@ -645,8 +651,8 @@
         let pages = document.querySelector("iron-pages");
         pages.select("search");
 
-        let searchResults = document.querySelector("search-results").querySelector("paper-dialog");
-        searchResults.open();
+        let cta = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
+        cta.open();
       }
 
     });
