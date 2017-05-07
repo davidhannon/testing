@@ -28,6 +28,7 @@
 <link rel="import" href="../sections/signup.html">
 <link rel="import" href="../sections/components/carecard-cta-dialog.html">
 <link rel="import" href="../sections/components/carecard-cta-button.html">
+<link rel="import" href="../sections/components/carecard-rx-search-input.html">
 
 
 <dom-module id="carecard-app">
@@ -455,7 +456,8 @@
         <h2>Save up to 80% on prescriptions</h2>
           <div class="input-container">
             <div class="search-bar">
-              <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float=true source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>
+              <carecard-rx-search-input></carecard-rx-search-input>
+              <!--<paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float=true source="[[medSuggestions]]" on-autocomplete-selected="persistSearch"></paper-autocomplete>-->
               <input class="search" type="button" value="Search" on-tap="openSearch" />
             </div>
             <ul class="top-discounts">
@@ -579,7 +581,7 @@
       },
       ready: function() {
         let elem = document.querySelector("carecard-app");
-        document.querySelector('paper-autocomplete').queryFn = e => elem.medSuggestions;
+        // document.querySelector('paper-autocomplete').queryFn = e => elem.medSuggestions;
         elem.async(function() {
           document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
           document.querySelectorAll("section#discounts table td a").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
