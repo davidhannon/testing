@@ -5,19 +5,21 @@
         display: block;
         /*font-family: "Montserrat";*/
         --primary-color: #ee5c56;
+        --secondary-color: #525263;
       }
       
       section#about {
-        padding: 20px 20px 100px 20px;
+        padding: 20px 20px 70px 20px;
         text-align: center;
       }
 
-      section#about h2 {
+      section#about h3 {
+        font-weight: 600;
         margin: 70px auto 20px auto;
         max-width: 650px;
       }
 
-      section#about h2:nth-of-type(2) {
+      section#about h3:nth-of-type(2) {
         margin-top: 40px auto 20px auto;
       }
 
@@ -46,10 +48,16 @@
 
       paper-tab {
         flex: 0 1 auto;
+        font-weight: 600;
+        --paper-tab-ink: var(--primary-color);
         --paper-tab-content: {
-          /*display: inline-block;*/
           flex: 0 1 auto;
+          font-size: 18px;
         }
+      }
+
+      paper-tab.iron-selected {
+        color: var(--primary-color);
       }
 
     </style>
@@ -60,15 +68,15 @@
       </paper-tabs>
       <iron-pages selected="{{selectedTab}}">
         <section>
-          <h2>Your card is accepted at all major chains as well as most independent pharmacies.</h2>
+          <h3>Your card is accepted at all major chains as well as most independent pharmacies.</h3>
           <span>Your card is pre-activated with our savings when you receive it.</span>
           <span>No Fees. No registration. No Claim Now forms.</span>
         </section>
         <section>
-          <h2>Built with Commitment</h2>
+          <h3>Built with Commitment</h3>
           <span>We created Carecard to for Americans to save on their prescriptions. Prescription medications, like most products, are cheaper when purchased in bulk. By partnering with pharmacy suppliers, we're able to provide you savings on your prescriptions with our Carecard. By negotiating with pharmacies to provide low-cost medications, we bring discounted prices to consumers. You don’t have to sign up for anything, and there is no cost associated with using our cards or coupons.</span><br />
           <span>No matter if you are insured, uninsured or have a high deductible, we offer the lowest prescription prices on thousands of medications.</span>
-          <h2>When to use Carecard:</h2>
+          <h3>When to use Carecard:</h3>
           <ul>
             <li>When you have no insurance</li>
             <li>When you are underinsured</li>
