@@ -38,7 +38,7 @@
         <section name="print">
           <img src="../graphics/carecard_email_sms.png"></img>
           <div>
-            <paper-button raised><a href="/src/sections/graphics/carecard_print.pdf" download="CareCard.pdf" target="_blank">Print Now</a></paper-button>
+            <paper-button raised><a href="/src/sections/graphics/carecard_print.pdf" target="_blank">Print Now</a></paper-button>
           </div>
         </section>
         <section name="email">
@@ -59,6 +59,9 @@
       <paper-dialog-scrollable>
         
       </paper-dialog-scrollable>
+            <div id="close-dialog" onclick="ctaInput.close()">
+        <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
+      </div>
     </paper-dialog>
     
   </template>
