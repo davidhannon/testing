@@ -22,7 +22,7 @@ function endpoint( template ) {
 /* API Routing */
 
 router.use( "/email", bodyParser.json( ), ( req, res, next ) => {
-  let { email: emailAddress } = req.body;
+  let { email: emailAddress } = req.query;
 
   agent.post( endpoint( Template ) ).type( 'form' ).send( {
     api_key: ApiKey,

@@ -20,7 +20,7 @@
         if (name.length < 3) {
           return false;
         }
-        fetch(`https://carecard-beta.ethershaft.engineering/api/v1/drugs?name=${name}`).then(r => r.json()).then(results => this.updateSource(results)).catch(console.error);
+        fetch(`/api/v1/drugs?name=${name}`).then(r => r.json()).then(results => this.updateSource(results)).catch(console.error);
       },
 
       updateSource: function(response) {
@@ -31,7 +31,9 @@
         }
       },
       persistSearch: function(id, selection) {
-        window.sessionStorage.setItem("medName", selection.text)
+        window.sessionStorage.setItem("medName", selection.text);
+        window.sessionStorage.setItem("med", JSON.stringify(selection.option));
+
       },
     });
   </script>

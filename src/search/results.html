@@ -205,7 +205,7 @@
                     <span>([[item.Distance]] Miles Away)</span>
                   </li>
                   <li class="accent">
-                    <h3>$14.04</h3>
+                    <h3>$[[item.Cost]]</h3>
                     <span>With CareCard</span>
                   </li>
                 </ul>
@@ -214,7 +214,7 @@
   </iron-list>
   </div>
   <paper-toast id="geoError" text="There was an error fetching your location" vertical-align="auto"></paper-toast>
-  <geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPharmacies" on-geo-error="handleGeolocationError" timeout="30000"></geo-location>
+  <geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" timeout="30000"></geo-location>
   <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
     <template is="dom-repeat" items="[[pharmacies]]">
@@ -370,10 +370,54 @@
         let component = this;
         fetch(`/api/v1/pharmacies?lat=${latitude}&lng=${longitude}`).then(r => r.json()).then(res => this.updatePharmacies(res)).catch(console.error)
       },
+      fetchPricing: function({
+        detail
+      }) {
+        let {
+          latitude,
+          longitude
+        } = detail;
+        let component = this;
+        let drug = JSON.parse(window.sessionStorage.getItem("med") || {});
+        if (drug) {
+          let {
+            PackageSize: qty,
+            NDC,
+            Days: days
+          } = drug;
+          let params = new URLSearchParams();
+          params.append("qty", qty)
+          params.append("NDC", NDC)
+          params.append("days", "30");
+          params.append("lng", longitude)
+          params.append("lat", latitude);
+          let query = params.toString();
+          fetch(`/api/v1/pricing?${query}`).then(r => r.json()).then(res => this.updatePharmacies(res)).catch(console.error)
+        }
+      },
 
       updatePharmacies: function(response) {
         let component = this;
-        response.forEach(r => component.push("pharmacies", r));
+        response.forEach(r => {
+          let {
+            DrugCost: {
+              DrugCost: [{
+                Copay: Brand
+              }, {
+                Copay: Generic
+              }]
+            }
+          } = r;
+          let Cost = Generic || Brand || false;
+          let Distance = Number(r.Pharmacy.Distance).toFixed(2);
+          if (!Cost) {
+            return;
+          }
+          component.push("pharmacies", Object.assign(r.Pharmacy, {
+            Cost,
+            Distance
+          }));
+        });
       },
       _computedClass: function(isSelected) {
         var classes = 'search-result-list-item';
