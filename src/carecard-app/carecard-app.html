@@ -20,6 +20,9 @@
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
 <link rel="import" href="../../bower_components/paper-autocomplete/paper-autocomplete.html">
+
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+
 <link rel="import" href="./footer.html">
 <link rel="import" href="../search/results.html">
 <link rel="import" href="../sections/features.html">
@@ -87,10 +90,10 @@
         };
       }
 
-      carecard-cta-button {
+      /*carecard-cta-button {
         position: absolute;
         left: 30px;
-      }
+      }*/
 
       app-header {
         background-color: var(--section-bg-teal);
@@ -145,6 +148,10 @@
         /*padding-bottom: 40px;*/
         font-size: 30px;
         font-weight: 800;
+      }
+
+      .title h2 {
+        margin: 0 auto;
       }
 
       span.accent {
@@ -387,12 +394,28 @@
         margin: 20px auto;
       }
 
+      .spacer {
+        @apply(--layout);
+        @apply(--layout-flex-auto);
+        @apply(--layout-center-center);
+      }
+      .navItem:not(hidden) {
+        @apply(--layout-self-start);
+        margin: auto;
+        width: 88px;
+      }
+      @media(min-width: 600px){
+        .navItem:not(hidden) {
+          width: 350px;
+          text-align: center;
+        }
+      }
+
       @media (max-width: 580px) {
 
         /* make title smaller to fit on screen */
         .title {
           font-size: 40px;
-          padding-bottom: 16px;
         }
 
       }
@@ -427,6 +450,7 @@
         #fruit {
           display: none;
         }
+
       }
     </style>
     <app-location id="appLocation" route="{{route}}" use-hash-as-path></app-location>
@@ -441,18 +465,24 @@
 
     <!--<app-drawer-layout drawer-width="288px" responsive-width="1280px">-->
   <!-- main panel -->
-  <app-header-layout fullbleed>
-    <app-header id="appHeader" fixed effects="fade-background" class="main-header">
-
-      <app-toolbar class="title-toolbar main-title-toolbar">
+  <app-drawer-layout fullbleed>
+    <app-drawer id="drawer" force-narrow hidden$="{{wideLayout}}">
+      <paper-menu>
         <carecard-cta-button></carecard-cta-button>
-        <div class="title">
+      </paper-menu>
+    </app-drawer>
+    <app-header-layout>
+    <app-header id="appHeader" fixed effects="fade-background" class="main-header">
+      <app-toolbar class="title-toolbar main-title-toolbar">
+        <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
+        <!--<paper-button class="navItem" hidden$="{{!wideLayout}}">get free savings card</paper-button>-->
+        <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
+        <div main-title class="title spacer">
           <h2><span class='accent'>care</span>card</h2>
         </div>
+        <div class="navItem"></div>
       </app-toolbar>
-
     </app-header>
-
     <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="isActivated" >
       <div name="home">
       <section id="splash">
@@ -544,9 +574,10 @@
       </div>
     </iron-pages>
   </app-header-layout>
+  </app-drawer-layout>
   <carecard-cta-dialog></carecard-cta-dialog>
   <search-results name="search"></search-results>
-
+  <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
   </template>
 
   <script>
@@ -574,6 +605,11 @@
         medSuggestions: {
           type: Object,
           value: []
+        },
+        wideLayout: {
+          type: Boolean,
+          value: false,
+          observer: 'onLayoutChange',
         }
       },
 
@@ -660,6 +696,12 @@
 
         let cta = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
         cta.open();
+      },
+      onLayoutChange: function(wide) {
+        var drawer = this.$.drawer;
+        if (wide && drawer.opened) {
+          drawer.opened = false;
+        }
       }
 
     });

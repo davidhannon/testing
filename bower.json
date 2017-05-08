@@ -24,7 +24,8 @@
     "paper-elements": "^1.0.7",
     "paper-ui-elements": "PolymerElements/paper-ui-elements",
     "iron-form": "^1.1.4",
-    "iron-form-element-behavior": "^1.0.7"
+    "iron-form-element-behavior": "^1.0.7",
+    "iron-media-query": "^1.0.8"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
