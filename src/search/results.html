@@ -95,10 +95,16 @@
         max-height: 600px;
       }
 
+      iron-list {
+        max-height: calc(70px * 5);
+      }
+
       .search-result-list label {
         color: #a8a8b0;
       }
-
+      .search-result-list-item.selected {
+        background-color: #ededed;
+      }
       .search-result-list-item ul {
         align-items: center;
         border-top: 1px solid var(--section-bg-grey);
@@ -188,13 +194,13 @@
             <li>Pharmacy</li>
             <li class="savings">Savings</li>
           </ul>
-          <iron-list items="[[pharmacies]]" max-physical-count=5>
+          <iron-list id="itemsList" items="[[pharmacies]]" selection-enabled=true on-selected-item-changed="centerMarker">
             <template>
-              <div class="search-result-list-item" style="height: 70px;">
+              <div style="height: 70px;" id="[[item.NABP]]" class$="[[_computedClass(selected)]]">
                 <ul>
                   <li>
-                    <h3>{{item.PharmacyName}}</h3>
-                    <span>({{item.Distance}} Miles Away)</span>
+                    <h3>[[item.PharmacyName]]</h3>
+                    <span>([[item.Distance]] Miles Away)</span>
                   </li>
                   <li class="accent">
                     <h3>$14.04</h3>
@@ -210,8 +216,8 @@
   <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
     <template is="dom-repeat" items="[[pharmacies]]">
-      <google-map-marker latitude="{{item.Latitude}}" longitude="{{item.Longitude}}" title="{{item.PharmacyName}}">
-        <h3>{{item.PharmacyName}}</h3>
+      <google-map-marker id="[[item.NABP]]Marker" latitude="[[item.Latitude]]" longitude="[[item.Longitude]]" title="[[item.PharmacyName]]">
+        <h3>[[item.PharmacyName]]</h3>
       </google-map-marker>
     </template>
   </google-map>
@@ -288,6 +294,17 @@
         this.set("medName", window.sessionStorage.getItem("medName"));
       },
 
+      centerMarker: function(ev) {
+        let list = ev.target;
+        var selectedItem;
+        if (!list.selectedItem) {
+          return;
+        }
+        let resultsDialog = document.querySelector("search-results");
+        let selected = resultsDialog.pharmacies.filter(p => p.selected);
+        console.log(selected, list.selectedItem);
+      },
+
       geocodeZip: function() {
         var geocoder = new google.maps.Geocoder();
         let zipInput = document.querySelector("#splash input.zipcode") || null;
@@ -340,6 +357,16 @@
       updatePharmacies: function(response) {
         let component = this;
         response.forEach(r => component.push("pharmacies", r));
+      },
+      _computedClass: function(isSelected) {
+        var classes = 'search-result-list-item';
+        if (isSelected) {
+          classes += ' selected';
+        }
+        return classes;
+      },
+      _unselect: function(e) {
+        this.$.itemsList.deselectItem(e.model.item);
       }
 
     });
