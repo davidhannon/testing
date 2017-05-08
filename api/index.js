@@ -1,5 +1,6 @@
 // import twilio/SMS functions
 const TwilioFns = require( "./twilio" );
+const EmailFns = require( "./email" );
 // import envision functions
 const Envision = require( "./envision" );
 
@@ -11,6 +12,7 @@ router.use( ( req, res, next ) => {
   next( );
 } )
 router.use( TwilioFns );
+router.use( EmailFns );
 router.use( Envision );
 
 module.exports = router;

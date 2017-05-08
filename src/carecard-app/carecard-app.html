@@ -364,6 +364,11 @@
         color: var(--app-primary-color);
       }
 
+      section#splash li:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
       features-section, partners-section, carecard-signup, carecard-footer {
         display: block;
       }
@@ -462,10 +467,10 @@
             </div>
             <ul class="top-discounts">
               <label>Top Discounts:</label>
-              <li med>Adderall</li>
-              <li med>Cialis</li>
-              <li med>Suboxone</li>
-              <li med>Viagra</li>
+              <li med>Adderall,</li>
+              <li med>Cialis,</li>
+              <li med>Suboxone,</li>
+              <li med>Viagra,</li>
               <li med>Vyanase</li>
             </ul>
           </div>
@@ -628,7 +633,7 @@
         if (!this.$.drawer.persistent) this.$.drawer.close();
       },
       persistSearch: function(id, selection) {
-        window.sessionStorage.setItem("medName", selection.text)
+        window.sessionStorage.setItem("medName", selection.text.replace(",", ""))
       },
       openSearch: function(ev) {
         let target = ev.target;
