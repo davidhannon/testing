@@ -51,10 +51,10 @@
         --app-primary-color: #ee5c56;
         --app-secondary-color: #525262;
         --section-bg-grey: #f1f1f1;
-        --section-bg-teal: rgba(132,207,244,0.2);
+        --section-bg-teal: #e1f3fc;
         --paper-icon-button-ink-color:var(--app-secondary-color);
         font-family: "Montserrat";
-        background-color: var(--section-bg-grey);
+        background-color: transparent;
         max-width: 100vw;
         overflow-x: hidden;
         --primary-font: 'Montserrat', 'Lato', sans-serif;
@@ -64,6 +64,10 @@
         };
         --secondary-text-color: #848383;
         color: var(--app-secondary-color);
+              background-image: url(../sections/graphics/leaves.png);
+      background-repeat: no-repeat;
+      background-position: calc(85vmax) -100px;
+      background-size: 400px auto;
       }
 
       h1, h2, h3, h4, h5 {
@@ -96,9 +100,9 @@
       }*/
 
       app-header {
-        background-color: var(--section-bg-teal);
+        background-color: transparent;
         --app-header-background-rear-layer: {
-          background-color: #FFF;
+          background-color: rgba(255,255,255,0.7);
         }
       }
 
@@ -123,12 +127,6 @@
       .nav-menu > a.iron-selected {
         background-color: #888;
       }
-
-      /*.main-header {
-        border-bottom: 1px solid #ddd;
-        background-color: #FFF;
-        color: #444;
-      }*/
 
       .title-toolbar {
         @apply(--layout-center-center);
@@ -217,6 +215,10 @@
 
       section#splash {
           background-color: var(--section-bg-teal);
+          background-image: url(../sections/graphics/leaves.png), url(../sections/graphics/fruit.png);
+          background-repeat: no-repeat, no-repeat;
+          background-position: 85vmax calc(-100px - 64px), -80px 100%;
+          background-size: 400px auto, 120px auto;
           padding: 70px 20px;
       }
 
@@ -486,8 +488,8 @@
     <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="isActivated" >
       <div name="home">
       <section id="splash">
-        <img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">
-        <img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">
+        <!--<img id="leaves" src="../sections/graphics/leaves.png" alt="Leaves" width="300px">-->
+        <!--<img id="fruit" src="../sections/graphics/fruit.png" alt="Fruit" width="250px">-->
         <h2>Save up to 80% on prescriptions</h2>
           <div class="input-container">
             <div class="search-bar">
