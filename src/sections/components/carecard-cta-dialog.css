@@ -30,6 +30,24 @@ paper-tab {
   }
 }
 
+paper-tab[link] a {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-center);
+  color: var(--app-primary-color);
+  text-decoration: none;
+}
+
+section[name="print"] img {
+  max-height: 180px;
+}
+
+paper-button a {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-center);
+  color: #FFF;
+  text-decoration: none;
+}
+
 paper-tab.iron-selected {
   background-color: var(--app-primary-color);
   color: #FFF;

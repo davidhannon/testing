@@ -2,6 +2,7 @@
   --primary-color: #ee5c56;
   --secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
+  --input-background-color: #FFF;
   margin: 0 10px;
   max-width: 500px;
   width: 80%;
@@ -11,7 +12,7 @@
 
 paper-autocomplete {
   --paper-input-container-input: {
-    background-color: #FFF;
+    background-color: var(--input-background-color);
     padding: 10px 20px;
     --secondary-text-color: var(--secondary-color);
   }

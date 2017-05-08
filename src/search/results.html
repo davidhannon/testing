@@ -10,6 +10,7 @@
   <link rel="import" href="../../bower_components/google-map/google-map-search.html">
   <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 
+  <link rel="import" href="../sections/components/carecard-rx-search-input.html">
 
   <template>
     <style>
@@ -40,7 +41,11 @@
         color: var(--app-primary-color);
       }
 
-      paper-input.med-search-input {
+      carecard-rx-search-input {
+        --input-background-color: var(--section-bg-grey);
+      }
+
+      carecard-rx-search-input paper-autocomplete {
         --paper-input-container-input: {
           background-color: var(--section-bg-grey);
           padding: 10px 20px;
@@ -141,14 +146,13 @@
         }
       }
     </style>
-    <!--<paper-dialog id="searchResults" with-backdrop=true>-->
     <paper-dialog id="searchResults" on-iron-overlay-opened="openDialog" with-backdrop=true>
       <div class="title">
         <h2><span class='accent'>care</span>card</h2>
       </div>
       <div class="contents">
         <div class="search-result-list">
-          <paper-input class="med-search-input" placeholder="Type prescription name"></paper-input>
+          <carecard-rx-search-input></carecard-rx-search-input>
           <div class="status-bar">
             <label>Showing results for:</label>
             <div id="medicationName">{{medName}}</div>
@@ -183,6 +187,9 @@
     </template>
   </google-map>
   </div>
+  <paper-dialog-scrollable>
+
+  </paper-dialog-scrollable>
   </paper-dialog>
   </template>
 

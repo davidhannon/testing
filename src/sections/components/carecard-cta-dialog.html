@@ -30,12 +30,17 @@
       <h3>Select how you'd like to receive your carecard.</h3>
       
       <paper-tabs selected="{{selectedTab}}">
-        <paper-tab disabled=true>Print Now</paper-tab>
+        <paper-tab>Print</paper-tab>
         <paper-tab>Email</paper-tab>
         <paper-tab>Text</paper-tab>
       </paper-tabs>
       <iron-pages id="tabContent" selected="{{selectedTab}}" >
-        <section name="print">Printable Graphic</section>
+        <section name="print">
+          <img src="../graphics/carecard_email_sms.png"></img>
+          <div>
+            <paper-button raised><a href="/src/sections/graphics/carecard_print.pdf" download="CareCard.pdf" target="_blank">Print Now</a></paper-button>
+          </div>
+        </section>
         <section name="email">
           <div>
             <paper-input id="name-input" label="Full Name*" no-label-float=true required></paper-input>
