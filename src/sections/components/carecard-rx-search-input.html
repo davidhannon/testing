@@ -33,6 +33,7 @@
       persistSearch: function(id, selection) {
         window.sessionStorage.setItem("medName", selection.text);
         window.sessionStorage.setItem("med", JSON.stringify(selection.option));
+        this.fire("on-drug-selected", selection);
 
       },
     });

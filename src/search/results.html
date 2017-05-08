@@ -2,6 +2,7 @@
   <link rel="import" href="../../bower_components/polymer/polymer.html">
   <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
   <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
   <link rel="import" href="../../bower_components/paper-input/paper-input.html">
   <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
   <link rel="import" href="../../bower_components/iron-list/iron-list.html">
@@ -43,6 +44,7 @@
 
       carecard-rx-search-input {
         --input-background-color: var(--section-bg-grey);
+        display: block;
       }
 
       carecard-rx-search-input paper-autocomplete {
@@ -177,6 +179,30 @@
           max-height: 600px;
         }
       }
+
+      @media(max-width: 600px){
+        paper-dialog {
+          top: 0px;
+          min-height: 94vh;
+          padding: 0px;
+        }
+
+        paper-dialog-scrollable {
+          --paper-dialog-scrollable: {
+            padding: 0px;
+          }
+        }
+
+        carecard-rx-search-input {
+          width: 100%;
+          margin: 0;
+          
+        }
+
+        #itemsList {
+          max-height: 20vh;
+        }
+      }
     </style>
     <paper-dialog id="searchResults" on-iron-overlay-opened="openDialog" with-backdrop=true>
       <div id="close-dialog" onclick="searchResults.close()">
@@ -185,7 +211,8 @@
       <div class="title">
         <h2><span class='accent'>care</span>card</h2>
       </div>
-      <div class="contents">
+      <!--<paper-dialog-scrollable>-->
+      <div class="contents no-padding">
         <div class="search-result-list">
           <carecard-rx-search-input></carecard-rx-search-input>
           <div class="status-bar">
@@ -198,7 +225,7 @@
           </ul>
           <iron-list id="itemsList" items="[[pharmacies]]" selection-enabled=true on-selected-item-changed="centerMarker">
             <template>
-              <div style="height: 70px;" id="[[item.NABP]]" class$="[[_computedClass(selected)]]">
+              <div style="height: 70px;" class$="[[_computedClass(selected)]]">
                 <ul>
                   <li>
                     <h3>[[item.PharmacyName]]</h3>
@@ -213,8 +240,7 @@
             </template>
   </iron-list>
   </div>
-  <paper-toast id="geoError" text="There was an error fetching your location" vertical-align="auto"></paper-toast>
-  <geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" timeout="30000"></geo-location>
+  <geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" timeout="30000" maximum-age="120000"></geo-location>
   <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
     <template is="dom-repeat" items="[[pharmacies]]">
@@ -224,10 +250,9 @@
     </template>
   </google-map>
   </div>
-  <paper-dialog-scrollable>
-
-  </paper-dialog-scrollable>
+  <!--</paper-dialog-scrollable>-->
   </paper-dialog>
+  <paper-toast id="geoError" text="There was an error fetching your location" vertical-align="auto"></paper-toast>
   </template>
 
   <script>
@@ -262,11 +287,16 @@
         console.log("search results loaded");
         let map = document.querySelector("search-results google-map");
         let locator = document.querySelector("search-results geo-location") || null;
+        let rxSearch = this.querySelector("carecard-rx-search-input") || null
         let mapComponent = this;
         if (map) {
           map.addEventListener("google-map-ready", (e) => {
             console.log("google map is ready.");
           })
+        }
+
+        if (rxSearch) {
+          rxSearch.addEventListener("on-drug-selected", (e) => this.updateDrug(e));
         }
       },
 
@@ -275,9 +305,9 @@
       },
 
       openDialog: function() {
+        window.sessionStorage.removeItem("userLocation");
         this.$.searchResults.open();
         this.updateDrug();
-        this.requestLocation();
       },
 
       requestLocation: function() {
@@ -294,6 +324,21 @@
 
       updateDrug: function() {
         this.set("medName", window.sessionStorage.getItem("medName"));
+        let cached = window.sessionStorage.getItem("userLocation") || undefined;
+        if (cached) {
+          let {
+            longitude,
+            latitude
+          } = JSON.parse(cached);
+          this.fetchPricing({
+            detail: {
+              longitude,
+              latitude
+            }
+          });
+        } else {
+          this.requestLocation();
+        }
       },
 
       centerMarker: function(ev) {
@@ -356,29 +401,22 @@
           }
         );
       },
-      updateSearchResults: function(event, results) {
-        this.results = results;
-      },
-
-      fetchPharmacies: function({
-        detail
-      }) {
-        let {
-          latitude,
-          longitude
-        } = detail;
-        let component = this;
-        fetch(`/api/v1/pharmacies?lat=${latitude}&lng=${longitude}`).then(r => r.json()).then(res => this.updatePharmacies(res)).catch(console.error)
-      },
       fetchPricing: function({
         detail
       }) {
+        let component = this;
         let {
           latitude,
           longitude
         } = detail;
-        let component = this;
         let drug = JSON.parse(window.sessionStorage.getItem("med") || {});
+
+        // cache location for next query
+        window.sessionStorage.setItem("userLocation", JSON.stringify({
+          longitude,
+          latitude
+        }));
+
         if (drug) {
           let {
             PackageSize: qty,
@@ -401,14 +439,10 @@
         response.forEach(r => {
           let {
             DrugCost: {
-              DrugCost: [{
-                Copay: Brand
-              }, {
-                Copay: Generic
-              }]
+              DrugCost: Costs
             }
           } = r;
-          let Cost = Generic || Brand || false;
+          let Cost = Costs ? Costs.pop().Copay : false;
           let Distance = Number(r.Pharmacy.Distance).toFixed(2);
           if (!Cost) {
             return;
@@ -419,6 +453,7 @@
           }));
         });
       },
+
       _computedClass: function(isSelected) {
         var classes = 'search-result-list-item';
         if (isSelected) {

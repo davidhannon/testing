@@ -51,8 +51,6 @@ async function getPharmacies( [ Latitude, Longitude ] ) {
 async function getPricing( { Latitude, Longitude, Qty, Days, NDC } ) {
   await clientInitialized;
   let { GetBrandGenericDrugPricingByLatLongResult: result } = await ApiClient.GetBrandGenericDrugPricingByLatLong( { Latitude, Longitude, NDC, Qty, Days, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
-  // let formatted = drugs.map( d => ( { text: d.DrugName, value: d.GPI } ) )
-  console.log( result )
   let { RxClaims: { RxClaimMultiDrug: Details } } = result;
   return Details;
 }
