@@ -102,9 +102,11 @@
       .search-result-list label {
         color: #a8a8b0;
       }
+      
       .search-result-list-item.selected {
         background-color: #ededed;
       }
+      
       .search-result-list-item ul {
         align-items: center;
         border-top: 1px solid var(--section-bg-grey);
@@ -216,7 +218,7 @@
   <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
     <template is="dom-repeat" items="[[pharmacies]]">
-      <google-map-marker id="[[item.NABP]]Marker" latitude="[[item.Latitude]]" longitude="[[item.Longitude]]" title="[[item.PharmacyName]]">
+      <google-map-marker id="marker_[[item.NABP]]" latitude="[[item.Latitude]]" longitude="[[item.Longitude]]" title="[[item.PharmacyName]]">
         <h3>[[item.PharmacyName]]</h3>
       </google-map-marker>
     </template>
@@ -296,13 +298,28 @@
 
       centerMarker: function(ev) {
         let list = ev.target;
-        var selectedItem;
-        if (!list.selectedItem) {
+        let {
+          selectedItem: selected
+        } = list;
+        if (!selected) {
           return;
         }
-        let resultsDialog = document.querySelector("search-results");
-        let selected = resultsDialog.pharmacies.filter(p => p.selected);
-        console.log(selected, list.selectedItem);
+
+        this.closeMarkers();
+        let map = document.querySelector("google-map");
+        let marker = document.querySelector(`#marker_${selected.NABP}`);
+        marker.open = true;
+        let {
+          Latitude,
+          Longitude
+        } = selected;
+        map.latitude = Latitude;
+        map.longitude = Longitude;
+        console.log(list.selectedItem);
+      },
+
+      closeMarkers: function() {
+        document.querySelectorAll("google-map-marker").forEach(m => m.open = false);
       },
 
       geocodeZip: function() {
