@@ -24,6 +24,13 @@
        method="post"
        content-type="application/json"
        on-response="handleSMSResponse"></iron-ajax>
+
+    <iron-ajax id="sendEmail"
+       url="/api/v1/email"
+       handle-as="json"
+       method="post"
+       content-type="application/json"
+       on-response="handleSMSResponse"></iron-ajax>
     
     <paper-dialog id="ctaInput" with-backdrop=true>
       <h2>care<span class="accent">card</span></h2>
@@ -43,15 +50,17 @@
         </section>
         <section name="email">
           <div>
-            <paper-input id="name-input" label="Full Name*" no-label-float=true required></paper-input>
-            <gold-email-input label="Email*" no-label-float=true required></gold-email-input>
+            <form is="iron-form" id="emailForm" method="post" action="/api/v1/email">
+            <paper-input id="name-input" label="Full Name*" no-label-float=true required name="fullName"></paper-input>
+            <gold-email-input label="Email*" no-label-float=true required name="emailAddress"></gold-email-input>
+            </form>
           </div>
-          <paper-button raised>Send free card</paper-button>
+          <paper-button raised on-tap="sendEmail">Send free card</paper-button>
         </section>
         <section name="sms">
           <form is="iron-form" id="smsForm" method="post" action="/api/v1/sms">
             <gold-phone-input name="phone" no-label-float=true required></gold-phone-input>
-            <paper-button raised on-click="submitForm">Send free card</paper-button>
+            <paper-button raised on-tap="submitForm">Send free card</paper-button>
           </form>
         </section>
       </iron-pages>
@@ -89,6 +98,20 @@
           "phone": `${formData.get('phone')}`
         };
         this.$.sendSMSInfo.generateRequest();
+      },
+      sendEmail: function(ev) {
+        let {
+          target: {
+            form
+          }
+        } = ev;
+        let formData = (new FormData(this.$.emailForm));
+        let body = {};
+        for (let [name, value] of formData.entries()) {
+          body[name] = value;
+        }
+        this.$.sendEmail.body = body;
+        this.$.sendEmail.generateRequest();
       },
       handleSMSResponse: function() {
         this.$.ctaInput.close();

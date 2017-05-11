@@ -33,12 +33,12 @@
                     <h2 style="margin-top: 5%; font-size: 2em;">For the entire family...even your pets!</h2><br><br>
                     <form id="get-carecard" is="iron-form">
                       <div class="input-container">
-                        <input class="fname inp1" name="firstName" placeholder="First*">
-                        <input class="lname inp1" name="lastName" placeholder="Last*"><br>
-                        <input class="address1 inp2" name="address1" placeholder="Address 1*"><br>
-                        <input class="address2 inp2" name="address2" placeholder="Address 2*"><br>
-                        <input class="email inp2" name="email" placeholder="Email*"><br>
-                        <input class="zip inp2" name="zipcode" placeholder="Zip*"><br><br>
+                        <input class="fname inp1" name="firstName" placeholder="First*" required>
+                        <input class="lname inp1" name="lastName" placeholder="Last*" required><br>
+                        <input class="address1 inp2" name="address1" placeholder="Address 1*" required><br>
+                        <input class="address2 inp2" name="address2" placeholder="Address 2*" required><br>
+                        <input class="email inp2" name="email" placeholder="Email*" required><br>
+                        <input class="zip inp2" name="zipcode" placeholder="Zip*" required><br><br>
                         <button type="button" value="Submit" class="btn btn-primary get-carecard-btn" on-tap="submitForm" data-target="#carecardOptions">Get my free carecard!</button>
                       </div>
                     </form>
@@ -99,7 +99,9 @@
         // form.submit();
         let formData = (new FormData(form));
         let body = {};
-        formData.forEach((value, name) => body[name] = value);
+        for (let [name, value] of formData.entries()) {
+          body[name] = value;
+        }
         this.$.newSignup.body = body;
         this.$.newSignup.generateRequest();
       }

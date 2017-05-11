@@ -17,6 +17,7 @@
     "soap-as-promised": "^1.19.0",
     "superagent": "latest",
     "twilio": "^5.0.0-rc16",
-    "write-json-file": "^2.0.0"
+    "write-json-file": "^2.0.0",
+    "mailchimp-api-v3": "latest"
   }
 }

@@ -1,34 +1,49 @@
 /* Klaviyo Integration */
 const agent = require( "superagent" );
-const ApiKey = 'pk_c52546c353b89884ecc8e868e099c82005';
-const Template = 'dqQnNW';
+const Mailchimp = require( "mailchimp-api-v3" );
+const ApiKey = 'a1547c1092d21082c505cf201810e572-us5';
+const ListID = '0ecfc791dc';
+const RecipientList = '30485cc033';
+const SubscriptionList = 'e8edb8d592';
 const { Router } = require( 'express' );
 const bodyParser = require( 'body-parser' );
 let router = new Router( );
+let mailchimp = new Mailchimp( ApiKey );
 
-function endpoint( template ) {
-  return `https://a.klaviyo.com/api/v1/email-template/${template}/send`
+async function addMember( email, fullName ) {
+  let [ FNAME, ...LNAME ] = fullName.split( " " );
+  LNAME = LNAME.join( " " );
+  try {
+    let request = await mailchimp.post( `/lists/${ListID}`, {
+      members: [ {
+        email_address: email,
+        status: 'subscribed',
+        merge_fields: { FNAME, LNAME }
+    } ]
+    } );
+    console.log( request );
+    return true;
+  } catch ( err ) {
+    console.error( err );
+    return false;
+  }
 }
 
+function onError( req, res, next ) {
+  res.send( { ok: false } );
+}
 /* API Routing */
 
 router.use( "/email", bodyParser.json( ), ( req, res, next ) => {
-  let { email: emailAddress } = req.query;
-
-  agent.post( endpoint( Template ) ).type( 'form' ).send( {
-    api_key: ApiKey,
-    from_email: "hello@takecarecard.com",
-    from_name: "CareCard",
-    subject: "Your CareCard",
-    to: emailAddress
-  } ).end( ( err, result ) => {
-    if ( err ) {
-      console.error( err );
-      res.send( { ok: false } );
+  let { emailAddress, fullName } = req.body;
+  addMember( emailAddress, fullName ).then( ( success ) => {
+    if ( success ) {
+      return res.json( { ok: true } );
     } else {
-      res.send( { ok: true } );
+      onError( req, res, next );
     }
-  } );
+  } ).catch( e => onError( req, res, next ) );
+
 } );
 
 module.exports = router;
