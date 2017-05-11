@@ -1,0 +1,46 @@
+<dom-module id="carecard-splash">
+  <link rel="import" type="css" href="../css/splash.css">
+  <template>
+    <section id="splash">
+        <h2>Save up to 80% on prescriptions</h2>
+          <div class="input-container">
+            <div class="search-bar">
+              <carecard-rx-search-input></carecard-rx-search-input>
+              <input class="search" type="button" value="Search" on-tap="openSearch" />
+            </div>
+            <ul class="top-discounts">
+              <label>Top Discounts:</label>
+              <li med>Adderall,</li>
+              <li med>Cialis,</li>
+              <li med>Suboxone,</li>
+              <li med>Viagra,</li>
+              <li med>Vyanase</li>
+            </ul>
+          </div>
+      </section>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 0
+        }
+      },
+      is: 'carecard-splash',
+      openSearch: function(ev) {
+        let target = ev.target;
+        if (target.hasAttribute("med")) {
+          this.persistSearch(0, {
+            text: target.innerText
+          });
+        }
+        let pages = document.querySelector("iron-pages");
+        pages.select("search");
+
+        // let searchResults = document.querySelector("search-results").querySelector("paper-dialog");
+        // searchResults.open();
+      }
+    });
+  </script>
+</dom-module>

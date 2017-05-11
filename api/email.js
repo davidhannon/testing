@@ -1,12 +1,3 @@
-// curl https://a.klaviyo.com/api/v1/email-template/dqQnNW/send \
-//   -X POST \
-//   -d api_key=pk_c52546c353b89884ecc8e868e099c82005 \
-//   -d from_email=davidhannon7@gmail.com \
-//   -d from_name='Your Name' \
-//   -d subject='Your Weekly Summary' \
-//   -d to='[{ "email" : "recipient@example.com", "name" : "Recipient Name" }]' \
-//   -d context='{ "name" : "Recipient", "notifcation_count" : 8 }'
-
 /* Klaviyo Integration */
 const agent = require( "superagent" );
 const ApiKey = 'pk_c52546c353b89884ecc8e868e099c82005';

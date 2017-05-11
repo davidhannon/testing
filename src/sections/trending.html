@@ -1,0 +1,74 @@
+<dom-module id="carecard-trending">
+  <link rel="import" type="css" href="../css/trending.css">
+  <template>
+      <section id="discounts">
+        <div class="table-view">
+          <h2>Trending Discounts</h2>
+          <table>
+            <tr>
+              <th>Drug</th>
+              <th>Uses</th>
+              <th>Savings</th>
+              <th>Discount</th>
+            </tr>
+            <tr>
+              <td>Lipitor</td>
+              <td>High Cholestorol</td>
+              <td>up to 76%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Cialis</td>
+              <td>Erectile Dysfunction</td>
+              <td>up to 75%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Plan B</td>
+              <td>Birth Control</td>
+              <td>up to 73%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Viagra</td>
+              <td>Erectile Dysfunction</td>
+              <td>up to 73%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Tamiflu</td>
+              <td>Flu</td>
+              <td>up to 75%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Nexium</td>
+              <td>Heartburn</td>
+              <td>up to 73%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+            <tr>
+              <td>Yaz</td>
+              <td>Birth Control</td>
+              <td>up to 73%</td>
+              <td><a>Claim Now</a></td>
+            </tr>
+          </table>
+        </div>
+        <div class="graphic-view">
+          <img src="./graphics/static-map-graphic.jpg"/>
+        </div>
+      </section>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 0
+        }
+      },
+      is: 'carecard-trending'
+    });
+  </script>
+</dom-module>

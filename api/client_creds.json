@@ -1,0 +1,18 @@
+{
+  "installed": {
+    "client_id": "51469704899-9gbttniq073b1ut0nj18i4038927g7ii.apps.googleusercontent.com",
+    "project_id": "ethershaft",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "XH0nt11_iWzVStsHk25JMrMh",
+    "redirect_uris": [
+      "http://127.0.0.1:5010/api/v1/auth",
+      "https://carecard-beta.ethershaft.engineering/api/v1/auth"
+    ],
+    "javascript_origins": [
+      "http://127.0.0.1:5010",
+      "https://carecard-beta.ethershaft.engineering"
+    ]
+  }
+}

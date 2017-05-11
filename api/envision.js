@@ -34,25 +34,49 @@ let clientInitialized = initializeClient( );
 
 async function getDrug( DrugName ) {
   await clientInitialized;
-  let { GetDrugByNameResult: { Drug: drugs } } = await ApiClient.GetDrugByName( { DrugName, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
+  let result;
+  let { GetDrugByNameResult: response } = await ApiClient.GetDrugByName( { DrugName, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( ( e ) => {
+    console.error( e );
+  } );
 
-  return drugs.map( d => Object.assign( d, { text: d.DrugName, value: d.GPI } ) )
+  if ( !response ) {
+    result = [ ];
+  } else {
+    let { Drug: drugs } = response;
+    result = drugs.map( d => Object.assign( d, { text: d.DrugName, value: d.GPI } ) );
+  }
+
+  return result;
 }
 
 async function getPharmacies( [ Latitude, Longitude ] ) {
   await clientInitialized;
-  let { GetPharmaciesByLatLongResult: { Pharmacy: pharmacies } } = await ApiClient.GetPharmaciesByLatLong( { Latitude, Longitude, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
-  pharmacies.forEach( p => p.PharmacyName = p.PharmacyName.toLowerCase( ) )
-  pharmacies.forEach( p => p.Distance = parseFloat( p.Distance ).toFixed( 2 ) )
+  let result;
+  let { GetPharmaciesByLatLongResult: response } = await ApiClient.GetPharmaciesByLatLong( { Latitude, Longitude, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
 
-  return pharmacies;
+  if ( !response ) {
+    result = [ ];
+  } else {
+    let { Pharmacy: pharmacies } = response;
+    pharmacies.forEach( p => p.PharmacyName = p.PharmacyName.toLowerCase( ) );
+    pharmacies.forEach( p => p.Distance = parseFloat( p.Distance ).toFixed( 2 ) );
+    result = pharmacies;
+  }
+  return result;
 }
 
 async function getPricing( { Latitude, Longitude, Qty, Days, NDC } ) {
   await clientInitialized;
-  let { GetBrandGenericDrugPricingByLatLongResult: result } = await ApiClient.GetBrandGenericDrugPricingByLatLong( { Latitude, Longitude, NDC, Qty, Days, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
-  let { RxClaims: { RxClaimMultiDrug: Details } } = result;
-  return Details;
+  let result;
+  let { GetBrandGenericDrugPricingByLatLongResult: response } = await ApiClient.GetBrandGenericDrugPricingByLatLong( { Latitude, Longitude, NDC, Qty, Days, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
+
+  if ( !response ) {
+    result = [ ];
+  } else {
+    let { RxClaims: { RxClaimMultiDrug: Details } } = response;
+    result = Details;
+  }
+  return result;
 }
 
 router.get( '/drugs', ( req, res, next ) => {

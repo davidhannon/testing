@@ -4,7 +4,7 @@ const { name } = pkg;
 const { static, Router } = ex;
 const app = ex( );
 const api = require( "./api/index" );
-let host = `localhost`;
+let host = `0.0.0.0`;
 let port = 5010;
 
 app.use( '/api/v1', api );
