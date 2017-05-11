@@ -75,9 +75,7 @@
         properties: {
           medName: {
             type: String,
-            value: function() {
-              return window.sessionStorage.getItem("medName") || "Lipitor";
-            }
+            value: null
           },
           loadProgress: {
             type: String,
@@ -130,6 +128,9 @@
 
         _searchTermChanged: function(medName) {
           console.log(medName);
+          if (!medName) {
+            return;
+          }
           this.updateDrug();
           window.sessionStorage.setItem("medName", medName);
         },
@@ -168,6 +169,9 @@
               longitude,
               latitude
             } = JSON.parse(cached);
+            let map = document.querySelector("google-map");
+            map.latitude = latitude;
+            map.longitude = longitude;
             this.fetchPricing({
               detail: {
                 longitude,

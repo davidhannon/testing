@@ -125,6 +125,11 @@
         elem.async(function() {
           document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
           document.querySelectorAll("section#discounts table td a").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
+          let rxSearch = this.querySelector("carecard-rx-search-input") || null;
+          let searchPage = this.querySelector("search-results-page") || null;
+          if (rxSearch && searchPage) {
+            rxSearch.addEventListener("on-drug-selected", (e) => searchPage.updateDrug(e));
+          }
         });
       },
 
