@@ -198,26 +198,6 @@ paper-progress {
   }
 }
 
-.search-results-page h4 {
-  font-weight: 400;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-.search-results-page h2.marker {
-  text-align: center;
-  font-size: 24px;
-  margin: 5px auto;
-}
-
-.search-results-page h5 {
-  font-weight: 300;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
 @media(min-width: 600px) {
   #searchResults {
     align-items: center;

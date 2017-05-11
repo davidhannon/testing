@@ -92,6 +92,11 @@
       },
       handleSMSResponse: function() {
         this.$.ctaInput.close();
+        this.showSuccessDialog();
+      },
+      showSuccessDialog: function(ev) {
+        let dialog = document.querySelector("carecard-success-dialog").querySelector("paper-dialog");
+        dialog.open();
       }
     });
   </script>

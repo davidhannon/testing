@@ -31,6 +31,7 @@
   <link rel="import" href="../sections/trending.html">
   <link rel="import" href="../sections/search.html">
   <link rel="import" href="../sections/components/carecard-cta-dialog.html">
+  <link rel="import" href="../sections/components/carecard-success-dialog.html">
   <link rel="import" href="../sections/components/carecard-cta-button.html">
   <link rel="import" href="../sections/components/carecard-rx-search-input.html">
   <link rel="import" type="css" href="../css/app.css">
@@ -77,6 +78,7 @@
     </app-header-layout>
     </app-drawer-layout>
     <carecard-cta-dialog></carecard-cta-dialog>
+    <carecard-success-dialog></carecard-success-dialog>
     <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
   </template>
 
@@ -199,6 +201,10 @@
 
         let cta = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
         cta.open();
+      },
+      showSuccessDialog: function(ev) {
+        let dialog = document.querySelector("carecard-success-dialog").querySelector("paper-dialog");
+        dialog.open();
       },
       onLayoutChange: function(wide) {
         var drawer = this.$.drawer;

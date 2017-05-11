@@ -1,0 +1,34 @@
+<dom-module id="carecard-success-dialog">
+  <link rel="import" href="../../../bower_components/polymer/polymer.html">
+  <link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+  <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+
+  <link rel="import" type="css" href="./carecard-success-dialog.css">
+  <template>
+    <paper-dialog id="carecardSuccessDialog" with-backdrop=true>
+      <h2>care<span class="accent">card</span></h2>
+      <paper-dialog-scrollable>
+      <h3>Welcome to the carecard family!</h3>
+      <h5>Your digital card is on the way</h5>
+      <section class="details">
+        <h5>Show the carecard to your pharmacist to receive your free savings</h5>
+      </section>
+      
+        
+      </paper-dialog-scrollable>
+            <div id="close-dialog" onclick="carecardSuccessDialog.close()">
+        <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
+      </div>
+    </paper-dialog>
+    
+  </template>
+  <script>
+    Polymer({
+      properties: {
+
+      },
+      is: 'carecard-success-dialog'
+    });
+  </script>
+</dom-module>
