@@ -175,7 +175,7 @@ google-map {
 
 paper-progress {
   margin: 0 auto;
-  display: none;
+  /*display: none;*/
 }
 
 @media(max-width: 600px) {

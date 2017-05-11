@@ -23,7 +23,7 @@
         <h2><span class='accent'>care</span>card</h2>
       </div>-->
 <geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" timeout="30000" maximum-age="120000"></geo-location>
-<section id="searchResults" on-iron-select="openDialog">
+<section id="searchResults">
   <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
     <template is="dom-repeat" items="[[pharmacies]]">
@@ -39,8 +39,8 @@
         <label>Showing results for:</label>
         <div id="medicationName">{{medName}}</div>
       </div>
-      <paper-progress indeterminate value="{{loadProgress}}" secondary-progress="{{secondaryLoadProgress}}"></paper-progress>
-      <div class="search-result-list">
+      <paper-progress indeterminate hidden$="[[!isSearching]]"></paper-progress>
+      <div class="search-result-list" hidden$="[[isSearching]]">
         <ul class="results-header">
           <li>Pharmacy</li>
           <li class="savings">Savings</li>
@@ -84,6 +84,10 @@
           secondaryProgress: {
             type: String,
             value: "70"
+          },
+          isSearching: {
+            type: Boolean,
+            value: true
           },
           results: {
             type: Object,
@@ -153,6 +157,7 @@
         },
 
         updateDrug: function(event) {
+          this.set("isSearching", true);
           this.set("loadProgress", 40);
           // this.set("medName", window.sessionStorage.getItem("medName"));
           if (event) {
@@ -297,6 +302,7 @@
           });
           component.splice("pharmacies", 0, this.pharmacies.length, ...newResults);
           this.set("loadProgress", 100);
+          this.set("isSearching", false);
         },
 
         _computedClass: function(isSelected) {
