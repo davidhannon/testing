@@ -14,7 +14,7 @@ async function addMember( email, fullName ) {
   let [ FNAME, ...LNAME ] = fullName.split( " " );
   LNAME = LNAME.join( " " );
   try {
-    let request = await mailchimp.post( `/lists/${ListID}`, {
+    let request = await mailchimp.post( `/lists/${RecipientList}`, {
       members: [ {
         email_address: email,
         status: 'subscribed',

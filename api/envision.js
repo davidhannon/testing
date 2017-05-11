@@ -65,6 +65,38 @@ async function getPharmacies( [ Latitude, Longitude ] ) {
   return result;
 }
 
+function filterPharmacies( ApiResponse ) {
+
+  let filtered = ApiResponse.filter( ( pharmacy ) => {
+
+    if ( pharmacy.DrugCost.DrugCost.length > 0 ) {
+      return true;
+    } else {
+      return false;
+    }
+  } );
+  return filtered;
+}
+
+function sortPharmacies( ApiResponse ) {
+  if ( !ApiResponse || ApiResponse.length < 1 ) {
+    return [ ];
+  }
+  return ApiResponse.sort( ( resultA, resultB ) => {
+    if ( !resultA.DrugCost.DrugCost || !resultB.DrugCost.DrugCost ) {
+      return 0;
+    }
+    let costA = resultA.DrugCost.DrugCost;
+    let costB = resultB.DrugCost.DrugCost;
+    let { Copay: BrandA } = Array.isArray( costA ) && costA.length > 0 ? costA.pop( ) : costA;
+    let { Copay: BrandB } = Array.isArray( costB ) && costB.length > 0 ? costB.pop( ) : costB;
+    if ( BrandA & BrandB ) {
+      return +BrandA < +BrandB ? 1 : -1;
+    }
+    return 0;
+  } );
+}
+
 async function getPricing( { Latitude, Longitude, Qty, Days, NDC } ) {
   await clientInitialized;
   let result;
