@@ -24,11 +24,14 @@
       </div>-->
 <geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" timeout="30000" maximum-age="120000"></geo-location>
 <section id="searchResults">
-  <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
+  <google-map latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14 single-info-window=true>
     <google-map-marker latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
     <template is="dom-repeat" items="[[pharmacies]]">
-      <google-map-marker id="marker_[[item.NABP]]" latitude="[[item.Latitude]]" longitude="[[item.Longitude]]" title="[[item.PharmacyName]]">
-        <h3>[[item.PharmacyName]]</h3>
+      <google-map-marker class="search-marker" id="marker_[[item.NABP]]" latitude="[[item.Latitude]]" longitude="[[item.Longitude]]" title="[[item.PharmacyName]]">
+        <h2 class="marker"><span class="accent">$[[item.Cost]]</span></h2>
+        <h4>[[item.PharmacyName]]</h4>
+        <h5>[[item.Address1]]</h5>
+        <h5>[[item.City]], [[item.State]], [[item.ZipCode]]</h5>
       </google-map-marker>
     </template>
   </google-map>
@@ -197,7 +200,7 @@
             return;
           }
 
-          this.closeMarkers();
+          // this.closeMarkers();
           let map = document.querySelector("google-map");
           let marker = document.querySelector(`#marker_${selected.NABP}`);
           marker.open = true;
