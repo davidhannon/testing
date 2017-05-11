@@ -54,7 +54,7 @@
           <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
           <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
           <div main-title class="title spacer">
-            <h2><span class='accent'>care</span>card</h2>
+            <a href="#"><h2><span class='accent'>care</span>card</h2></a>
           </div>
           <div class="navItem"></div>
         </app-toolbar>
@@ -188,8 +188,6 @@
         let pages = document.querySelector("iron-pages");
         pages.select("search");
 
-        // let searchResults = document.querySelector("#searchResults");
-        // searchResults.openDialog();
       },
       openCTADialog: function(ev) {
         let target = ev.target;
@@ -198,8 +196,6 @@
             text: target.innerText
           });
         }
-        let pages = document.querySelector("iron-pages");
-        pages.select("search");
 
         let cta = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
         cta.open();
