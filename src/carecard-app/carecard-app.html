@@ -187,8 +187,9 @@
             text: target.innerText
           });
         }
-        let pages = document.querySelector("iron-pages");
-        pages.select("search");
+        // let pages = document.querySelector("iron-pages");
+        // pages.select("search");
+        this.set("categoryData.category", "search");
 
       },
       openCTADialog: function(ev) {
