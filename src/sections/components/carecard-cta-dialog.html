@@ -90,10 +90,12 @@
           }
         } = ev;
         // form.submit();
-        let formData = (new FormData(form));
-        this.$.sendSMSInfo.body = {
-          "phone": `${formData.get('phone')}`
-        };
+        let formData = (Array.from(form));
+        let body = {};
+        formData.forEach(input => {
+          body[input.name] = input.value;
+        });
+        this.$.sendSMSInfo.body = body;
         this.$.sendSMSInfo.generateRequest();
       },
       sendEmail: function(ev) {
@@ -102,11 +104,11 @@
             form
           }
         } = ev;
-        let formData = (new FormData(this.$.emailForm));
+        let formData = (Array.from(this.$.emailForm));
         let body = {};
-        for (let [name, value] of formData.entries()) {
-          body[name] = value;
-        }
+        formData.forEach(input => {
+          body[input.name] = input.value;
+        });
         this.$.sendEmail.body = body;
         this.$.sendEmail.generateRequest();
       },
