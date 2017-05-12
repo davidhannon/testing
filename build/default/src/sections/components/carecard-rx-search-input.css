@@ -1,0 +1,46 @@
+:host {
+  --primary-color: #ee5c56;
+  --secondary-color: #525262;
+  --section-bg-grey: #f1f1f1;
+  --input-background-color: #FFF;
+  margin: 0 10px;
+  max-width: 500px;
+  width: 80%;
+  flex: 0 1 auto;
+  text-align: left;
+}
+
+paper-autocomplete {
+  --paper-input-container-input: {
+    background-color: var(--input-background-color);
+    padding: 10px 20px;
+    --secondary-text-color: var(--secondary-color);
+  }
+  --paper-input-container-focus-color: var(--secondary-color);
+  --paper-input-container-color: {
+    color: var(--secondary-color);
+  }
+  --paper-input-container-underline: {
+    display: none;
+  }
+  --paper-input-container-underline-focus: {
+    color: var(--secondary-color);
+  }
+  --paper-input-container-underline-disabled: {
+    display: none;
+  }
+  --paper-input-suffix,
+  --layout-flex-none {
+    margin-top: 0px;
+  }
+}
+
+.paper-autocomplete-0 #clear.paper-autocomplete {
+  margin-top: 0px;
+}
+
+@media(max-width: 808px) {
+  paper-autocomplete {
+    margin: 20px auto 10px auto;
+  }
+}

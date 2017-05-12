@@ -1,0 +1,41 @@
+<html><head></head><body><dom-module id="carecard-rx-search-input">
+  <link rel="import" href="../../../bower_components/paper-autocomplete/paper-autocomplete.html">
+  <link rel="import" type="css" href="./carecard-rx-search-input.css">
+  <template>
+    <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float="true" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch" disable-show-clear="true"></paper-autocomplete>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        medSuggestions: {
+          type: Object,
+          value: []
+        }
+      },
+      is: 'carecard-rx-search-input',
+      suggestMeds: function(e) {
+        let {
+          value: name
+        } = e.target;
+        if (name.length < 3) {
+          return false;
+        }
+        fetch(`/api/v1/drugs?name=${name}`).then(r => r.json()).then(results => this.updateSource(results)).catch(console.error);
+      },
+
+      updateSource: function(response) {
+        if (Array.isArray(response) && response.length > 0) {
+          let input = this.querySelector("#med-search");
+          let elem = document.querySelector("carecard-app");
+          input.suggestions(response);
+        }
+      },
+      persistSearch: function(id, selection) {
+        window.sessionStorage.setItem("medName", selection.text);
+        window.sessionStorage.setItem("med", JSON.stringify(selection.option));
+        this.fire("on-drug-selected", selection);
+
+      },
+    });
+  </script>
+</dom-module></body></html>

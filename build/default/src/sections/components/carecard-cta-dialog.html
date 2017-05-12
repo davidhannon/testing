@@ -1,0 +1,115 @@
+<html><head></head><body><dom-module id="carecard-cta-dialog">
+  <link rel="import" href="../../../bower_components/polymer/polymer.html">
+  <link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+  <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+  <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+
+  <link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+  <link rel="import" href="../../../bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
+  <link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+  <link rel="import" href="../../../bower_components/gold-email-input/gold-email-input.html">
+  <link rel="import" href="../../../bower_components/gold-phone-input/gold-phone-input.html">
+
+
+  <link rel="import" type="css" href="./carecard-cta-dialog.css">
+  <template>
+    
+    <iron-ajax id="sendSMSInfo" url="/api/v1/sms" handle-as="json" method="post" content-type="application/json" on-response="handleSMSResponse"></iron-ajax>
+
+    <iron-ajax id="sendEmail" url="/api/v1/email" handle-as="json" method="post" content-type="application/json" on-response="handleSMSResponse"></iron-ajax>
+    
+    <paper-dialog id="ctaInput" with-backdrop="true">
+      <h2><span class="accent">care</span>card</h2>
+      <h3>Select how you'd like to receive your carecard.</h3>
+      
+      <paper-tabs selected="{{selectedTab}}">
+        <paper-tab>Print</paper-tab>
+        <paper-tab>Email</paper-tab>
+        <paper-tab>Text</paper-tab>
+      </paper-tabs>
+      <iron-pages id="tabContent" selected="{{selectedTab}}">
+        <section name="print">
+          <img src="../graphics/carecard_email_sms.png">
+          <div>
+            <paper-button raised=""><a href="/src/sections/graphics/carecard_print.pdf" target="_blank">Print Now</a></paper-button>
+          </div>
+        </section>
+        <section name="email">
+          <div>
+            <form is="iron-form" id="emailForm" method="post" action="/api/v1/email">
+            <paper-input id="name-input" label="Full Name*" no-label-float="true" required="" name="fullName"></paper-input>
+            <gold-email-input label="Email*" no-label-float="true" required="" name="emailAddress"></gold-email-input>
+            </form>
+          </div>
+          <paper-button raised="" on-click="sendEmail">Send free card</paper-button>
+        </section>
+        <section name="sms">
+          <form is="iron-form" id="smsForm" method="post" action="/api/v1/sms">
+            <gold-phone-input name="phone" no-label-float="true" required=""></gold-phone-input>
+            <paper-button raised="" on-click="submitForm">Send free card</paper-button>
+          </form>
+        </section>
+      </iron-pages>
+
+      <paper-dialog-scrollable>
+        
+      </paper-dialog-scrollable>
+            <div id="close-dialog" on-click="ctaInput.close()">
+        <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
+      </div>
+    </paper-dialog>
+    
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 2
+        }
+      },
+      is: 'carecard-cta-dialog',
+      submitForm: function(ev) {
+        let {
+          target: {
+            parentElement: form
+          }
+        } = ev;
+        // form.submit();
+        let formData = (Array.from(form));
+        let body = {};
+        formData.forEach(input => {
+          body[input.name] = input.value;
+        });
+        this.$.sendSMSInfo.body = body;
+        this.$.sendSMSInfo.generateRequest();
+      },
+      sendEmail: function(ev) {
+        let {
+          target: {
+            form
+          }
+        } = ev;
+        let formData = (Array.from(this.$.emailForm));
+        let body = {};
+        formData.forEach(input => {
+          body[input.name] = input.value;
+        });
+        this.$.sendEmail.body = body;
+        this.$.sendEmail.generateRequest();
+      },
+      handleSMSResponse: function() {
+        this.$.ctaInput.close();
+        this.showSuccessDialog();
+      },
+      showSuccessDialog: function(ev) {
+        let dialog = document.querySelector("carecard-success-dialog").querySelector("paper-dialog");
+        dialog.open();
+      }
+    });
+  </script>
+</dom-module></body></html>

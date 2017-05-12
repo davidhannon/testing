@@ -1,0 +1,23 @@
+<html><head></head><body><dom-module id="carecard-cta-button">
+  <link rel="import" href="../../../bower_components/polymer/polymer.html">
+  <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+  <link rel="import" type="css" href="./carecard-cta-button.css">
+  <template>
+    <paper-button raised="" on-tap="openCTA">get free savings card</paper-button>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 2
+        }
+      },
+      is: 'carecard-cta-button',
+      openCTA: function() {
+        let searchResults = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
+        searchResults.open();
+      }
+    });
+  </script>
+</dom-module></body></html>
