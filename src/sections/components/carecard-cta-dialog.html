@@ -55,12 +55,12 @@
             <gold-email-input label="Email*" no-label-float=true required name="emailAddress"></gold-email-input>
             </form>
           </div>
-          <paper-button raised on-tap="sendEmail">Send free card</paper-button>
+          <paper-button raised on-click="sendEmail">Send free card</paper-button>
         </section>
         <section name="sms">
           <form is="iron-form" id="smsForm" method="post" action="/api/v1/sms">
             <gold-phone-input name="phone" no-label-float=true required></gold-phone-input>
-            <paper-button raised on-tap="submitForm">Send free card</paper-button>
+            <paper-button raised on-click="submitForm">Send free card</paper-button>
           </form>
         </section>
       </iron-pages>
@@ -68,7 +68,7 @@
       <paper-dialog-scrollable>
         
       </paper-dialog-scrollable>
-            <div id="close-dialog" onclick="ctaInput.close()">
+            <div id="close-dialog" on-click="ctaInput.close()">
         <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
       </div>
     </paper-dialog>
