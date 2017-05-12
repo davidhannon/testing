@@ -20,6 +20,9 @@ let credentials = {
 const router = new Router( );
 
 async function initializeClient( ) {
+  if ( ApiClient ) {
+    return ApiClient;
+  }
   try {
     ApiClient = await soap.createClient( rxAPI, { empty: true } );
     ApiClient.addSoapHeader( credentials, 'UserCredentials', "tns", BaseURL );

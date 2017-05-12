@@ -1,5 +1,4 @@
 /* Klaviyo Integration */
-const agent = require( "superagent" );
 const Mailchimp = require( "mailchimp-api-v3" );
 const ApiKey = 'a1547c1092d21082c505cf201810e572-us5';
 const ListID = '0ecfc791dc';
