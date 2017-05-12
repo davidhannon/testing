@@ -21,7 +21,6 @@ async function addMember( email, fullName ) {
         merge_fields: { FNAME, LNAME }
     } ]
     } );
-    console.log( request );
     return true;
   } catch ( err ) {
     console.error( err );

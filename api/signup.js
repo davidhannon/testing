@@ -18,7 +18,6 @@ async function addMember( email, firstName, lastName, address1, address2, zipcod
         merge_fields: { FNAME: firstName, LNAME: lastName, ZIP: zipcode }
     } ]
     } );
-    console.log( request );
     return true;
   } catch ( err ) {
     console.error( err );

@@ -128,7 +128,6 @@
 
         createInfoWindow(item, map, marker) {
           let content = `
-          <link rel='stylesheet' href='/src/css/marker.css'/>
           <div class="carecard-marker">
             <h2><span class="accent">$${item.Cost}</span></h2>
             <h4>${item.PharmacyName}</h4>
@@ -143,7 +142,7 @@
             this.info.close();
           }
           this.info = infoWindow;
-          this.info.open(map, marker.marker);
+          this.info.open(map.map, marker.marker);
         },
 
         requestLocation: function() {
