@@ -71,8 +71,7 @@
           },
           userLocation: {
             type: Object,
-            value: null,
-            observer: "_onLocationChanged"
+            value: null
           },
           isSearching: {
             type: Boolean,
@@ -127,9 +126,6 @@
           window.sessionStorage.setItem("medName", medName);
         },
 
-        _onLocationChanged: function(oldLocation, newLocation) {
-          console.log(oldLocation, newLocation);
-        },
         _onSearchActive: function(isActive, wasActive) {
           console.log(isActive, wasActive);
           if (isActive) {
@@ -169,7 +165,6 @@
           }
         },
         updateLocation(event) {
-          console.log(event);
           this.set("userLocation", event.detail)
           window.sessionStorage.setItem("userLocation", JSON.stringify(event.detail));
           if (this.medName) {
@@ -327,6 +322,9 @@
               Distance
             });
           }).filter(r => {
+            if (!r) {
+              return false;
+            }
             return r.Cost ? true : false;
           }).sort((rA, rB) => {
             return +rA.Cost <= +rB.Cost ? -1 : 1;
