@@ -103,6 +103,9 @@
         ],
 
         attached: function() {
+          if (!this.medName || !this.shouldSearch) {
+            this.redirect();
+          }
           let map = document.querySelector("#searchResults google-map");
           let locator = document.querySelector("#searchResults geo-location") || null;
           let rxSearch = this.querySelector("carecard-rx-search-input") || null
@@ -158,6 +161,10 @@
           this.info.open(map.map, marker.marker);
         },
 
+        clearResults() {
+          this.splice("pharmacies", 0, this.pharmacies.length);
+        },
+
         requestLocation: function() {
           let locator = this.$.geoLocation || null;
           if (locator) {
@@ -180,8 +187,17 @@
           return Math.round(+cost);
         },
 
+        redirect() {
+          let app = document.querySelector("carecard-app");
+          app.set("categoryData.category", "");
+          console.log("redirecting");
+        },
+
         updateDrug: function(event) {
+          let map = document.querySelector("google-map");
+          this.clearResults();
           this.set("isSearching", true);
+
           if (event) {
             let {
               detail: {
@@ -202,10 +218,8 @@
               longitude,
               latitude
             } = JSON.parse(cached);
-            let map = document.querySelector("google-map");
             map.latitude = latitude;
             map.longitude = longitude;
-            map.clear();
             this.fetchPricing({
               detail: {
                 longitude,
