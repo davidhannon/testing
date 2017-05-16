@@ -110,11 +110,6 @@
           let locator = document.querySelector("#searchResults geo-location") || null;
           let rxSearch = this.querySelector("carecard-rx-search-input") || null
           let mapComponent = this;
-          if (map) {
-            map.addEventListener("google-map-ready", (e) => {
-              console.log("google map is ready.");
-            })
-          }
 
           if (rxSearch) {
             rxSearch.addEventListener("on-drug-selected", (e) => this.updateDrug(e));
@@ -130,7 +125,6 @@
         },
 
         _onSearchActive: function(isActive, wasActive) {
-          console.log(isActive, wasActive);
           if (isActive) {
             this.set("autoLocate", true);
             this.requestLocation();
@@ -190,7 +184,6 @@
         redirect() {
           let app = document.querySelector("carecard-app");
           app.set("categoryData.category", "");
-          console.log("redirecting");
         },
 
         updateDrug: function(event) {

@@ -141,6 +141,7 @@
         }
       },
       ready: function() {
+        window.addEventListener("resize", this.onLayoutChange);
         let elem = document.querySelector("carecard-app");
         elem.async(function() {
           document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
@@ -224,6 +225,10 @@
         dialog.open();
       },
       onLayoutChange: function(wide) {
+        let cta = document.querySelector("carecard-cta-dialog");
+        let success = document.querySelector("carecard-success-dialog");
+        cta.$.ctaInput.refit();
+        success.$.carecardSuccessDialog.refit();
         var drawer = this.$.drawer;
         if (wide && drawer.opened) {
           drawer.opened = false;

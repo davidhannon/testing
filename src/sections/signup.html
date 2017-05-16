@@ -92,7 +92,9 @@
             form
           }
         } = ev;
-        // form.submit();
+        if (!form.validate()) {
+          return;
+        }
         let formData = (Array.from(form));
         let body = {};
         formData.forEach(input => {
