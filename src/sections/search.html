@@ -22,7 +22,7 @@
       <!--<div class="title">
         <h2><span class='accent'>care</span>card</h2>
       </div>-->
-<geo-location latitude="{{lat}}" idle=true longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" timeout="30000" maximum-age="120000"></geo-location>
+<geo-location id="geoLocation" latitude="{{lat}}" idle={{autoLocate}} longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" maximum-age="120000"></geo-location>
 <section id="searchResults">
   <google-map map="{{map}}" latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14 single-info-window=true>
     <google-map-marker map="[[map]]" latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
@@ -79,6 +79,10 @@
           isSearching: {
             type: Boolean,
             value: true
+          },
+          autoLocate: {
+            type: Boolean,
+            value: false
           },
           results: {
             type: Object,
@@ -146,9 +150,10 @@
         },
 
         requestLocation: function() {
-          let locator = document.querySelector("geo-location") || null;
+          let locator = this.$.geoLocation || null;
           if (locator) {
-            locator.set("idle", false);
+            // locator.set("idle", false);
+            this.set("autoLocate", true);
             let p = locator.fetch();
           }
         },
@@ -300,6 +305,10 @@
               Cost,
               Distance
             });
+          }).filter(r => {
+            return r.Cost ? true : false;
+          }).sort((rA, rB) => {
+            return +rA.Cost <= +rB.Cost ? -1 : 1;
           });
           component.splice("pharmacies", 0, this.pharmacies.length, ...newResults);
           this.set("isSearching", false);

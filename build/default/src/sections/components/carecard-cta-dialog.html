@@ -1,4 +1,4 @@
-<html><head></head><body><dom-module id="carecard-cta-dialog">
+<dom-module id="carecard-cta-dialog">
   <link rel="import" href="../../../bower_components/polymer/polymer.html">
   <link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
   <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
@@ -58,7 +58,7 @@
       <paper-dialog-scrollable>
         
       </paper-dialog-scrollable>
-            <div id="close-dialog" on-click="ctaInput.close()">
+            <div id="close-dialog" on-click="cancel">
         <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
       </div>
     </paper-dialog>
@@ -106,10 +106,13 @@
         this.$.ctaInput.close();
         this.showSuccessDialog();
       },
+      cancel: function() {
+        this.$.ctaInput.close();
+      },
       showSuccessDialog: function(ev) {
         let dialog = document.querySelector("carecard-success-dialog").querySelector("paper-dialog");
         dialog.open();
       }
     });
   </script>
-</dom-module></body></html>
+</dom-module>

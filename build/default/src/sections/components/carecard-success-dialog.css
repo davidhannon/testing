@@ -8,8 +8,15 @@
 }
 
 paper-dialog {
-  padding: 100px;
+  padding: 40px 0px;
   padding-top: 0px;
+}
+
+@media(min-width: 600px) {
+  paper-dialog {
+    padding: 100px;
+    padding-top: 0px;
+  }
 }
 
 h2 {

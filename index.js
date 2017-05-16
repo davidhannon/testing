@@ -10,7 +10,7 @@ let port = 5010;
 app.use( '/api/v1', api );
 app.use( "/src", static( "./src" ) );
 app.use( "/bower_components", static( "./bower_components" ) );
-app.use( "/", static( "./build/default" ) );
+app.use( "/", static( "." ) );
 const server = app.listen( port, host );
 
 server.on( "listening", z => console.log( `Server listening on http://${server.address().address}:${server.address().port}` ) ).on( "error", err => console.error( err ) );
