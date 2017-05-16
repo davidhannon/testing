@@ -60,8 +60,8 @@
           <div class="navItem"></div>
         </app-toolbar>
       </app-header>
-      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" >
-        <div name="home">
+      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
+        <div id="homePage" name="home">
           <carecard-splash></carecard-splash>
           <carecard-trending></carecard-trending>
           <features-section></features-section>
@@ -72,7 +72,7 @@
           <partners-section></partners-section>
           <carecard-signup></carecard-signup>
         </div>
-        <search-results-page id="searchResultsPage" name="search"></search-results-page>
+        <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
       </iron-pages>
       <carecard-footer></carecard-footer>
     </app-header-layout>
@@ -93,13 +93,20 @@
           value: 'carecard'
         },
 
+        searchActive: {
+          type: Boolean,
+          value: false
+        },
+
         route: Object,
 
         subRoute: Object,
 
         subsubRoute: Object,
 
-        categoryData: Object,
+        categoryData: {
+          type: Object
+        },
 
         pageData: Object,
 
@@ -121,6 +128,17 @@
             this.set('route.path', '/');
           }
         });
+      },
+      _onRouteChange: function(event) {
+        let {
+          id
+        } = event.detail.item;
+        if (id === "homePage") {
+          this.set("searchActive", false);
+        }
+        if (id === "searchResultsPage") {
+          this.set("searchActive", true);
+        }
       },
       ready: function() {
         let elem = document.querySelector("carecard-app");
@@ -187,8 +205,6 @@
             text: target.innerText
           });
         }
-        // let pages = document.querySelector("iron-pages");
-        // pages.select("search");
         this.set("categoryData.category", "search");
 
       },

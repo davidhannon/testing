@@ -35,8 +35,10 @@
             text: target.innerText
           });
         }
-        let pages = document.querySelector("iron-pages");
-        pages.select("search");
+        // let pages = document.querySelector("iron-pages");
+        // pages.select("search");
+        let app = document.querySelector("carecard-app");
+        app.openSearch(ev);
 
         // let searchResults = document.querySelector("search-results").querySelector("paper-dialog");
         // searchResults.open();

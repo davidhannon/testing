@@ -15,14 +15,7 @@
   <link rel="import" href="./components/carecard-rx-search-input.html">
   <link rel="import" type="css" href="../css/search.css">
   <template>
-    <!--<paper-dialog id="searchResults" on-iron-overlay-opened="openDialog" with-backdrop=true>
-      <div id="close-dialog" onclick="searchResults.close()">
-        <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
-      </div>-->
-      <!--<div class="title">
-        <h2><span class='accent'>care</span>card</h2>
-      </div>-->
-<geo-location id="geoLocation" latitude="{{lat}}" idle={{autoLocate}} longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" maximum-age="120000"></geo-location>
+<geo-location id="geoLocation" latitude="{{lat}}" idle={{!autoLocate}} longitude="{{lng}}" on-geo-response="updateLocation" on-geo-error="handleGeolocationError" maximum-age="120000"></geo-location>
 <section id="searchResults">
   <google-map map="{{map}}" latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14 single-info-window=true>
     <google-map-marker map="[[map]]" latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
@@ -76,6 +69,11 @@
             type: String,
             value: null
           },
+          userLocation: {
+            type: Object,
+            value: null,
+            observer: "_onLocationChanged"
+          },
           isSearching: {
             type: Boolean,
             value: true
@@ -95,6 +93,10 @@
           },
           map: {
             type: Object
+          },
+          shouldSearch: {
+            type: Boolean,
+            observer: "_onSearchActive"
           }
         },
         observers: [
@@ -125,6 +127,17 @@
           window.sessionStorage.setItem("medName", medName);
         },
 
+        _onLocationChanged: function(oldLocation, newLocation) {
+          console.log(oldLocation, newLocation);
+        },
+        _onSearchActive: function(isActive, wasActive) {
+          console.log(isActive, wasActive);
+          if (isActive) {
+            this.set("autoLocate", true);
+            this.requestLocation();
+          }
+        },
+
         openDialog: function() {
           window.sessionStorage.removeItem("userLocation");
           this.updateDrug();
@@ -152,9 +165,15 @@
         requestLocation: function() {
           let locator = this.$.geoLocation || null;
           if (locator) {
-            // locator.set("idle", false);
-            this.set("autoLocate", true);
             let p = locator.fetch();
+          }
+        },
+        updateLocation(event) {
+          console.log(event);
+          this.set("userLocation", event.detail)
+          window.sessionStorage.setItem("userLocation", JSON.stringify(event.detail));
+          if (this.medName) {
+            this.fetchPricing();
           }
         },
         handleGeolocationError: function(error) {
@@ -175,6 +194,9 @@
               }
             } = event;
             this.set("medName", drug.DrugName);
+          }
+          if (!this.shouldSearch) {
+            return false;
           }
           if (this.info) {
             this.info.close();
@@ -254,22 +276,21 @@
             }
           );
         },
-        fetchPricing: function({
-          detail
-        }) {
+        fetchPricing: function() {
           let component = this;
-          let {
-            latitude,
-            longitude
-          } = detail;
-          let drug = JSON.parse(window.sessionStorage.getItem("med") || {});
+          let location = this.userLocation;
+          if (!this.userLocation) {
+            return false;
+          }
+          let drug = JSON.parse(window.sessionStorage.getItem("med") || "{}");
 
           // cache location for next query
-          window.sessionStorage.setItem("userLocation", JSON.stringify({
+          this.set("loadProgress", 70);
+          let {
             longitude,
             latitude
-          }));
-          this.set("loadProgress", 70);
+          } = this.userLocation;
+
           if (drug) {
             let {
               PackageSize: qty,
