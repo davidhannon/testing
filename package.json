@@ -6,7 +6,8 @@
   "scripts": {
     "start": "babel-node index.js",
     "build": "polymer build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install && build"
   },
   "author": "Martial James Jefferson <martial.jefferson@gmail.com>",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "google-auth-library": "^0.10.0",
     "googleapis": "^19.0.0",
     "mailchimp-api-v3": "latest",
+    "polymer-cli": "^1.2.0",
     "soap-as-promised": "latest",
     "superagent": "latest",
     "twilio": "^5.0.0-rc16",
