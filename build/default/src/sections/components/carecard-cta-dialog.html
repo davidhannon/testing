@@ -22,7 +22,7 @@
 
     <iron-ajax id="sendEmail" url="/api/v1/email" handle-as="json" method="post" content-type="application/json" on-response="handleSMSResponse"></iron-ajax>
     
-    <paper-dialog id="ctaInput" with-backdrop="true">
+    <paper-dialog id="ctaInput" with-backdrop="true" fit-into="[[targetElement]]" position-element="[[targetElement]]" auto-fit-on-attach="false">
       <h2><span class="accent">care</span>card</h2>
       <h3>Select how you'd like to receive your carecard.</h3>
       
@@ -70,6 +70,12 @@
         selectedTab: {
           type: String,
           value: 2
+        },
+        targetElement: {
+          type: Object,
+          value: function() {
+            return document.querySelector("carecard-app");
+          }
         }
       },
       is: 'carecard-cta-dialog',
@@ -79,7 +85,9 @@
             parentElement: form
           }
         } = ev;
-        // form.submit();
+        if (!form.validate()) {
+          return;
+        }
         let formData = (Array.from(form));
         let body = {};
         formData.forEach(input => {
@@ -89,12 +97,11 @@
         this.$.sendSMSInfo.generateRequest();
       },
       sendEmail: function(ev) {
-        let {
-          target: {
-            form
-          }
-        } = ev;
-        let formData = (Array.from(this.$.emailForm));
+        let form = this.$.emailForm;
+        if (!form.validate()) {
+          return;
+        }
+        let formData = (Array.from(form));
         let body = {};
         formData.forEach(input => {
           body[input.name] = input.value;

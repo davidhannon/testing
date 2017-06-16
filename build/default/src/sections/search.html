@@ -15,14 +15,7 @@
   <link rel="import" href="./components/carecard-rx-search-input.html">
   <link rel="import" type="css" href="../css/search.css">
   <template>
-    <!--<paper-dialog id="searchResults" on-iron-overlay-opened="openDialog" with-backdrop=true>
-      <div id="close-dialog" onclick="searchResults.close()">
-        <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
-      </div>-->
-      <!--<div class="title">
-        <h2><span class='accent'>care</span>card</h2>
-      </div>-->
-<geo-location id="geoLocation" latitude="{{lat}}" idle="{{autoLocate}}" longitude="{{lng}}" on-geo-response="fetchPricing" on-geo-error="handleGeolocationError" maximum-age="120000"></geo-location>
+<geo-location id="geoLocation" latitude="{{lat}}" idle="{{!autoLocate}}" longitude="{{lng}}" on-geo-response="updateLocation" on-geo-error="handleGeolocationError" maximum-age="120000"></geo-location>
 <section id="searchResults">
   <google-map map="{{map}}" latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui="" zoom="14" single-info-window="true">
     <google-map-marker map="[[map]]" latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
@@ -76,6 +69,10 @@
             type: String,
             value: null
           },
+          userLocation: {
+            type: Object,
+            value: null
+          },
           isSearching: {
             type: Boolean,
             value: true
@@ -95,6 +92,10 @@
           },
           map: {
             type: Object
+          },
+          shouldSearch: {
+            type: Boolean,
+            observer: "_onSearchActive"
           }
         },
         observers: [
@@ -102,15 +103,13 @@
         ],
 
         attached: function() {
+          if (!this.medName || !this.shouldSearch) {
+            this.redirect();
+          }
           let map = document.querySelector("#searchResults google-map");
           let locator = document.querySelector("#searchResults geo-location") || null;
           let rxSearch = this.querySelector("carecard-rx-search-input") || null
           let mapComponent = this;
-          if (map) {
-            map.addEventListener("google-map-ready", (e) => {
-              console.log("google map is ready.");
-            })
-          }
 
           if (rxSearch) {
             rxSearch.addEventListener("on-drug-selected", (e) => this.updateDrug(e));
@@ -123,6 +122,13 @@
           }
           this.updateDrug();
           window.sessionStorage.setItem("medName", medName);
+        },
+
+        _onSearchActive: function(isActive, wasActive) {
+          if (isActive) {
+            this.set("autoLocate", true);
+            this.requestLocation();
+          }
         },
 
         openDialog: function() {
@@ -149,12 +155,21 @@
           this.info.open(map.map, marker.marker);
         },
 
+        clearResults() {
+          this.splice("pharmacies", 0, this.pharmacies.length);
+        },
+
         requestLocation: function() {
           let locator = this.$.geoLocation || null;
           if (locator) {
-            // locator.set("idle", false);
-            this.set("autoLocate", true);
             let p = locator.fetch();
+          }
+        },
+        updateLocation(event) {
+          this.set("userLocation", event.detail)
+          window.sessionStorage.setItem("userLocation", JSON.stringify(event.detail));
+          if (this.medName) {
+            this.fetchPricing();
           }
         },
         handleGeolocationError: function(error) {
@@ -166,8 +181,16 @@
           return Math.round(+cost);
         },
 
+        redirect() {
+          let app = document.querySelector("carecard-app");
+          app.set("categoryData.category", "");
+        },
+
         updateDrug: function(event) {
+          let map = document.querySelector("google-map");
+          this.clearResults();
           this.set("isSearching", true);
+
           if (event) {
             let {
               detail: {
@@ -175,6 +198,9 @@
               }
             } = event;
             this.set("medName", drug.DrugName);
+          }
+          if (!this.shouldSearch) {
+            return false;
           }
           if (this.info) {
             this.info.close();
@@ -185,10 +211,8 @@
               longitude,
               latitude
             } = JSON.parse(cached);
-            let map = document.querySelector("google-map");
             map.latitude = latitude;
             map.longitude = longitude;
-            map.clear();
             this.fetchPricing({
               detail: {
                 longitude,
@@ -254,22 +278,21 @@
             }
           );
         },
-        fetchPricing: function({
-          detail
-        }) {
+        fetchPricing: function() {
           let component = this;
-          let {
-            latitude,
-            longitude
-          } = detail;
-          let drug = JSON.parse(window.sessionStorage.getItem("med") || {});
+          let location = this.userLocation;
+          if (!this.userLocation) {
+            return false;
+          }
+          let drug = JSON.parse(window.sessionStorage.getItem("med") || "{}");
 
           // cache location for next query
-          window.sessionStorage.setItem("userLocation", JSON.stringify({
+          this.set("loadProgress", 70);
+          let {
             longitude,
             latitude
-          }));
-          this.set("loadProgress", 70);
+          } = this.userLocation;
+
           if (drug) {
             let {
               PackageSize: qty,
@@ -306,6 +329,9 @@
               Distance
             });
           }).filter(r => {
+            if (!r) {
+              return false;
+            }
             return r.Cost ? true : false;
           }).sort((rA, rB) => {
             return +rA.Cost <= +rB.Cost ? -1 : 1;

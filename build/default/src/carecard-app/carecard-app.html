@@ -21,6 +21,7 @@
   <link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
 
   <link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+  <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
   <link rel="import" href="./footer.html">
   <link rel="import" href="../sections/features.html">
@@ -60,8 +61,9 @@
           <div class="navItem"></div>
         </app-toolbar>
       </app-header>
-      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home">
-        <div name="home">
+
+      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
+        <div id="homePage" name="home">
           <carecard-splash></carecard-splash>
           <carecard-trending></carecard-trending>
           <features-section></features-section>
@@ -72,7 +74,7 @@
           <partners-section></partners-section>
           <carecard-signup></carecard-signup>
         </div>
-        <search-results-page id="searchResultsPage" name="search"></search-results-page>
+        <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
       </iron-pages>
       <carecard-footer></carecard-footer>
     </app-header-layout>
@@ -80,6 +82,7 @@
     <carecard-cta-dialog></carecard-cta-dialog>
     <carecard-success-dialog></carecard-success-dialog>
     <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
+     <iron-ajax auto="" url="/src/carecard-app/trending.json" handle-as="json" on-response="loadPresets"></iron-ajax>
   </template>
 
   <script>
@@ -93,13 +96,20 @@
           value: 'carecard'
         },
 
+        searchActive: {
+          type: Boolean,
+          value: false
+        },
+
         route: Object,
 
         subRoute: Object,
 
         subsubRoute: Object,
 
-        categoryData: Object,
+        categoryData: {
+          type: Object
+        },
 
         pageData: Object,
 
@@ -112,6 +122,9 @@
           type: Boolean,
           value: false,
           observer: 'onLayoutChange',
+        },
+        presets: {
+          type: Object
         }
       },
 
@@ -122,7 +135,19 @@
           }
         });
       },
+      _onRouteChange: function(event) {
+        let {
+          id
+        } = event.detail.item;
+        if (id === "homePage") {
+          this.set("searchActive", false);
+        }
+        if (id === "searchResultsPage") {
+          this.set("searchActive", true);
+        }
+      },
       ready: function() {
+        window.addEventListener("resize", this.onLayoutChange);
         let elem = document.querySelector("carecard-app");
         elem.async(function() {
           document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
@@ -183,12 +208,12 @@
       openSearch: function(ev) {
         let target = ev.target;
         if (target.hasAttribute("med")) {
+          let preset = this.presets[target.innerText.replace(',', '')];
           this.persistSearch(0, {
-            text: target.innerText
+            text: preset.DrugName
           });
+          window.sessionStorage.setItem("med", JSON.stringify(preset));
         }
-        // let pages = document.querySelector("iron-pages");
-        // pages.select("search");
         this.set("categoryData.category", "search");
 
       },
@@ -208,10 +233,24 @@
         dialog.open();
       },
       onLayoutChange: function(wide) {
+        let cta = document.querySelector("carecard-cta-dialog");
+        let success = document.querySelector("carecard-success-dialog");
+        cta.$.ctaInput.refit();
+        success.$.carecardSuccessDialog.refit();
         var drawer = this.$.drawer;
         if (wide && drawer.opened) {
           drawer.opened = false;
         }
+      },
+      loadPresets: function(event) {
+        let {
+          response
+        } = event.detail;
+        let presets = {};
+        response.forEach(med => {
+          presets[med.name] = med.preset;
+        });
+        this.set("presets", presets);
       }
 
     });

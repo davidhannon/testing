@@ -19,18 +19,31 @@
       /*background-color: #EFEFEF;*/
       background-color: #e1f3fc;
       max-width: 100vw;
+      box-sizing: border-box;
       overflow-x: hidden;
       font-family: 'Montserrat', 'Lato', sans-serif;
     }
     
     carecard-app {
       /*background-color: #FFF;*/
+      box-sizing: border-box;
       height: 100vh;
       width: 100vw;
+      max-width: 100vw;
+      overflow-x: hidden;
     }
     
-    carecard-app iron-pages {
+    carecard-app #carecardPages {
       background-color: #FFF;
+      width: 100vw;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    
+    carecard-app>* {
+      /*background-color: #FFF;*/
+      /*max-width: 100vw;*/
+      overflow-x: hidden;
     }
   </style>
 </head>
