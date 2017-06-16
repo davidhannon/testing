@@ -3,6 +3,7 @@
   <link rel="import" type="css" href="./carecard-rx-search-input.css">
   <template>
     <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float="true" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch" disable-show-clear="true"></paper-autocomplete>
+    <input placeholder="Zipcode" name="zipcode">
   </template>
   <script>
     Polymer({

@@ -166,7 +166,7 @@
           }
         },
         updateLocation(event) {
-          this.set("userLocation", event.detail)
+          this.set("userLocation", event.detail);
           window.sessionStorage.setItem("userLocation", JSON.stringify(event.detail));
           if (this.medName) {
             this.fetchPricing();
@@ -248,6 +248,7 @@
           var geocoder = new google.maps.Geocoder();
           let zipInput = document.querySelector("#splash input.zipcode") || null;
           let zipCode = zipInput ? zipInput.value : "10012";
+          console.log("Zipcode is: ", zipcode);
           let map = document.querySelector("#searchResults google-map").map;
           let searchComponent = document.querySelector("#searchResults google-map-search");
           let {
@@ -278,21 +279,43 @@
             }
           );
         },
+
         fetchPricing: function() {
+          console.log("Fetching pricing...");
           let component = this;
           let location = this.userLocation;
-          if (!this.userLocation) {
-            return false;
+          if (this.userLocation) {
+            console.error('User location not found...');
+            let zipcode = window.sessionStorage.getItem("zipcode")
+            console.log('Zip is: ', zipcode);
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                address: zipcode
+              },
+              function(results, status) {
+                if (status == 'OK') {
+                  console.log(results[0].geometry.location.lat());
+                  console.log(results[0].geometry.location.lng());
+                  let latitude = results[0].geometry.location.lat();
+                  let longitude = results[0].geometry.location.lng();
+                  component.queryPricing(latitude, longitude);
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+              }
+            );
+          } else {
+            let {
+              longitude,
+              latitude
+            } = this.userLocation;
+            component.queryPricing(latitude, longitude);
           }
+        },
+
+        queryPricing: function(latitude, longitude) {
           let drug = JSON.parse(window.sessionStorage.getItem("med") || "{}");
-
-          // cache location for next query
           this.set("loadProgress", 70);
-          let {
-            longitude,
-            latitude
-          } = this.userLocation;
-
           if (drug) {
             let {
               PackageSize: qty,

@@ -1,8 +1,8 @@
 <dom-module id="carecard-splash">
   <link rel="import" type="css" href="../css/splash.css">
   <template>
-   
-    
+
+
     <section id="splash">
         <h2>Save up to 80% on prescriptions</h2>
           <div class="input-container">
@@ -32,6 +32,7 @@
       is: 'carecard-splash',
       openSearch: function(ev) {
         let target = ev.target;
+        console.log('Target: ', target);
         if (target.hasAttribute("med")) {
           this.persistSearch(0, {
             text: target.innerText

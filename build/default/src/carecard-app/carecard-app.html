@@ -238,7 +238,7 @@
         cta.$.ctaInput.refit();
         success.$.carecardSuccessDialog.refit();
         var drawer = this.$.drawer;
-        if (wide && drawer.opened) {
+        if (wide && drawer && drawer.opened) {
           drawer.opened = false;
         }
       },
