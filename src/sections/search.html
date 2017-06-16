@@ -175,6 +175,7 @@
         handleGeolocationError: function(error) {
           console.error(error);
           this.$.geoError.open();
+          this.fetchPricing();
         },
 
         _roundCost: function(cost) {
@@ -284,7 +285,7 @@
           console.log("Fetching pricing...");
           let component = this;
           let location = this.userLocation;
-          if (this.userLocation) {
+          if (!this.userLocation) {
             console.error('User location not found...');
             let zipcode = window.sessionStorage.getItem("zipcode")
             console.log('Zip is: ', zipcode);
