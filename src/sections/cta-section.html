@@ -1,0 +1,28 @@
+<dom-module id="cta-section">
+  <link rel="import" type="css" href="../css/cta-section.css">
+  <template>
+    <div class="container">
+      <div class="card-preview"></div>
+      <div class="wrapper">
+        <img src="./graphics/start-saving.png" height="59px" width="59px" alt="Start saving">
+        <div class="header">
+          <h2>Start Saving Now!</h2>
+        </div>
+        <a class="button">
+          Get your free card
+        </a>
+      </div>
+    </section>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 0
+        }
+      },
+      is: 'cta-section'
+    });
+  </script>
+</dom-module>

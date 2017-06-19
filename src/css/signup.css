@@ -1,3 +1,7 @@
+:root * {
+  box-sizing: border-box;
+}
+
 .inp1 {
   width: 45%;
   margin-bottom: 4px;

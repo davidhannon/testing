@@ -1,3 +1,7 @@
+:root * {
+  box-sizing: border-box;
+}
+
 :host {
   /*display: block;*/
   --app-primary-color: #ee5c56;
@@ -5,21 +9,33 @@
   --section-bg-grey: #f1f1f1;
   --section-bg-teal: #e1f3fc;
   --secondary-text-color: #848383;
-  color: var(--app-secondary-color);
+
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --app-primary-color: var(--light-blue-color);
 }
 
 h2 {
   text-align: center;
   font-weight: 600;
+  font-size: 30pt;
+  margin-bottom: .75em;
+}
+
+@media (max-width: 767px) {
+  h2 {
+    font-size: 30px;
+  }
 }
 
 section#splash {
-  background-color: var(--section-bg-teal);
-  background-image: url(../sections/graphics/leaves.png), url(../sections/graphics/fruit.png);
-  background-repeat: no-repeat, no-repeat;
-  background-position: 85vmax calc(-100px - 64px), -80px 100%;
   background-size: 400px auto, 120px auto;
-  padding: 70px 20px;
+  padding: 75px 20px 120px;
+  background: linear-gradient(to bottom, #fff, #eee);
+  background-image: url(../sections/graphics/kiwi.png);
+  background-size: cover;
+  background-position: left center;
 }
 
 section#splash .input-container {
@@ -37,33 +53,50 @@ section#splash .input-container input[type="button"] {
   appearance: none;
   background-color: var(--app-secondary-color);
   border-radius: 6px;
-  border: 1px solid;
+  border: 0;
   color: #FFF;
-  padding: 14px 35px;
+  text-transform: uppercase;
+  padding: 17px 30px;
+  flex: 0 0 100px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  background-color: var(--app-primary-color);
 }
 
 section#splash .input-container input.med {
   width: 25%;
 }
 
+
+section#splash .input-wrapper {
+  flex: 1 0 auto;
+  padding: 6px 5px 8px;
+}
+
+section#splash .input-wrapper input {
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+  padding: 16px 14px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 400;
+  outline: 0;
+}
+
 section#splash ul {
   list-style: none;
   line-height: 2;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: -5px auto 0;
   text-align: left;
-  padding-left: 0px;
+  padding: 0 15px;
 }
 
 section#splash .search-bar {
   align-items: center;
   display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.search-bar>* {
-  flex: 0 1 auto;
+  justify-content: flex-start;
+  margin: 10px auto;
+  max-width: 800px;
 }
 
 section#splash label,
@@ -71,15 +104,19 @@ section#splash li {
   display: inline-block;
   line-height: normal;
   vertical-align: top;
-  cursor: pointer;
+  font-size: 11pt;
 }
 
 section#splash label {
   margin: 0 5px 0 0;
+  font-weight: 400px;
+  color: var(--app-secondary-color);
+  font-weight: normal;
 }
 
 section#splash li {
-  color: var(--app-primary-color);
+  color: var(--font-color);
+  cursor: pointer;
 }
 
 section#splash li:hover {

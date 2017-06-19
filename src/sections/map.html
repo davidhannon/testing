@@ -1,0 +1,26 @@
+<dom-module id="carecard-map">
+  <link rel="import" type="css" href="../css/map.css">
+  <template>
+    <section class="map">
+      <div class="graphic-view">
+        <div class="header">
+          <h2 class="h2">Search prescriptions close to you</h2>
+        </div>
+        <a class="button">
+          Find discounts now
+        </a>
+      </div>
+    </section>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 0
+        }
+      },
+      is: 'carecard-map'
+    });
+  </script>
+</dom-module>

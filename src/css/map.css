@@ -1,0 +1,45 @@
+:root {
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  text-align: center;
+  padding: 75px 20px 90px;
+  border-sizing: border-box;
+}
+
+:root * {
+  box-sizing: border-box;
+}
+
+.map {
+  background-color: #f0f0f0;
+  background-size: cover;
+  background-position: center;
+  background-image: url('../sections/graphics/map-background.png');
+}
+
+.header {
+  max-width: 350px;
+  margin: 0 auto 36%;
+}
+
+.header h2 {
+  font-weight: 600;
+  font-size: 25pt;
+}
+
+a.button {
+  display: inline-block;
+  font-size: 14px;
+  padding: 16px 0px;
+  width: 100%;
+  max-width: 350px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: "Montserrat";
+  font-weight: 700;
+  background-color: var(--font-color);
+  color: var(--white-color);
+  letter-spacing: 2.5px;
+  border-radius: 5px;
+}

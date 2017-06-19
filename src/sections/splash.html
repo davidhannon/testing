@@ -8,6 +8,9 @@
           <div class="input-container">
             <div class="search-bar">
               <carecard-rx-search-input></carecard-rx-search-input>
+              <div class="input-wrapper">
+                <input on-input="updateZip" placeholder="Zipcode" name="zipcode" />
+              </div>
               <input class="search" type="button" value="Search" on-tap="openSearch" />
             </div>
             <ul class="top-discounts">
@@ -44,6 +47,9 @@
 
         // let searchResults = document.querySelector("search-results").querySelector("paper-dialog");
         // searchResults.open();
+      },
+      updateZip: function(e) {
+        window.sessionStorage.setItem("zipcode", e.target.value);
       }
     });
   </script>

@@ -1,0 +1,120 @@
+:host {
+  --app-secondary-color: #525262;
+  --section-bg-grey: #f1f1f1;
+  --paper-icon-button-ink-color: var(--app-secondary-color);
+  font-family: "Montserrat";
+  background-color: var(--section-bg-grey);
+  max-width: 100vw;
+  --secondary-text-color: #848383;
+
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --app-primary-color: var(--light-blue-color);
+}
+
+:root * {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Montserrat";
+  font-weight: 600;
+}
+
+h1 {
+  text-align: center;
+  color: var(--app-secondary-color);
+}
+
+.container {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+  display: flex;
+}
+
+.container > * {
+  flex: 1 0 50%;
+  width: 50%;
+}
+
+@media (max-width: 767px) {
+  .container {
+    display: block;
+  }
+
+  .container > * {
+    flex: 1 0 100%;
+    width: 100%;
+  }
+
+}
+
+.card-preview {
+  background-color: var(--font-color);
+  background-size: cover;
+  background-position: center;
+  padding-bottom: 45%;
+  width: 100%;
+  background-image: url('../sections/graphics/carecard-example.jpg');
+}
+
+@media (max-width: 767px) {
+  .card-preview {
+    padding-bottom: 60%;
+  }
+}
+
+.header h2 {
+  font-weight: 600;
+  font-size: 25pt;
+  margin-bottom: 1em;
+}
+
+.wrapper {
+  padding: 60px 20px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+}
+
+.wrapper img {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+@media(min-width: 1200px) {
+  .wrapper {
+    flex: 1 1 50%;
+    padding: 100px 40px 70px 40px;
+  }
+}
+
+a.button {
+  display: inline-block;
+  font-size: 14px;
+  padding: 16px 0px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: "Montserrat";
+  font-weight: 700;
+  background-color: var(--light-blue-color);
+  color: var(--white-color);
+  letter-spacing: 2.5px;
+  border-radius: 5px;
+}

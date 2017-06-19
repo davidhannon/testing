@@ -1,3 +1,7 @@
+:root * {
+  box-sizing: border-box;
+}
+
 :host {
   font-family: "Montserrat";
   --app-primary-color: #ee5c56;

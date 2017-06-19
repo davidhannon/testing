@@ -5,6 +5,10 @@
   --secondary-color: #525263;
 }
 
+:root * {
+  box-sizing: border-box;
+}
+
 section#about {
   padding: 20px 20px 70px 20px;
   text-align: center;

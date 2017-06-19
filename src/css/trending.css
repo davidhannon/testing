@@ -1,3 +1,7 @@
+:root * {
+  box-sizing: border-box;
+}
+
 :host {
   /*display: flex;*/
   --app-primary-color: #ee5c56;

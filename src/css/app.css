@@ -5,12 +5,21 @@
     -webkit-font-smoothing: antialiased;
   }
   ;
+  color: var(--font-color);
+  margin: 0;
 }
 
- :host {
+:root * {
+  box-sizing: border-box;
+}
+
+:host {
   background-color: #FFF;
   display: block;
-  --app-primary-color: #ee5c56;
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --app-primary-color: var(--light-blue-color);
   --app-secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
   --section-bg-teal: #e1f3fc;
@@ -31,6 +40,8 @@
   background-repeat: no-repeat;
   background-position: calc(85vmax) -100px;
   background-size: 400px auto;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 h1,
@@ -53,6 +64,7 @@ paper-input {
 
 app-toolbar.menu-bar {
   color: var(--app-primary-color);
+  justify-content: space-between;
 }
 
 app-drawer {
@@ -74,14 +86,11 @@ app-drawer carecard-cta-button {
       }*/
 
 app-header {
-  background-color: transparent;
-  --app-header-background-rear-layer: {
-    background-color: rgba(255, 255, 255, 0.7);
-  }
+  background-color: var(--white-color);
 }
 
 .nav-menu {
-  background-color: var(--app-primary-color);
+  background-color: var(--white-color);
   color: #fff;
 }
 
@@ -117,8 +126,9 @@ a {
 }
 
 .title {
-  font-size: 30px;
-  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .title h2 {
@@ -160,6 +170,24 @@ paper-autocomplete {
   }
 }
 
+.split-section {
+  display: flex;
+}
+
+.split-section > * {
+  flex: 1 0 50%;
+  width: 50%;
+}
+
+@media (max-width: 767px) {
+  .split-section {
+    display: block;
+  }
+  .split-section > * {
+    flex: 1 0 100%;
+    width: 100%;
+  }
+}
 
 /* ----- « Discounts » ----- */
 
@@ -168,25 +196,6 @@ partners-section,
 carecard-signup,
 carecard-footer {
   display: block;
-}
-
-
-/* ----- « Call to Action Banner » ----- */
-
-section#cta-banner {
-  background-color: var(--app-primary-color);
-  color: #FFF;
-  padding: 5px 20px;
-  text-align: center;
-  font-family: "Montserrat";
-  font-weight: 600;
-}
-
-section#cta-banner h2,
-h3,
-h4,
-h5 {
-  margin: 20px auto;
 }
 
 .spacer {

@@ -1,0 +1,44 @@
+<dom-module id="top-savings">
+  <link rel="import" type="css" href="../css/top-savings.css">
+  <template>
+    <div class="container">
+      <div class="wrapper">
+        <div class="header">
+          <h2>Top Savings</h2>
+        </div>
+        <ul class="savings">
+          <li>Lipitor</li>
+          <li>Cialis</li>
+          <li>Plan B</li>
+          <li>Viagra</li>
+          <li>Tamiflu</li>
+          <li>Nexium</li>
+          <li>Yaz</li>
+        </ul>
+        <div class="logos">
+          <div class="row">
+            <div class="logo-wrapper"><img src="./graphics/cvs-pharmacy.png" height="22px" alt="CVS Pharmacy" class="logo" /></div>
+            <div class="logo-wrapper"><img src="./graphics/rite-aid.png" height="52px" alt="Rite Aid" class="logo" /></div>
+            <div class="logo-wrapper"><img src="./graphics/target.png" height="70px" alt="Target" class="logo" /></div>
+          </div>
+          <div class="row">
+            <div class="logo-wrapper"><img src="./graphics/safeway.png" height="65px" alt="Safeway" class="logo" /></div>
+            <div class="logo-wrapper"><img src="./graphics/kroger.png" height="65px" alt="Kroger" class="logo" /></div>
+            <div class="logo-wrapper"><img src="./graphics/publix.png" height="42px" alt="Publix" class="logo" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      properties: {
+        selectedTab: {
+          type: String,
+          value: 0
+        }
+      },
+      is: 'top-savings'
+    });
+  </script>
+</dom-module>

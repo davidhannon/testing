@@ -3,7 +3,6 @@
   <link rel="import" type="css" href="./carecard-rx-search-input.css">
   <template>
     <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float=true source="[[medSuggestions]]" on-autocomplete-selected="persistSearch" disable-show-clear=true></paper-autocomplete>
-    <input on-input="updateZip" placeholder="Zipcode" name="zipcode" />
   </template>
   <script>
     Polymer({
@@ -22,10 +21,6 @@
           return false;
         }
         fetch(`/api/v1/drugs?name=${name}`).then(r => r.json()).then(results => this.updateSource(results)).catch(console.error);
-      },
-
-      updateZip: function(e) {
-        window.sessionStorage.setItem("zipcode", e.target.value);
       },
 
       updateSource: function(response) {

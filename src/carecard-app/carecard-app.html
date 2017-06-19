@@ -25,11 +25,10 @@
 
   <link rel="import" href="./footer.html">
   <link rel="import" href="../sections/features.html">
-  <link rel="import" href="../sections/about.html">
-  <link rel="import" href="../sections/partners.html">
-  <link rel="import" href="../sections/signup.html">
+  <link rel="import" href="../sections/map.html">
+  <link rel="import" href="../sections/cta-section.html">
   <link rel="import" href="../sections/splash.html">
-  <link rel="import" href="../sections/trending.html">
+  <link rel="import" href="../sections/top-savings.html">
   <link rel="import" href="../sections/search.html">
   <link rel="import" href="../sections/components/carecard-cta-dialog.html">
   <link rel="import" href="../sections/components/carecard-success-dialog.html">
@@ -54,25 +53,26 @@
       <app-header id="appHeader" fixed effects="fade-background" class="main-header">
         <app-toolbar class="title-toolbar main-title-toolbar">
           <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
-          <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
-          <div main-title class="title spacer">
-            <a href="#"><h2><span class='accent'>care</span>card</h2></a>
-          </div>
           <div class="navItem"></div>
+          <div main-title class="title spacer">
+            <a href="#"><span class="logo"><span class='accent'>care</span>card</span></a>
+          </div>
+          <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
         </app-toolbar>
       </app-header>
 
       <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
         <div id="homePage" name="home">
           <carecard-splash></carecard-splash>
-          <carecard-trending></carecard-trending>
-          <features-section></features-section>
-          <section id="cta-banner">
-            <h4>Start Saving now for free -- no sign up or credit card required</h4>
-          </section>
-          <carecard-about></carecard-about>
+          <carecard-map></carecard-map>
+          <div class="split-section">
+            <features-section></features-section>
+            <top-savings></top-savings>
+          </div>
+          <cta-section></cta-section>
+          <!--<carecard-about></carecard-about>
           <partners-section></partners-section>
-          <carecard-signup></carecard-signup>
+          <carecard-signup></carecard-signup>-->
         </div>
         <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
       </iron-pages>

@@ -1,3 +1,11 @@
+:root * {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
 .carecard-marker h4 {
   font-weight: 400;
   text-align: center;

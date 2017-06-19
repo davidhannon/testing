@@ -1,13 +1,20 @@
 :host {
   display: block;
-  --app-primary-color: #ee5c56;
   --app-secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
   --paper-icon-button-ink-color: var(--app-secondary-color);
   font-family: "Montserrat";
-  background-color: var(--section-bg-grey);
   max-width: 100vw;
   --secondary-text-color: #848383;
+
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --app-primary-color: var(--light-blue-color);
+}
+
+:root * {
+  box-sizing: border-box;
 }
 
 h1,
@@ -25,7 +32,7 @@ h1 {
 }
 
 .container {
-  background-color: var(--section-bg-grey);
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   /*max-width: 1200px;*/
@@ -34,14 +41,18 @@ h1 {
   padding: 0;
 }
 
-.feature-list,
-.card-preview {
-  padding: 100px 40px 70px 40px;
+.header h2 {
+  font-weight: 600;
+  font-size: 25pt;
+}
+
+.feature-list {
+  padding: 90px 20px 70px;
+  width: 100%;
 }
 
 @media(min-width: 1200px) {
-  .feature-list,
-  .card-preview {
+  .feature-list {
     flex: 1 1 50%;
     padding: 100px 40px 70px 40px;
   }
@@ -52,34 +63,41 @@ h1 {
   text-align: center;
 }
 
+.feature-list ul {
+  width: 400px;
+  max-width: 100%;
+}
+
 .feature-list .icon {
-  width: 50px;
-  flex: 0 0 50px;
+  width: 60px;
+  flex: 0 0 60px;
+  position: relative;
+  border-radius: 30px;
+  border: 2px solid #e2e2e2;
+  height: 60px;
 }
 
 .feature-list .icon img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
   display: block;
-  margin: 0 auto;
-  height: 30px;
-  width: auto;
-}
-
-.feature-list h2 {
-  color: var(--app-primary-color);
-  margin: 0;
+  height: 25px;
+  width: 25px;
 }
 
 .feature-list ul {
   display: inline-block;
   list-style: none;
-  padding: 0px;
+  padding: 30px 0 0;
 }
 
 .feature-list ul li {
   align-items: center;
   text-align: left;
   display: flex;
-  max-width: 400px
+  max-width: 400px;
 }
 
 .feature-list .description {
@@ -87,12 +105,32 @@ h1 {
   margin: 20px;
 }
 
-.card-preview img {
-  width: 100%;
+.feature-list .description h3 {
+  font-size: 24pt;
+  font-weight: normal;
+  margin-top: 3px;
+}
+
+.subheader {
+  letter-spacing: 2px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.quote {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  font-weight: 300;
   max-width: 400px;
-  height: auto;
-  margin: 50px auto 0 auto;
-  display: block;
+  margin: 0 auto;
+  padding: 60px 45px;
+}
+
+.quote .credit {
+  margin-left: 60px 45px;
+  margin-top: 10px;
 }
 
 @media (max-width: 580px) {
