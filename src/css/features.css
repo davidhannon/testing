@@ -122,10 +122,35 @@ h1 {
   font-size: 16px;
   line-height: 1.5;
   text-align: left;
-  font-weight: 300;
+  font-weight: 400;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 30px auto 0;
   padding: 60px 45px;
+  position: relative;
+}
+
+.quote::after {
+  background-image: url(../sections/graphics/quote-end.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  height: 50px;
+  width: 80px;
+  content: '';
+  bottom: 0px;
+  right: -10px;
+}
+
+.quote::before {
+  background-image: url(../sections/graphics/quote-start.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  height: 50px;
+  width: 80px;
+  content: '';
+  top: -10px;
+  left: -10px;
 }
 
 .quote .credit {

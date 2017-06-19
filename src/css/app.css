@@ -36,10 +36,6 @@
   ;
   --secondary-text-color: #848383;
   color: var(--app-secondary-color);
-  background-image: url(../sections/graphics/leaves.png);
-  background-repeat: no-repeat;
-  background-position: calc(85vmax) -100px;
-  background-size: 400px auto;
   box-sizing: border-box;
   margin: 0;
 }

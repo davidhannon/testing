@@ -3,8 +3,6 @@
 }
 
 :host {
-  /*display: block;*/
-  --app-primary-color: #ee5c56;
   --app-secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
   --section-bg-teal: #e1f3fc;
