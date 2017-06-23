@@ -124,17 +124,11 @@ navbar {
   }
 }
 
-/* V1 */
-
-.nav-menu {
-  background-color: var(--white-color);
-  color: #fff;
-}
-
 a {
   text-decoration: none;
   color: inherit;
   font-size: inherit;
+  cursor: pointer;
 }
 
 a.logo {
@@ -147,24 +141,110 @@ span.accent {
   color: var(--app-primary-color);
 }
 
+a.nav-toggler {
+  position: relative;
+  margin-top: 18px;
+  display: block;
+  height: 30px;
+  width: 30px;
+}
+
+a.nav-toggler::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 12px;
+  width: 26px;
+  border-top: 2px solid var(--font-color);
+  border-bottom: 2px solid var(--font-color);
+  content: '';
+  display: block;
+}
+
+a.nav-toggler::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 2px;
+  width: 26px;
+  background-color: var(--font-color);
+  content: '';
+  display: block;
+}
+
 .drawer {
-  background-color: rgba(255,255,255,0.85);
+  background-color: rgba(230,230,230,0.95);
   top: 0;
-  left: -300px;
+  left: -500px;
   height: 100vh;
   position: absolute;
-  width: 300px;
+  width: 500px;
   transition: left 450ms ease-in-out;
+  padding: 120px 60px;
+  font-family: "Montserrat";
+}
+
+.drawer a.link {
+  font-weight: 600;
+  font-size: 28px;
+  color: var(--font-color);
+  display: block;
+  margin-bottom: 15px;
+}
+
+.drawer a.link:hover {
+  color: var(--app-primary-color);
+  cursor: pointer;
 }
 
 .drawer.active {
   left: 0px;
 }
 
-@media (min-width: 768px) {
+a.drawer-close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+a.drawer-close::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  height: 2px;
+  width: 24px;
+  background-color: var(--font-color);
+  content: '';
+  display: block;
+}
+
+a.drawer-close::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+  height: 2px;
+  width: 24px;
+  background-color: var(--font-color);
+  content: '';
+  display: block;
+}
+
+@media (max-width: 767px) {
   .drawer {
-    left: -500px;
-    width: 500px;
+    left: -320px;
+    width: 320px;
+    padding: 75px 30px;
+  }
+
+  .drawer a.link {
+    font-size: 22px;
   }
 }
 

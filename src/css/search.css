@@ -201,7 +201,7 @@ google-map {
   .result-details {
     display: block;
     overflow-y: scroll;
-    padding-bottom: 30px;
+    padding-bottom: 120px;
   }
 
   google-map {

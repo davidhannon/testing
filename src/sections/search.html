@@ -73,7 +73,7 @@
           </div>
           <div class="details-cta">
             Access your discount through Carecard
-            <a class="button">Get it now!</a>
+            <a class="button" on-click="openCTA">Get it now!</a>
           </div>
         </div>
       </div>
@@ -195,6 +195,11 @@
           // this.set("autoLocate", true);
           // this.requestLocation();
         }
+      },
+
+      openCTA: function() {
+        let cta = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
+        cta.open();
       },
 
       openDialog: function() {

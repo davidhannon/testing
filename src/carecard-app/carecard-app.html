@@ -72,9 +72,7 @@
       <navbar>
         <div class="nav-content">
           <div class="nav-end first">
-            <a class="nav-toggler" on-click="toggleDrawer">
-              open
-            </a>
+            <a class="nav-toggler" on-click="toggleDrawer"></a>
           </div>
           <div class="nav-logo">
             <a href="/" on-click="goHome" class="logo"><span class='accent'>care</span>card</a>
@@ -86,8 +84,13 @@
       </navbar>
     </div>
     <div class$="drawer {{drawerOpen}}">
-      Nav.
-      <a class="drawer-close" on-click="closeDrawer">x</a>
+      <a class="link" on-click="openCTADialog">Get Carecard</a>
+      <a class="link" on-click="goHome" href="/">Home</a>
+      <a class="link" on-click="goHome">About Us</a>
+      <a class="link" on-click="goHome">FAQ</a>
+      <a class="link" on-click="goHome">Terms &amp; Conditions</a>
+      <a class="link" on-click="goHome">Contact</a>
+      <a class="drawer-close" on-click="closeDrawer"></a>
     </div>
     <carecard-cta-dialog></carecard-cta-dialog>
     <carecard-success-dialog></carecard-success-dialog>
@@ -183,6 +186,7 @@
       },
 
       goHome: function(e) {
+        this.closeDrawer();
         this.set("categoryData.category", "home");
       },
 
