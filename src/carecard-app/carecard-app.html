@@ -50,18 +50,6 @@
           <carecard-cta-button></carecard-cta-button>
         </paper-menu>
       </app-drawer>
-      <app-header-layout>
-        <app-header id="appHeader" fixed effects="fade-background" class="main-header">
-          <app-toolbar class="title-toolbar main-title-toolbar">
-            <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
-            <div class="navItem"></div>
-            <div main-title class="title spacer">
-              <a href="#"><span class="logo"><span class='accent'>care</span>card</span></a>
-            </div>
-            <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
-          </app-toolbar>
-        </app-header>
-      </app-header-layout>
       <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
         <div id="homePage" name="home">
           <carecard-splash></carecard-splash>
@@ -81,6 +69,37 @@
         <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
       </iron-pages>
       <carecard-footer></carecard-footer>
+      <navbar>
+        <div class="nav-content">
+          <div class="nav-end first">
+            <a class="nav-toggler" on-click="toggleDrawer">
+              open
+            </a>
+          </div>
+          <div class="nav-logo">
+            <a href="/" class="logo"><span class='accent'>care</span>card</a>
+          </div>
+          <div class="nav-end last">
+            <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
+          </div>
+        </div>
+      </navbar>
+      <!--<app-header-layout>
+        <app-header id="appHeader" fixed effects="fade-background" class="main-header">
+          <app-toolbar class="title-toolbar main-title-toolbar">
+            <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
+            <div class="navItem"></div>
+            <div main-title class="title spacer">
+              <a href="#"><span class="logo"><span class='accent'>care</span>card</span></a>
+            </div>
+
+          </app-toolbar>
+        </app-header>
+      </app-header-layout>-->
+    </div>
+    <div class$="drawer {{drawerOpen}}">
+      Nav.
+      <a class="drawer-close" on-click="closeDrawer">x</a>
     </div>
     <carecard-cta-dialog></carecard-cta-dialog>
     <carecard-success-dialog></carecard-success-dialog>
@@ -125,6 +144,9 @@
           type: Object,
           value: []
         },
+
+        drawerOpen: String,
+
         wideLayout: {
           type: Boolean,
           value: false,
@@ -143,6 +165,7 @@
         });
       },
       _onRouteChange: function(event) {
+        this.closeDrawer();
         let {
           id
         } = event.detail.item;
@@ -169,6 +192,14 @@
 
       _equal: function(value1, value2) {
         return value1 === value2;
+      },
+
+      closeDrawer: function(e) {
+        this.drawerOpen = '';
+      },
+
+      toggleDrawer: function(e) {
+        this.drawerOpen = 'active';
       },
 
       isActivated: function(e) {
