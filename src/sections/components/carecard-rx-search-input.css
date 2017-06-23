@@ -65,9 +65,3 @@ paper-input {
 .paper-autocomplete-0 #clear.paper-autocomplete {
   margin-top: 0px;
 }
-
-@media(max-width: 808px) {
-  paper-autocomplete {
-    margin: 20px auto 10px auto;
-  }
-}

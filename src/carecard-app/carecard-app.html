@@ -30,6 +30,7 @@
   <link rel="import" href="../sections/splash.html">
   <link rel="import" href="../sections/top-savings.html">
   <link rel="import" href="../sections/search.html">
+  <link rel="import" href="../sections/about.html">
   <link rel="import" href="../sections/components/carecard-cta-dialog.html">
   <link rel="import" href="../sections/components/carecard-success-dialog.html">
   <link rel="import" href="../sections/components/carecard-cta-button.html">
@@ -50,6 +51,24 @@
         </paper-menu>
       </app-drawer>
       <app-header-layout>
+      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
+        <div id="homePage" name="home">
+          <carecard-splash></carecard-splash>
+          <carecard-map></carecard-map>
+          <div class="split-section">
+            <features-section></features-section>
+            <top-savings></top-savings>
+          </div>
+          <div class="split-section">
+            <div class="card-preview"></div>
+            <cta-section></cta-section>
+          </div>
+          <carecard-about></carecard-about>
+          <!--<partners-section></partners-section>
+          <carecard-signup></carecard-signup>-->
+        </div>
+        <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
+      </iron-pages>
       <app-header id="appHeader" fixed effects="fade-background" class="main-header">
         <app-toolbar class="title-toolbar main-title-toolbar">
           <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
@@ -60,22 +79,6 @@
           <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
         </app-toolbar>
       </app-header>
-
-      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
-        <div id="homePage" name="home">
-          <carecard-splash></carecard-splash>
-          <carecard-map></carecard-map>
-          <div class="split-section">
-            <features-section></features-section>
-            <top-savings></top-savings>
-          </div>
-          <cta-section></cta-section>
-          <!--<carecard-about></carecard-about>
-          <partners-section></partners-section>
-          <carecard-signup></carecard-signup>-->
-        </div>
-        <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
-      </iron-pages>
       <carecard-footer></carecard-footer>
     </app-header-layout>
     </app-drawer-layout>

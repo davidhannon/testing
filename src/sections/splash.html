@@ -9,7 +9,7 @@
             <div class="search-bar">
               <carecard-rx-search-input></carecard-rx-search-input>
               <div class="input-wrapper">
-                <input on-input="updateZip" placeholder="Zipcode" name="zipcode" />
+                <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]"/>
               </div>
               <input class="search" type="button" value="Search" on-tap="openSearch" />
             </div>
@@ -30,9 +30,16 @@
         selectedTab: {
           type: String,
           value: 0
+        },
+        zipcode: {
+          type: String,
+          value: ''
         }
       },
       is: 'carecard-splash',
+      attached: function() {
+        this.zipcode = window.sessionStorage.getItem('zipcode');
+      },
       openSearch: function(ev) {
         let target = ev.target;
         if (target.hasAttribute("med")) {

@@ -13,368 +13,364 @@
 
   <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
   <link rel="import" href="./components/carecard-rx-search-input.html">
+  <link rel="import" href="../sections/cta-section.html">
   <link rel="import" type="css" href="../css/search.css">
   <template>
-<geo-location id="geoLocation" latitude="{{lat}}" idle={{!autoLocate}} longitude="{{lng}}" on-geo-response="updateLocation" on-geo-error="handleGeolocationError" maximum-age="120000"></geo-location>
-<section id="searchResults">
-  <google-map map="{{map}}" latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14 single-info-window=true>
-    <google-map-marker map="[[map]]" latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
-    <template is="dom-repeat" items="[[pharmacies]]">
-      <google-map-marker class="search-marker" id="marker_[[item.NABP]]" latitude="[[item.Latitude]]" longitude="[[item.Longitude]]" title="[[item.PharmacyName]]">
-      </google-map-marker>
-    </template>
-  </google-map>
-  <div class="contents no-padding">
-    <div class="detail-panel">
-      <carecard-rx-search-input></carecard-rx-search-input>
-      <div class="status-bar">
-        <label>Showing results for:</label>
-        <div id="medicationName">{{medName}}</div>
-      </div>
-      <paper-progress indeterminate hidden$="[[!isSearching]]"></paper-progress>
-      <div class="search-result-list" hidden$="[[isSearching]]">
-        <ul class="results-header">
-          <li>Pharmacy</li>
-          <li class="savings">Savings</li>
-        </ul>
-        <iron-list id="itemsList" items="[[pharmacies]]" selection-enabled=true on-selected-item-changed="centerMarker">
-          <template>
-              <div style="height: 70px;" class$="[[_computedClass(selected)]]">
+  <section id="searchResults">
+    <div class="contents no-padding">
+      <div class="detail-panel">
+        <div class="panel-inner">
+          <div class="header">
+            <label>Results for</label>
+            <carecard-rx-search-input></carecard-rx-search-input>
+            <div class="input-wrapper">
+              <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]"/>
+            </div>
+          </div>
+          <div class="status-bar">
+            <div id="medicationName">{{medName}}</div>
+          </div>
+          <paper-progress indeterminate hidden$="[[!isSearching]]"></paper-progress>
+          <div class="search-result-list" hidden$="[[isSearching]]">
+            <template is="dom-repeat" items="[[pharmacies]]">
+              <div class="search-result-list-item" on-click="centerMarker">
                 <ul>
                   <li>
                     <h3>[[item.PharmacyName]]</h3>
-                    <span>([[item.Distance]] Miles Away)</span>
+                    <span>[[item.Distance]] mi away</span>
                   </li>
-                  <li class="accent">
-                    <h3>$[[_roundCost(item.Cost)]]</h3>
-                    <span>With CareCard</span>
+                  <li class="item-cost">
+                    $[[_roundCost(item.Cost)]]
                   </li>
                 </ul>
               </div>
             </template>
-        </iron-list>
+          </div>
+        </div>
+      </div>
+      <cta-section></cta-section>
+    </div>
+    <div class$="{{resultDetailsClass(selectedResult)}}">
+      <div class="details-content">
+        <div class="details-content-inner">
+          <div class="details-header">
+            <span class="">{{medName}}</span>
+            <h2>${{selectedResult.Cost}}</h2>
+          </div>
+          <div class="details-body">
+            <div class="location">
+              <h3>{{selectedResult.PharmacyName}}</h3>
+              <span>{{selectedResult.Distance}} mi away</span>
+            </div>
+            <div class="address">
+              <span>{{selectedResult.Address1}}</span><br/>
+              <template is="dom-if" if="[[ selectedResult.Address2.length ]]">
+                <span>{{selectedResult.Address2}}</span><br/>
+              </template>
+              <span>{{selectedResult.City}}, {{selectedResult.State}} {{selectedResult.ZipCode}}</span>
+            </div>
+          </div>
+          <div class="details-cta">
+            Access your discount through Carecard
+            <a class="button">Get it now!</a>
+          </div>
+        </div>
+      </div>
+      <google-map latitude$="[[latitude]]" longitude$="[[longitude]]" api-key="AIzaSyCdH_BQxHpwDJV_ySsUxq0iQ6JWCQlDYI8" disable-default-ui zoom=14>
+        <google-map-marker latitude$="[[latitude]]" longitude$="[[longitude]]" draggable="true"></google-map-marker>
+      </google-map>
+      <div class="details-cta mobile">
+        Access your discount through Carecard
+        <a class="button">Get it now!</a>
       </div>
     </div>
-  </div>
-  <paper-toast id="geoError" text="There was an error fetching your location" vertical-align="auto"></paper-toast>
-  <section>
-    </template>
+  </section>
+  </template>
 
-    <script>
-      Polymer({
+  <script>
+    Polymer({
 
-        is: 'search-results-page',
-        properties: {
-          medName: {
-            type: String,
-            value: null
-          },
-          userLocation: {
-            type: Object,
-            value: null
-          },
-          isSearching: {
-            type: Boolean,
-            value: true
-          },
-          autoLocate: {
-            type: Boolean,
-            value: false
-          },
-          results: {
-            type: Object,
-            value: []
-          },
-          pharmacies: {
-            type: Object,
-            value: [],
-            notify: true
-          },
-          map: {
-            type: Object
-          },
-          shouldSearch: {
-            type: Boolean,
-            observer: "_onSearchActive"
-          }
+      is: 'search-results-page',
+      properties: {
+        medName: {
+          type: String,
+          value: null
         },
-        observers: [
-          '_searchTermChanged(medName)'
-        ],
-
-        attached: function() {
-          if (!this.medName || !this.shouldSearch) {
-            this.redirect();
-          }
-          let map = document.querySelector("#searchResults google-map");
-          let locator = document.querySelector("#searchResults geo-location") || null;
-          let rxSearch = this.querySelector("carecard-rx-search-input") || null
-          let mapComponent = this;
-
-          if (rxSearch) {
-            rxSearch.addEventListener("on-drug-selected", (e) => this.updateDrug(e));
-          }
+        userLocation: {
+          type: Object,
+          value: null
         },
+        isSearching: {
+          type: Boolean,
+          value: true
+        },
+        autoLocate: {
+          type: Boolean,
+          value: false
+        },
+        results: {
+          type: Object,
+          value: []
+        },
+        selectedResult: {
+          type: Object,
+          value: null,
+          observer: "_onSelectResult"
+        },
+        latitude: {
+          type: Number,
+          value: 37.78
+        },
+        longitude: {
+          type: Number,
+          value: -122.4
+        },
+        pharmacies: {
+          type: Object,
+          value: [],
+          notify: true
+        },
+        map: {
+          type: Object
+        },
+        shouldSearch: {
+          type: Boolean,
+          observer: "_onSearchActive"
+        },
+        zipcode: {
+          type: String,
+          value: ''
+        }
+      },
+      observers: [
+        '_searchTermChanged(medName)'
+      ],
 
-        _searchTermChanged: function(medName) {
-          if (!medName) {
-            return;
+      resultDetailsClass: function(selectedResult) {
+        return 'result-details' + (selectedResult ? ' active' : '');
+      },
+
+      attached: function() {
+        // Runs on application load (not page)
+        if (!this.medName || !this.shouldSearch) {
+          this.redirect();
+        }
+        let map = document.querySelector("#searchResults google-map");
+        let locator = document.querySelector("#searchResults geo-location") || null;
+        let rxSearch = this.querySelector("carecard-rx-search-input") || null
+        let mapComponent = this;
+
+        if (rxSearch) {
+          rxSearch.addEventListener("on-drug-selected", (e) => this.updateDrug(e));
+        }
+      },
+
+      _onSelectResult: function(result, oldValue) {
+        console.log("Selected: ", result);
+      },
+
+      _searchTermChanged: function(medName) {
+        console.log('_searchTermChange()', medName);
+        if (!medName) {
+          if (window.sessionStorage.getItem("medName", medName)) {
+            this.set('medName', window.sessionStorage.getItem("medName", medName));
           }
-          this.updateDrug();
+        } else {
           window.sessionStorage.setItem("medName", medName);
-        },
+        }
+      },
 
-        _onSearchActive: function(isActive, wasActive) {
-          if (isActive) {
-            this.set("autoLocate", true);
-            this.requestLocation();
+      _onSearchActive: function(isActive, wasActive) {
+        // Runs on page open
+        console.log("_onSearchActive()", isActive);
+        this.zipcode = window.sessionStorage.getItem('zipcode');
+        console.log(this.zipcode);
+        if (isActive) {
+          this.fetchResults();
+          // this.set("autoLocate", true);
+          // this.requestLocation();
+        }
+      },
+
+      openDialog: function() {
+        window.sessionStorage.removeItem("userLocation");
+        this.updateDrug();
+      },
+
+      clearResults() {
+        this.splice("pharmacies", 0, this.pharmacies.length);
+      },
+
+      _roundCost: function(cost) {
+        return +cost;
+        // return Math.round(+cost);
+      },
+
+      redirect() {
+        let app = document.querySelector("carecard-app");
+        app.set("categoryData.category", "");
+      },
+
+      fetchResults() {
+        console.log("Fetching results");
+        let component = this;
+        let zipcode = window.sessionStorage.getItem("zipcode");
+        // @todo: get zipcode here
+        console.log('Zip is: ', zipcode);
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            address: zipcode
+          },
+          function(results, status) {
+            if (status == 'OK') {
+              console.log(results[0].geometry.location.lat());
+              console.log(results[0].geometry.location.lng());
+              let latitude = results[0].geometry.location.lat();
+              let longitude = results[0].geometry.location.lng();
+              component.queryPricing(latitude, longitude);
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
           }
-        },
+        );
+      },
 
-        openDialog: function() {
-          window.sessionStorage.removeItem("userLocation");
-          this.updateDrug();
-        },
+      updateDrug: function(event) {
+        // Main action
+        console.log("running updateDrug()");
+        // let map = document.querySelector("google-map");
+        this.clearResults();
+        this.set("isSearching", true);
 
-        createInfoWindow(item, map, marker) {
-          let content = `
-          <div class="carecard-marker">
-            <h2><span class="accent">$${Math.round(+item.Cost)}</span></h2>
-            <h4>${item.PharmacyName}</h4>
-            <h5>${item.Address1}</h5>
-            <h5>${item.City}, ${item.State}, ${item.ZipCode}</h5>
-          </div>
-          `;
-          let infoWindow = new google.maps.InfoWindow({
-            content
-          });
-          if (this.info) {
-            this.info.close();
-          }
-          this.info = infoWindow;
-          this.info.open(map.map, marker.marker);
-        },
-
-        clearResults() {
-          this.splice("pharmacies", 0, this.pharmacies.length);
-        },
-
-        requestLocation: function() {
-          let locator = this.$.geoLocation || null;
-          if (locator) {
-            let p = locator.fetch();
-          }
-        },
-        updateLocation(event) {
-          this.set("userLocation", event.detail);
-          window.sessionStorage.setItem("userLocation", JSON.stringify(event.detail));
-          if (this.medName) {
-            this.fetchPricing();
-          }
-        },
-        handleGeolocationError: function(error) {
-          console.error(error);
-          this.$.geoError.open();
-          this.fetchPricing();
-        },
-
-        _roundCost: function(cost) {
-          return Math.round(+cost);
-        },
-
-        redirect() {
-          let app = document.querySelector("carecard-app");
-          app.set("categoryData.category", "");
-        },
-
-        updateDrug: function(event) {
-          let map = document.querySelector("google-map");
-          this.clearResults();
-          this.set("isSearching", true);
-
-          if (event) {
-            let {
-              detail: {
-                option: drug
-              }
-            } = event;
-            this.set("medName", drug.DrugName);
-          }
-          if (!this.shouldSearch) {
-            return false;
-          }
-          if (this.info) {
-            this.info.close();
-          }
-          let cached = window.sessionStorage.getItem("userLocation") || undefined;
-          if (cached) {
-            let {
-              longitude,
-              latitude
-            } = JSON.parse(cached);
-            map.latitude = latitude;
-            map.longitude = longitude;
-            this.fetchPricing({
-              detail: {
-                longitude,
-                latitude
-              }
-            });
-          } else {
-            this.requestLocation();
-          }
-        },
-
-        centerMarker: function(ev) {
-          let list = ev.target;
+        if (event) {
           let {
-            selectedItem: selected
-          } = list;
-          if (!selected) {
-            return;
-          }
+            detail: {
+              option: drug
+            }
+          } = event;
+          this.set("medName", drug.DrugName);
+        }
+        if (!this.shouldSearch) {
+          return false;
+        }
+        if (this.info) {
+          this.info.close();
+        }
 
-          let map = document.querySelector("google-map");
-          let marker = document.querySelector(`#marker_${selected.NABP}`);
-          let {
-            Latitude,
-            Longitude
-          } = selected;
-          map.latitude = Latitude;
-          map.longitude = Longitude;
-          this.createInfoWindow(selected, map, marker);
-        },
+        this.fetchResults();
+      },
 
-        geocodeZip: function() {
+      centerMarker: function(ev) {
+        const item = ev.model.get('item');
+        this.set('selectedResult', item);
+        let lat = parseFloat(item.Latitude);
+        let lng = parseFloat(item.Longitude);
+        this.set('latitude', lat);
+        this.set('longitude', lng);
+      },
+
+      // OLD AND UNUSED
+      fetchPricing: function() {
+        console.log("Fetching pricing...");
+        let component = this;
+        let location = this.userLocation;
+        if (!this.userLocation) {
+          console.error('User location not found...');
+          let zipcode = window.sessionStorage.getItem("zipcode")
+          console.log('Zip is: ', zipcode);
           var geocoder = new google.maps.Geocoder();
-          let zipInput = document.querySelector("#splash input.zipcode") || null;
-          let zipCode = zipInput ? zipInput.value : "10012";
-          console.log("Zipcode is: ", zipcode);
-          let map = document.querySelector("#searchResults google-map").map;
-          let searchComponent = document.querySelector("#searchResults google-map-search");
-          let {
-            latitude: searchLatitude,
-            longitude: searchLongitude
-          } = searchComponent;
-
           geocoder.geocode({
-              address: zipCode
+              address: zipcode
             },
             function(results, status) {
               if (status == 'OK') {
-                let {
-                  latitude,
-                  longitude
-                } = results[0].geometry.location;
-                map.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                  map: map,
-                  position: results[0].geometry.location
-                });
-                searchLatitude = latitude;
-                searchLongitude = longitude;
-                searchComponent.search("pharmacies");
+                console.log(results[0].geometry.location.lat());
+                console.log(results[0].geometry.location.lng());
+                let latitude = results[0].geometry.location.lat();
+                let longitude = results[0].geometry.location.lng();
+                component.queryPricing(latitude, longitude);
               } else {
                 alert('Geocode was not successful for the following reason: ' + status);
               }
             }
           );
-        },
-
-        fetchPricing: function() {
-          console.log("Fetching pricing...");
-          let component = this;
-          let location = this.userLocation;
-          if (!this.userLocation) {
-            console.error('User location not found...');
-            let zipcode = window.sessionStorage.getItem("zipcode")
-            console.log('Zip is: ', zipcode);
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({
-                address: zipcode
-              },
-              function(results, status) {
-                if (status == 'OK') {
-                  console.log(results[0].geometry.location.lat());
-                  console.log(results[0].geometry.location.lng());
-                  let latitude = results[0].geometry.location.lat();
-                  let longitude = results[0].geometry.location.lng();
-                  component.queryPricing(latitude, longitude);
-                } else {
-                  alert('Geocode was not successful for the following reason: ' + status);
-                }
-              }
-            );
-          } else {
-            let {
-              longitude,
-              latitude
-            } = this.userLocation;
-            component.queryPricing(latitude, longitude);
-          }
-        },
-
-        queryPricing: function(latitude, longitude) {
-          let drug = JSON.parse(window.sessionStorage.getItem("med") || "{}");
-          this.set("loadProgress", 70);
-          if (drug) {
-            let {
-              PackageSize: qty,
-              NDC,
-              Days: days
-            } = drug;
-            let params = new URLSearchParams();
-            params.append("qty", qty)
-            params.append("NDC", NDC)
-            params.append("days", "30");
-            params.append("lng", longitude)
-            params.append("lat", latitude);
-            let query = params.toString();
-            fetch(`/api/v1/pricing?${query}`).then(r => r.json()).then(res => this.updatePharmacies(res)).catch(console.error)
-          }
-        },
-
-        updatePharmacies: function(response) {
-          let component = this;
-          let newResults = response.map(r => {
-            let {
-              DrugCost: {
-                DrugCost: Costs
-              }
-            } = r;
-            let Cost = Costs ? Costs.pop().Copay : false;
-            let Distance = Number(r.Pharmacy.Distance).toFixed(2);
-            if (!Cost) {
-              return;
-            }
-
-            return Object.assign(r.Pharmacy, {
-              Cost,
-              Distance
-            });
-          }).filter(r => {
-            if (!r) {
-              return false;
-            }
-            return r.Cost ? true : false;
-          }).sort((rA, rB) => {
-            return +rA.Cost <= +rB.Cost ? -1 : 1;
-          });
-          component.splice("pharmacies", 0, this.pharmacies.length, ...newResults);
-          this.set("isSearching", false);
-        },
-
-        _computedClass: function(isSelected) {
-          var classes = 'search-result-list-item';
-          if (isSelected) {
-            classes += ' selected';
-          }
-          return classes;
-        },
-        _unselect: function(e) {
-          this.$.itemsList.deselectItem(e.model.item);
+        } else {
+          let {
+            longitude,
+            latitude
+          } = this.userLocation;
+          component.queryPricing(latitude, longitude);
         }
+      },
 
-      });
-    </script>
+      // Still used, main query function
+      queryPricing: function(latitude, longitude) {
+        let drug = JSON.parse(window.sessionStorage.getItem("med") || "{}");
+        this.set("loadProgress", 70);
+        if (drug) {
+          let {
+            PackageSize: qty,
+            NDC,
+            Days: days
+          } = drug;
+          let params = new URLSearchParams();
+          params.append("qty", qty)
+          params.append("NDC", NDC)
+          params.append("days", "30");
+          params.append("lng", longitude)
+          params.append("lat", latitude);
+          let query = params.toString();
+          fetch(`/api/v1/pricing?${query}`).then(r => r.json()).then(res => this.updatePharmacies(res)).catch(console.error)
+        }
+      },
+
+      updatePharmacies: function(response) {
+        let component = this;
+        let newResults = response.map(r => {
+          let {
+            DrugCost: {
+              DrugCost: Costs
+            }
+          } = r;
+          let Cost = Costs ? Costs.pop().Copay : false;
+          let Distance = Number(r.Pharmacy.Distance).toFixed(2);
+          if (!Cost) {
+            return;
+          }
+
+          return Object.assign(r.Pharmacy, {
+            Cost,
+            Distance
+          });
+        }).filter(r => {
+          return (!r || !r.Cost) ? false : true
+        }).sort((rA, rB) => {
+          if(+rA.Cost === +rB.Cost) {
+            return (+rA.Distance < +rB.Distance) ? -1 : (+rA.Distance > +rB.Distance) ? 1 : 0;
+          } else {
+            return (+rA.Cost <= +rB.Cost) ? -1 : 1;
+          }
+        });
+        console.log(newResults.slice(0,10));
+        this.set('pharmacies', newResults.slice(0,10));
+        this.set('isSearching', false);
+      },
+
+      _computedClass: function(isSelected) {
+        var classes = 'search-result-list-item';
+        if (isSelected) {
+          classes += ' selected';
+        }
+        return classes;
+      },
+      _unselect: function(e) {
+        this.$.itemsList.deselectItem(e.model.item);
+      },
+      updateZip: function(e) {
+        window.sessionStorage.setItem("zipcode", e.target.value);
+        this.zipcode = e.target.value;
+      }
+
+    });
+  </script>
 </dom-module>

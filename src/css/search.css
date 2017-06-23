@@ -8,6 +8,14 @@
   --app-secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
   display: block;
+  background-color: var(--section-bg-grey);
+  min-height: 100vh;
+}
+
+@media (max-width: 767px) {
+  :host {
+    min-height: 0;
+  }
 }
 
 paper-dialog {
@@ -31,14 +39,18 @@ span.accent {
 }
 
 carecard-rx-search-input {
-  --input-background-color: var(--section-bg-grey);
+  --input-background-color: white;
+  --paper-input-container: {
+    padding: 8px 0 0 0;
+  };
   display: block;
   margin: 0 auto;
+  padding-bottom: 0px;
 }
 
 carecard-rx-search-input paper-autocomplete {
   --paper-input-container-input: {
-    background-color: var(--section-bg-grey);
+    background-color: white;
     padding: 10px 20px;
     --secondary-text-color: var(--app-secondary-color);
   }
@@ -57,38 +69,49 @@ carecard-rx-search-input paper-autocomplete {
   }
 }
 
-.results-header {
-  align-items: center;
-  list-style: none;
-  display: flex;
-  padding: 0px;
-  margin-bottom: 0px;
+.panel-inner {
+  max-width: 100%;
+  width: 600px;
+  margin: 0 auto;
+  padding: 60px 20px 120px;
 }
 
-.results-header li {
-  flex: 1 1 auto;
-  font-size: 1.5em;
-  font-weight: 600;
-  line-height: 2;
+.header {
+  text-align: center;
+  padding: 0 15px;
+  margin-bottom: 30px;
 }
 
-.results-header li.savings {
-  text-align: right;
-  padding-right: 20px;
+.header label {
+  display: inline-block;
+  margin-bottom: 15px;
 }
 
-.detail-panel {
-  flex: 0 1 35%;
-  padding: 0 20px;
-  max-height: 600px;
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+  padding: 16px 14px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 400;
+  outline: 0;
+  width: 100%;
+  margin: 4px 0 0 0;
+  display: block;
+}
+
+#medicationName {
+  text-align: center;
 }
 
 iron-list {
-  max-height: calc(70px * 5);
 }
 
-.detail-panel label {
-  color: #a8a8b0;
+.search-result-list-item {
+  padding-bottom: 6px;
 }
 
 .search-result-list-item.selected {
@@ -96,22 +119,25 @@ iron-list {
 }
 
 .search-result-list-item ul {
-  align-items: center;
-  border-top: 1px solid var(--section-bg-grey);
+  background-color: white;
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+  border-radius: 3px;
+  padding: 20px;
+  justify-content: space-between;
   display: flex;
-  height: 100%;
   list-style: none;
-  margin: 0px;
-  padding: 0;
+  margin: 0;
   width: 100%;
 }
 
 .search-result-list-item li {
-  flex: 1 1 70%;
+  flex: 1 1 65%;
 }
 
-.search-result-list-item li.accent {
-  color: var(--app-primary-color);
+.search-result-list-item li.item-cost {
+  color: green;
+  font-size: 28px;
+  font-weight: 500;
   flex: 0 1 auto;
   margin-left: auto;
   text-align: center;
@@ -120,28 +146,169 @@ iron-list {
 .search-result-list-item h3 {
   margin: 0px;
   padding: 0px;
-  font-size: 16px;
-  font-weight: 400;
-  text-transform: capitalize;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;;
 }
 
 .search-result-list-item span {
   font-weight: 300;
+  font-size: 12px;
 }
 
 .status-bar {
   margin: 20px 0px;
 }
 
-google-map {
-  flex: 1 1 65%;
-  max-height: 40vh;
-  height: 600px;
+/* Big picture */
+
+#searchResult {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-@media(min-width: 600px) {
-  max-height: 600px;
+.result-details {
+  position: fixed;
+  padding-top: 64px;
+  height: 100vh;
+  top: 0;
+  left: 100%;
+  display: flex;
+  width: 100%;
+  transition: 450ms ease-in-out;
+  background-color: white;
 }
+
+.result-details.active {
+  left: 0;
+}
+
+.details-content {
+  flex: 0 0 50%;
+}
+
+google-map {
+  flex: 0 0 50%;
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .result-details {
+    display: block;
+    overflow-y: scroll;
+    padding-bottom: 30px;
+  }
+
+  google-map {
+    height: auto;
+    padding-bottom: 50%;
+    pointer-events: none;
+  }
+}
+
+.details-content-inner {
+  padding: 75px 0;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 767px) {
+  .details-content-inner {
+    padding: 30px 0 0;
+    height: auto;
+    display: block;
+  }
+}
+
+.details-header {
+  flex: 1 0 auto;
+  padding: 0 20px;
+}
+
+.details-header h2 {
+  font-size: 48px;
+  margin: 15px 0 60px 0;
+  letter-spacing: 2px;
+}
+
+
+.details-body {
+  flex: 0 1 100%;
+  padding: 0 20px;
+}
+
+@media (max-width: 767px) {
+  .details-header {
+    text-align: center;
+    border-bottom: 2px solid var(--section-bg-grey);
+  }
+
+  .details-header h2 {
+    margin-bottom: 30px;
+  }
+}
+
+.location {
+  font-size: 12px;
+}
+
+.location h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.address {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.address span {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.details-cta {
+  flex: 1 0 auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.details-cta.mobile {
+  display: none;
+}
+
+.details-cta .button {
+  display: block;
+  padding: 16px;
+  color: white;
+  background-color: var(--light-blue-color);
+  border-radius: 5px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+  .location h3 {
+    font-size: 20px;
+  }
+
+  .details-cta {
+    display: none;
+  }
+  .details-cta.mobile {
+    margin-top: 40px;
+    display: block;
+  }
+}
+
+/* Dialog */
+
 
 #close-dialog {
   width: 40px;
@@ -167,58 +334,7 @@ google-map {
   color: hsl(0, 0%, 40%);
 }
 
-@media(max-width: 768px) {
-  #searchResults .contents {
-    flex-direction: column-reverse;
-  }
-  google-map {
-    height: 40vh;
-    max-height: 600px;
-  }
-}
-
 paper-progress {
   margin: 0 auto;
   /*display: none;*/
-}
-
-@media(max-width: 600px) {
-  paper-dialog {
-    top: 0px;
-    min-height: 94vh;
-    padding: 0px;
-  }
-  paper-dialog-scrollable {
-    --paper-dialog-scrollable: {
-      padding: 0px;
-    }
-  }
-  carecard-rx-search-input {
-    width: 100%;
-    margin: 0 auto;
-  }
-  #itemsList {
-    max-height: 20vh;
-  }
-}
-
-@media(min-width: 600px) {
-  #searchResults {
-    align-items: center;
-    display: flex;
-    flex-direction: row-reverse;
-    min-height: 70vh;
-    position: relative;
-  }
-  google-map {
-    height: 600px;
-    max-height: 70vh;
-    position: relative;
-  }
-  .contents {
-    flex: 0 0 40%;
-    /*min-width: 300px;*/
-    width: 400px;
-    max-width: 30vw;
-  }
 }

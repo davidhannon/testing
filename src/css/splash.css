@@ -30,8 +30,9 @@ h2 {
 section#splash {
   background-size: 400px auto, 120px auto;
   padding: 75px 20px 120px;
-  background: linear-gradient(to bottom, #fff, #eee);
-  background-image: url(../sections/graphics/kiwi.png);
+  // background: linear-gradient(to bottom, #fff, #eee);
+  // background-image: url(../sections/graphics/kiwi.png);
+  background-color: var(--light-blue-color);
   background-size: cover;
   background-position: left center;
 }
@@ -49,7 +50,6 @@ section#splash .input-container input[type="button"] {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--app-secondary-color);
   border-radius: 6px;
   border: 0;
   color: #FFF;
@@ -58,7 +58,7 @@ section#splash .input-container input[type="button"] {
   flex: 0 0 100px;
   font-weight: 600;
   letter-spacing: 2.5px;
-  background-color: var(--app-primary-color);
+  background-color: var(--font-color);
 }
 
 section#splash .input-container input.med {
@@ -108,7 +108,7 @@ section#splash li {
 section#splash label {
   margin: 0 5px 0 0;
   font-weight: 400px;
-  color: var(--app-secondary-color);
+  color: white;
   font-weight: normal;
 }
 
