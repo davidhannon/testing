@@ -87,6 +87,10 @@ app-header {
   background-color: var(--white-color);
 }
 
+app-header-layout {
+  -webkit-overflow-scrolling: touch;
+}
+
 .nav-menu {
   background-color: var(--white-color);
   color: #fff;
