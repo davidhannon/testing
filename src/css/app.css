@@ -63,6 +63,16 @@ app-toolbar.menu-bar {
   justify-content: space-between;
 }
 
+.full-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
 app-drawer {
   --app-drawer-content-container: {
     /*background-color: var(--app-primary-color);*/
@@ -77,17 +87,15 @@ app-drawer carecard-cta-button {
   margin: auto 14px;
 }
 
-
-/*carecard-cta-button {
-        position: absolute;
-        left: 30px;
-      }*/
-
 app-header {
   background-color: var(--white-color);
 }
 
-app-header-layout {
+.app-drawer-layout {
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 0;
   -webkit-overflow-scrolling: touch;
 }
 

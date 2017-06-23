@@ -11,9 +11,6 @@
   <!--<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">-->
   <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
   <link rel="import" href="../../bower_components/paper-styles/shadow.html">
-
-  <link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-  <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
   <link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
   <link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
   <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
@@ -44,24 +41,24 @@
     <app-scrollpos-control selected="[[categoryData.category]]"></app-scrollpos-control>
 
     <!-- main panel -->
-    <app-drawer-layout fullbleed="">
-      <app-drawer id="drawer" force-narrow="" hidden$="{{wideLayout}}">
+    <div class="full-container" fullbleed="">
+      <div id="drawer" force-narrow="" hidden$="{{wideLayout}}">
         <paper-menu>
           <carecard-cta-button></carecard-cta-button>
         </paper-menu>
-      </app-drawer>
+      </div>
       <app-header-layout>
-      <app-header id="appHeader" fixed="" effects="fade-background" class="main-header">
-        <app-toolbar class="title-toolbar main-title-toolbar">
-          <paper-icon-button class="navItem" icon="menu" drawer-toggle="" hidden$="{{wideLayout}}"></paper-icon-button>
-          <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
-          <div main-title="" class="title spacer">
-            <a href="#"><h2><span class="accent">care</span>card</h2></a>
-          </div>
-          <div class="navItem"></div>
-        </app-toolbar>
-      </app-header>
-
+        <app-header id="appHeader" fixed="" effects="fade-background" class="main-header">
+          <app-toolbar class="title-toolbar main-title-toolbar">
+            <paper-icon-button class="navItem" icon="menu" drawer-toggle="" hidden$="{{wideLayout}}"></paper-icon-button>
+            <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
+            <div main-title="" class="title spacer">
+              <a href="#"><h2><span class="accent">care</span>card</h2></a>
+            </div>
+            <div class="navItem"></div>
+          </app-toolbar>
+        </app-header>
+      </app-header-layout>
       <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
         <div id="homePage" name="home">
           <carecard-splash></carecard-splash>
@@ -77,8 +74,7 @@
         <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
       </iron-pages>
       <carecard-footer></carecard-footer>
-    </app-header-layout>
-    </app-drawer-layout>
+    </div>
     <carecard-cta-dialog></carecard-cta-dialog>
     <carecard-success-dialog></carecard-success-dialog>
     <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>

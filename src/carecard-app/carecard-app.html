@@ -44,13 +44,24 @@
     <app-scrollpos-control selected="[[categoryData.category]]"></app-scrollpos-control>
 
     <!-- main panel -->
-    <app-drawer-layout fullbleed>
+    <div class="full-container" fullbleed="">
       <app-drawer id="drawer" force-narrow hidden$="{{wideLayout}}">
         <paper-menu>
           <carecard-cta-button></carecard-cta-button>
         </paper-menu>
       </app-drawer>
       <app-header-layout>
+        <app-header id="appHeader" fixed effects="fade-background" class="main-header">
+          <app-toolbar class="title-toolbar main-title-toolbar">
+            <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
+            <div class="navItem"></div>
+            <div main-title class="title spacer">
+              <a href="#"><span class="logo"><span class='accent'>care</span>card</span></a>
+            </div>
+            <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
+          </app-toolbar>
+        </app-header>
+      </app-header-layout>
       <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
         <div id="homePage" name="home">
           <carecard-splash></carecard-splash>
@@ -69,19 +80,8 @@
         </div>
         <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
       </iron-pages>
-      <app-header id="appHeader" fixed effects="fade-background" class="main-header">
-        <app-toolbar class="title-toolbar main-title-toolbar">
-          <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
-          <div class="navItem"></div>
-          <div main-title class="title spacer">
-            <a href="#"><span class="logo"><span class='accent'>care</span>card</span></a>
-          </div>
-          <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
-        </app-toolbar>
-      </app-header>
       <carecard-footer></carecard-footer>
-    </app-header-layout>
-    </app-drawer-layout>
+    </div>
     <carecard-cta-dialog></carecard-cta-dialog>
     <carecard-success-dialog></carecard-success-dialog>
     <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
