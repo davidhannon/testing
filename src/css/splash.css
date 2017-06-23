@@ -78,11 +78,12 @@ section#splash .input-wrapper input {
   font-size: 16px;
   font-weight: 400;
   outline: 0;
+  display: block;
 }
 
 section#splash ul {
   list-style: none;
-  line-height: 2;
+  line-height: 1.5;
   max-width: 800px;
   margin: -5px auto 0;
   text-align: left;
@@ -122,15 +123,22 @@ section#splash li:hover {
   cursor: pointer;
 }
 
-@media (max-width: 808px) {
+@media (max-width: 767px) {
   section#splash {
     padding: 50px 20px;
   }
   section#splash .search-bar {
     display: block;
   }
-  section#splash .search-bar button.search {
-    margin-bottom: 20px;
+  section#splash .input-wrapper {
+    padding: 0;
+  }
+  section#splash .input-wrapper input {
+    width: 100%;
+  }
+  section#splash .search-bar input.search {
+    margin: 20px auto;
+    width: 100%;
   }
   section#splash paper-autocomplete {
     margin: 20px auto 10px auto;

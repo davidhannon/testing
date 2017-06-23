@@ -1,3 +1,8 @@
+:root * {
+  box-sizing: border-box;
+  font-family: "Montserrat";
+}
+
 :host {
   font-family: "Montserrat";
   --app-primary-color: #ee5c56;
@@ -5,40 +10,60 @@
   --app-secondary-color: #525262;
   --secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
+
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --app-primary-color: var(--light-blue-color);
 }
 
 paper-dialog {
   font-family: "Montserrat";
   text-align: center;
+  width: 650px;
+  max-width: 100%;
+  padding: 60px 0;
+  background-color: var(--section-bg-grey);
+}
+
+.dialog-inner {
+  width: 440px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 paper-dialog .contents {
   display: flex;
 }
 
-paper-dialog h3 {
-  margin-bottom: 20px;
+paper-tabs {
+  margin: 20px auto;
 }
 
 paper-tab {
+
   --paper-tab: {
     background-color: #FFF;
-    color: var(--app-primary-color);
-    border: 2px solid;
+    color: var(--font-color);
+    border: 0px solid;
     border-radius: 6px;
     margin: 0 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
   }
 }
 
 paper-tab[link] a {
   @apply(--layout-horizontal);
   @apply(--layout-center-center);
-  color: var(--app-primary-color);
+  color: var(--font-color);
   text-decoration: none;
 }
 
 section[name="print"] img {
-  max-height: 180px;
+  width: 338px;
+  max-width: 100%;
 }
 
 paper-button a {
@@ -49,43 +74,66 @@ paper-button a {
 }
 
 paper-tab.iron-selected {
-  background-color: var(--app-primary-color);
+  background-color: var(--font-color);
   color: #FFF;
   border: 0;
 }
 
 iron-pages paper-button {
-  background-color: var(--app-secondary-color);
-  color: #FFF;
+  display: block;
+  padding: 16px;
+  color: white;
+  background-color: var(--light-blue-color);
+  border-radius: 5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   margin: 20px auto;
+  width: 400px;
+  max-width: 100%;
+  box-shadow: none;
+  margin-top: 15px;
+}
+
+:global(.floated-label-placeholder) {
+  display: none;
+}
+
+.form-section {
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 gold-phone-input,
 gold-email-input,
 #name-input {
-  max-width: 200px;
+  max-width: 400px;
   margin: 5px auto;
   text-align: left;
-}
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+  border: 0;
+  font-size: 16px;
+  font-weight: 400;
+  outline: 0;
+  background-color: white;
 
-gold-email-input,
-#name-input {
-  display: inline-block;
-}
-
-gold-phone-input {
-  text-align: center;
-}
-
-h2 {
-  color: var(--app-secondary-color);
-  font-size: 2.5em;
-  font-weight: 800;
-  text-align: center;
-}
-
-span.accent {
-  color: var(--app-primary-color);
+  --paper-input-container: {
+    padding: 0;
+  }
+  --paper-input-container-input: {
+    padding: 10px 20px;
+  }
+  --paper-input-container-label: {
+    display: none;
+  }
+  --paper-input-container-underline: {
+    display: none
+  }
+  --paper-input-container-underline-focus: {
+    display: none
+  }
 }
 
 #close-dialog {

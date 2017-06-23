@@ -1,8 +1,12 @@
 :host {
   display: block;
-  /*font-family: "Montserrat";*/
-  --primary-color: #ee5c56;
+  font-family: "Montserrat";
   --secondary-color: #525263;
+
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --primary-color: var(--light-blue-color);
 }
 
 :root * {

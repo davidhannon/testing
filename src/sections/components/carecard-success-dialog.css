@@ -1,3 +1,8 @@
+:root * {
+  box-sizing: border-box;
+  font-family: "Montserrat";
+}
+
 :host {
   font-family: "Montserrat";
   --app-primary-color: #ee5c56;
@@ -5,10 +10,15 @@
   --app-secondary-color: #525262;
   --secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
+
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --app-primary-color: var(--light-blue-color);
 }
 
 paper-dialog {
-  padding: 40px 0px;
+  padding: 40px 0px 90px;
   padding-top: 0px;
 }
 
@@ -17,6 +27,11 @@ paper-dialog {
     padding: 100px;
     padding-top: 0px;
   }
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat";
 }
 
 h2 {
@@ -58,7 +73,8 @@ h3 {
   font-weight: 500;
   font-size: 1.9em;
   color: var(--app-primary-color);
-  margin: 50px auto 10px auto;
+  margin: 50px auto 45px auto;
+  font-weight: 500px;
 }
 
 h5 {
@@ -69,8 +85,11 @@ h5 {
 
 h3,
 h5 {
-  max-width: 400px;
+  width: 400px;
+  max-width: 100%;
   text-align: center;
+  line-height: 1.3;
+  color: var(--font-color);
 }
 
 .details {

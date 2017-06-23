@@ -17,7 +17,7 @@
 
   <link rel="import" type="css" href="./carecard-cta-dialog.css">
   <template>
-    
+
     <iron-ajax id="sendSMSInfo"
        url="/api/v1/sms"
        handle-as="json"
@@ -31,48 +31,49 @@
        method="post"
        content-type="application/json"
        on-response="handleSMSResponse"></iron-ajax>
-    
-    <paper-dialog id="ctaInput" with-backdrop=true fit-into="[[targetElement]]" position-element="[[targetElement]]" auto-fit-on-attach=false>
-      <h2><span class="accent">care</span>card</h2>
-      <h3>Select how you'd like to receive your carecard.</h3>
-      
-      <paper-tabs selected="{{selectedTab}}">
-        <paper-tab>Print</paper-tab>
-        <paper-tab>Email</paper-tab>
-        <paper-tab>Text</paper-tab>
-      </paper-tabs>
-      <iron-pages id="tabContent" selected="{{selectedTab}}" >
-        <section name="print">
-          <img src="../graphics/carecard_email_sms.png"></img>
-          <div>
-            <paper-button raised><a href="/src/sections/graphics/carecard_print.pdf" target="_blank">Print Now</a></paper-button>
-          </div>
-        </section>
-        <section name="email">
-          <div>
-            <form is="iron-form" id="emailForm" method="post" action="/api/v1/email">
-            <paper-input id="name-input" label="Full Name*" no-label-float=true required name="fullName"></paper-input>
-            <gold-email-input label="Email*" no-label-float=true required name="emailAddress"></gold-email-input>
-            </form>
-          </div>
-          <paper-button raised on-click="sendEmail">Send free card</paper-button>
-        </section>
-        <section name="sms">
-          <form is="iron-form" id="smsForm" method="post" action="/api/v1/sms">
-            <gold-phone-input name="phone" no-label-float=true required></gold-phone-input>
-            <paper-button raised on-click="submitForm">Send free card</paper-button>
-          </form>
-        </section>
-      </iron-pages>
 
-      <paper-dialog-scrollable>
-        
-      </paper-dialog-scrollable>
-            <div id="close-dialog" on-click="cancel">
-        <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
+    <paper-dialog id="ctaInput" with-backdrop=false fit-into="[[targetElement]]" position-element="[[targetElement]]" auto-fit-on-attach=false>
+      <div class="dialog-inner">
+        <p>Get your instant savings with CareCard for free</p>
+
+        <paper-tabs selected="{{selectedTab}}">
+          <paper-tab>Print</paper-tab>
+          <paper-tab>Email</paper-tab>
+          <paper-tab>Text</paper-tab>
+        </paper-tabs>
+        <iron-pages id="tabContent" selected="{{selectedTab}}" >
+          <section name="print" class="form-section">
+            <div>
+              <img src="../graphics/carecard_email_sms.png" alt="CareCard Preview" />
+            </div>
+            <paper-button raised><a href="/src/sections/graphics/carecard_print.pdf" target="_blank">Print Now</a></paper-button>
+          </section>
+          <section name="email" class="form-section">
+            <div>
+              <form is="iron-form" id="emailForm" method="post" action="/api/v1/email">
+              <paper-input id="name-input" placeholder="Full Name" no-label-float=true required name="fullName"></paper-input>
+              <gold-email-input placeholder="Email" no-label-float=true required name="emailAddress"></gold-email-input>
+              </form>
+            </div>
+            <paper-button raised on-click="sendEmail">Send free card</paper-button>
+          </section>
+          <section name="sms" class="form-section">
+            <form is="iron-form" id="smsForm" method="post" action="/api/v1/sms">
+              <gold-phone-input placeholder="Phone number" name="phone" no-label-float=true required></gold-phone-input>
+            </form>
+            <paper-button raised on-click="submitForm">Send free card</paper-button>
+          </section>
+        </iron-pages>
+
+        <paper-dialog-scrollable>
+
+        </paper-dialog-scrollable>
+        <div id="close-dialog" on-click="cancel">
+          <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
+        </div>
       </div>
     </paper-dialog>
-    
+
   </template>
   <script>
     Polymer({
@@ -90,14 +91,10 @@
       },
       is: 'carecard-cta-dialog',
       submitForm: function(ev) {
-        let {
-          target: {
-            parentElement: form
-          }
-        } = ev;
-        if (!form.validate()) {
-          return;
-        }
+        let form = this.$.smsForm;
+        // if (!form.validate()) {
+        //   return;
+        // }
         let formData = (Array.from(form));
         let body = {};
         formData.forEach(input => {
@@ -108,9 +105,9 @@
       },
       sendEmail: function(ev) {
         let form = this.$.emailForm;
-        if (!form.validate()) {
-          return;
-        }
+        // if (!form.validate()) {
+        //   return;
+        // }
         let formData = (Array.from(form));
         let body = {};
         formData.forEach(input => {
