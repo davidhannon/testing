@@ -77,25 +77,13 @@
             </a>
           </div>
           <div class="nav-logo">
-            <a href="/" class="logo"><span class='accent'>care</span>card</a>
+            <a href="/" on-click="goHome" class="logo"><span class='accent'>care</span>card</a>
           </div>
           <div class="nav-end last">
             <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
           </div>
         </div>
       </navbar>
-      <!--<app-header-layout>
-        <app-header id="appHeader" fixed effects="fade-background" class="main-header">
-          <app-toolbar class="title-toolbar main-title-toolbar">
-            <paper-icon-button class="navItem" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
-            <div class="navItem"></div>
-            <div main-title class="title spacer">
-              <a href="#"><span class="logo"><span class='accent'>care</span>card</span></a>
-            </div>
-
-          </app-toolbar>
-        </app-header>
-      </app-header-layout>-->
     </div>
     <div class$="drawer {{drawerOpen}}">
       Nav.
@@ -192,6 +180,10 @@
 
       _equal: function(value1, value2) {
         return value1 === value2;
+      },
+
+      goHome: function(e) {
+        this.set("categoryData.category", "home");
       },
 
       closeDrawer: function(e) {
