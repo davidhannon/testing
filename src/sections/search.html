@@ -28,7 +28,8 @@
             </div>
           </div>
           <div class="status-bar">
-            <div id="medicationName">{{medName}}</div>
+            <div id="medicationName" hidden$="[[errorMessage.length]]">{{medName}}</div>
+            <div id="errorMessage">{{errorMessage}}</div>
           </div>
           <paper-progress indeterminate hidden$="[[!isSearching]]"></paper-progress>
           <div class="search-result-list" hidden$="[[isSearching]]">
@@ -103,6 +104,10 @@
         isSearching: {
           type: Boolean,
           value: true
+        },
+        errorMessage: {
+          type: String,
+          value: ''
         },
         autoLocate: {
           type: Boolean,
@@ -213,9 +218,22 @@
 
       fetchResults() {
         console.log("Fetching results");
+        this.set("isSearching", true);
+        this.set('errorMessage', '');
         let component = this;
         let zipcode = window.sessionStorage.getItem("zipcode");
         // @todo: get zipcode here
+        if (!zipcode || !(zipcode.length === 5)) {
+          this.set('errorMessage', 'Please enter a valid zipcode');
+          this.set("isSearching", false);
+          return;
+        }
+        let drug = JSON.parse(window.sessionStorage.getItem("med"));
+        if (!drug) {
+          this.set('errorMessage', 'Please select a prescription');
+          this.set("isSearching", false);
+          return;
+        }
         console.log('Zip is: ', zipcode);
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({
@@ -229,7 +247,8 @@
               let longitude = results[0].geometry.location.lng();
               component.queryPricing(latitude, longitude);
             } else {
-              alert('Geocode was not successful for the following reason: ' + status);
+              this.set("isSearching", false);
+              this.set('errorMessage', 'Geocode was not successful for the following reason: ' + status);
             }
           }
         );
@@ -240,7 +259,6 @@
         console.log("running updateDrug()");
         // let map = document.querySelector("google-map");
         this.clearResults();
-        this.set("isSearching", true);
 
         if (event) {
           let {
@@ -269,43 +287,9 @@
         this.set('longitude', lng);
       },
 
-      // OLD AND UNUSED
-      fetchPricing: function() {
-        console.log("Fetching pricing...");
-        let component = this;
-        let location = this.userLocation;
-        if (!this.userLocation) {
-          console.error('User location not found...');
-          let zipcode = window.sessionStorage.getItem("zipcode")
-          console.log('Zip is: ', zipcode);
-          var geocoder = new google.maps.Geocoder();
-          geocoder.geocode({
-              address: zipcode
-            },
-            function(results, status) {
-              if (status == 'OK') {
-                console.log(results[0].geometry.location.lat());
-                console.log(results[0].geometry.location.lng());
-                let latitude = results[0].geometry.location.lat();
-                let longitude = results[0].geometry.location.lng();
-                component.queryPricing(latitude, longitude);
-              } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-              }
-            }
-          );
-        } else {
-          let {
-            longitude,
-            latitude
-          } = this.userLocation;
-          component.queryPricing(latitude, longitude);
-        }
-      },
-
       // Still used, main query function
       queryPricing: function(latitude, longitude) {
-        let drug = JSON.parse(window.sessionStorage.getItem("med") || "{}");
+        let drug = JSON.parse(window.sessionStorage.getItem('med') || '{}');
         this.set("loadProgress", 70);
         if (drug) {
           let {
@@ -367,8 +351,12 @@
         this.$.itemsList.deselectItem(e.model.item);
       },
       updateZip: function(e) {
+        console.log(e.target.value);
         window.sessionStorage.setItem("zipcode", e.target.value);
-        this.zipcode = e.target.value;
+        this.set('zipcode', e.target.value);
+        if (this.zipcode.toString().length === 5) {
+          this.fetchResults();
+        }
       }
 
     });

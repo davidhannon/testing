@@ -38,6 +38,10 @@ span.accent {
   color: var(--app-primary-color);
 }
 
+#errorMessage {
+  text-align: center;
+}
+
 carecard-rx-search-input {
   --input-background-color: white;
   --paper-input-container: {
