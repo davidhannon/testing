@@ -111,11 +111,15 @@ navbar {
 .nav-logo {
   flex: 1 1 100%;
   text-align: center;
-  padding-top: 15px;
+  padding-top: 12px;
 }
 
 .nav-end {
-  flex: 0 0 200px;
+  flex: 0 0 210px;
+}
+
+.nav-end.last {
+  text-align: right;
 }
 
 @media (max-width: 767px) {
@@ -132,13 +136,43 @@ a {
 }
 
 a.logo {
-  font-size: 26px;
+  font-size: 32px;
   letter-spacing: 1px;
   font-weight: 600;
 }
 
 span.accent {
   color: var(--app-primary-color);
+}
+
+a.mini-cta {
+  text-align: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+  background-image: url(../sections/graphics/mini-cta.png);
+  background-size: cover;
+  background-position: center;
+  margin-top: 10px;
+  display: none;
+}
+
+.full-cta {
+  display: inline-block;
+}
+
+@media (max-width: 767px) {
+  a.mini-cta {
+    display: inline-block;
+  }
+  .full-cta {
+    display: none;
+  }
+}
+
+a.mini-cta:hover {
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,0.2);
 }
 
 a.nav-toggler {

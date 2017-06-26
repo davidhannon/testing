@@ -17,10 +17,11 @@ paper-button,
 paper-button[animated] {
   transition: all 350ms ease-in-out;
   box-shadow: none !important;
+  border: 3px solid #f05955;
 }
 
 paper-button:hover {
-  background-color: #f05955;
-  color: #fff;
-  /*border-color: #f05955;*/
+  background-color: white;
+  color: #f05955;
+  border-color: #f05955;
 }

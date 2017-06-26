@@ -30,7 +30,8 @@
   <link rel="import" href="../sections/splash.html">
   <link rel="import" href="../sections/top-savings.html">
   <link rel="import" href="../sections/search.html">
-  <link rel="import" href="../sections/about.html">
+  <link rel="import" href="../sections/faq-page.html">
+  <link rel="import" href="../sections/terms-page.html">
   <link rel="import" href="../sections/components/carecard-cta-dialog.html">
   <link rel="import" href="../sections/components/carecard-success-dialog.html">
   <link rel="import" href="../sections/components/carecard-cta-button.html">
@@ -53,7 +54,7 @@
       <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
         <div id="homePage" name="home">
           <carecard-splash></carecard-splash>
-          <carecard-map></carecard-map>
+          <carecard-map on-cta-click="openSearch"></carecard-map>
           <div class="split-section">
             <features-section></features-section>
             <top-savings></top-savings>
@@ -67,6 +68,8 @@
           <carecard-signup></carecard-signup>-->
         </div>
         <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
+        <faq-page id=faqPage name="faq"></faq-page>
+        <terms-page id=termsPage name="terms"></terms-page>
       </iron-pages>
       <carecard-footer></carecard-footer>
       <navbar>
@@ -78,7 +81,10 @@
             <a href="/" on-click="goHome" class="logo"><span class='accent'>care</span>card</a>
           </div>
           <div class="nav-end last">
-            <carecard-cta-button class="navItem" hidden$="{{!wideLayout}}"></carecard-cta-button>
+            <div class="full-cta">
+              <carecard-cta-button class="navItem"></carecard-cta-button>
+            </div>
+            <a class="mini-cta" on-click="openCTADialog"></a>
           </div>
         </div>
       </navbar>
@@ -87,8 +93,8 @@
       <a class="link" on-click="openCTADialog">Get Carecard</a>
       <a class="link" on-click="goHome" href="/">Home</a>
       <a class="link" on-click="goHome">About Us</a>
-      <a class="link" on-click="goHome">FAQ</a>
-      <a class="link" on-click="goHome">Terms &amp; Conditions</a>
+      <a class="link" on-click="goFaq">FAQ</a>
+      <a class="link" on-click="goTerms">Terms &amp; Conditions</a>
       <a class="link" on-click="goHome">Contact</a>
       <a class="drawer-close" on-click="closeDrawer"></a>
     </div>
@@ -153,6 +159,8 @@
           if (!this.route.path) {
             this.set('route.path', '/');
           }
+          window.sessionStorage.setItem("medName", "")
+          window.sessionStorage.setItem("med", null)
         });
       },
       _onRouteChange: function(event) {
@@ -188,6 +196,16 @@
       goHome: function(e) {
         this.closeDrawer();
         this.set("categoryData.category", "home");
+      },
+
+      goFaq: function(e) {
+        this.closeDrawer();
+        this.set("categoryData.category", "faq");
+      },
+
+      goTerms: function(e) {
+        this.closeDrawer();
+        this.set("categoryData.category", "terms");
       },
 
       closeDrawer: function(e) {
@@ -271,10 +289,6 @@
         let success = document.querySelector("carecard-success-dialog");
         cta.$.ctaInput.refit();
         success.$.carecardSuccessDialog.refit();
-        var drawer = this.$.drawer;
-        if (wide && drawer && drawer.opened) {
-          drawer.opened = false;
-        }
       },
       loadPresets: function(event) {
         let {

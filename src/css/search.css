@@ -9,7 +9,7 @@
   --section-bg-grey: #f1f1f1;
   display: block;
   background-color: var(--section-bg-grey);
-  min-height: 100vh;
+  min-height: 85vh;
 }
 
 @media (max-width: 767px) {

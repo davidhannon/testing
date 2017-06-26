@@ -2,6 +2,7 @@
   --white-color: #fff;
   --light-blue-color: #04b8ff;
   --font-color: #0e0048;
+  --font-color-lighten: #2b1a70;
   text-align: center;
   padding: 75px 20px 90px;
   border-sizing: border-box;
@@ -42,4 +43,10 @@ a.button {
   color: var(--white-color);
   letter-spacing: 2.5px;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+
+a.button:hover {
+  background-color: var(--font-color-lighten);
 }

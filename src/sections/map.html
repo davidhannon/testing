@@ -6,7 +6,7 @@
         <div class="header">
           <h2 class="h2">Search prescriptions close to you</h2>
         </div>
-        <a class="button">
+        <a class="button" on-click="goSearch">
           Find discounts now
         </a>
       </div>
@@ -20,7 +20,10 @@
           value: 0
         }
       },
-      is: 'carecard-map'
+      is: 'carecard-map',
+      goSearch: function(e) {
+        this.fire("cta-click");
+      }
     });
   </script>
 </dom-module>
