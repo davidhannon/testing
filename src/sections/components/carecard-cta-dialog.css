@@ -13,6 +13,7 @@
 
   --white-color: #fff;
   --light-blue-color: #04b8ff;
+  --lighter-blue-color: #34c3fb;
   --font-color: #0e0048;
   --app-primary-color: var(--light-blue-color);
 }
@@ -93,6 +94,10 @@ iron-pages paper-button {
   max-width: 100%;
   box-shadow: none;
   margin-top: 15px;
+}
+
+iron-pages paper-button:hover {
+  background-color: var(--lighter-blue-color);
 }
 
 :global(.floated-label-placeholder) {

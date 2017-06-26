@@ -57,15 +57,13 @@
           <carecard-map on-cta-click="openSearch"></carecard-map>
           <div class="split-section">
             <features-section></features-section>
-            <top-savings></top-savings>
+            <top-savings on-cta-click="openSearch"></top-savings>
           </div>
           <div class="split-section">
             <div class="card-preview"></div>
-            <cta-section></cta-section>
+            <cta-section on-cta-click="openCTADialog"></cta-section>
           </div>
           <carecard-about></carecard-about>
-          <!--<partners-section></partners-section>
-          <carecard-signup></carecard-signup>-->
         </div>
         <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
         <faq-page id=faqPage name="faq"></faq-page>

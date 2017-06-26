@@ -6,6 +6,7 @@
   font-family: "Montserrat";
   --app-primary-color: #ee5c56;
   --app-secondary-color: #525262;
+  --lighter-blue-color: #34c3fb;
   --section-bg-grey: #f1f1f1;
   display: block;
   background-color: var(--section-bg-grey);
@@ -295,6 +296,11 @@ google-map {
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-top: 10px;
+  cursor: pointer;
+}
+
+.details-cta .button:hover {
+  background-color: var(--lighter-blue-color);
 }
 
 @media (max-width: 767px) {

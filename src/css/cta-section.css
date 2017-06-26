@@ -9,6 +9,7 @@
 
   --white-color: #fff;
   --light-blue-color: #04b8ff;
+  --lighter-blue-color: #34c3fb;
   --font-color: #0e0048;
   --app-primary-color: var(--light-blue-color);
 
@@ -59,4 +60,9 @@ a.button {
   color: var(--white-color);
   letter-spacing: 2.5px;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+a.button:hover {
+  background-color: var(--lighter-blue-color);
 }

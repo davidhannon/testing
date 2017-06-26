@@ -5,7 +5,7 @@
     <div class="header">
       <h2>Start Saving Now!</h2>
     </div>
-    <a class="button">
+    <a class="button" on-click="goCTA">
       Get your free card
     </a>
   </template>
@@ -17,7 +17,10 @@
           value: 0
         }
       },
-      is: 'cta-section'
+      is: 'cta-section',
+      goCTA: function(e) {
+        this.fire("cta-click");
+      }
     });
   </script>
 </dom-module>
