@@ -165,6 +165,13 @@ iron-list {
   margin: 20px 0px;
 }
 
+a.close-button {
+  position: absolute;
+  display: block;
+  top: 30px;
+  left: 45px;
+}
+
 /* Big picture */
 
 #searchResult {

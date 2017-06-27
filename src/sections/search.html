@@ -34,7 +34,7 @@
           <paper-progress indeterminate hidden$="[[!isSearching]]"></paper-progress>
           <div class="search-result-list" hidden$="[[isSearching]]">
             <template is="dom-repeat" items="[[pharmacies]]">
-              <div class="search-result-list-item" on-click="centerMarker">
+              <div class="search-result-list-item" on-click="selectPharmacy">
                 <ul>
                   <li>
                     <h3>[[item.PharmacyName]]</h3>
@@ -53,6 +53,9 @@
     </div>
     <div class$="{{resultDetailsClass(selectedResult)}}">
       <div class="details-content">
+        <a class="back-button" on-click="deselectPharmacy">
+          <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
+        </a>
         <div class="details-content-inner">
           <div class="details-header">
             <span class="">{{medName}}</span>
@@ -283,13 +286,17 @@
         this.fetchResults();
       },
 
-      centerMarker: function(ev) {
+      selectPharmacy: function(ev) {
         const item = ev.model.get('item');
         this.set('selectedResult', item);
         let lat = parseFloat(item.Latitude);
         let lng = parseFloat(item.Longitude);
         this.set('latitude', lat);
         this.set('longitude', lng);
+      },
+
+      deselectPharmacy: function(ev) {
+        this.set('selectedResult', null);
       },
 
       // Still used, main query function

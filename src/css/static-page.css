@@ -26,6 +26,19 @@ h5 {
   font-weight: 600;
 }
 
+h3 {
+  margin-top: 45px;
+}
+
+p, li {
+  line-height: 1.4;
+  font-size: 16px;
+}
+
+li {
+  font-weight: 400;
+}
+
 .static-content {
   margin: 0 auto;
   width: 800px;

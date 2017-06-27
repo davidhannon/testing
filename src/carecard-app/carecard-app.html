@@ -30,6 +30,7 @@
   <link rel="import" href="../sections/splash.html">
   <link rel="import" href="../sections/top-savings.html">
   <link rel="import" href="../sections/search.html">
+  <link rel="import" href="../sections/about-page.html">
   <link rel="import" href="../sections/faq-page.html">
   <link rel="import" href="../sections/terms-page.html">
   <link rel="import" href="../sections/components/carecard-cta-dialog.html">
@@ -66,6 +67,7 @@
           <carecard-about></carecard-about>
         </div>
         <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
+        <about-page id=aboutPage name="about"></about-page>
         <faq-page id=faqPage name="faq"></faq-page>
         <terms-page id=termsPage name="terms"></terms-page>
       </iron-pages>
@@ -90,10 +92,9 @@
     <div class$="drawer {{drawerOpen}}">
       <a class="link" on-click="openCTADialog">Get Carecard</a>
       <a class="link" on-click="goHome" href="/">Home</a>
-      <a class="link" on-click="goHome">About Us</a>
+      <a class="link" on-click="goAbout">About Us</a>
       <a class="link" on-click="goFaq">FAQ</a>
       <a class="link" on-click="goTerms">Terms &amp; Conditions</a>
-      <a class="link" on-click="goHome">Contact</a>
       <a class="drawer-close" on-click="closeDrawer"></a>
     </div>
     <carecard-cta-dialog></carecard-cta-dialog>
@@ -194,6 +195,11 @@
       goHome: function(e) {
         this.closeDrawer();
         this.set("categoryData.category", "home");
+      },
+
+      goAbout: function(e) {
+        this.closeDrawer();
+        this.set("categoryData.category", "about");
       },
 
       goFaq: function(e) {
