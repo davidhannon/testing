@@ -117,6 +117,9 @@ iron-list {
 
 .search-result-list-item {
   padding-bottom: 6px;
+  paddi
+  position: relative;
+  cursor: pointer;
 }
 
 .search-result-list-item.selected {
@@ -127,16 +130,38 @@ iron-list {
   background-color: white;
   box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
   border-radius: 3px;
-  padding: 20px;
+  padding: 25px 45px 25px 20px;
   justify-content: space-between;
   display: flex;
   list-style: none;
   margin: 0;
   width: 100%;
+  position: relative;
 }
 
-.search-result-list-item li {
-  flex: 1 1 65%;
+.search-result-list-item ul::after {
+  content: '';
+  position: absolute;
+  display: block;
+  right: 23px;
+  top: 50%;
+  height: 12px;
+  width: 12px;
+  opacity: 0.35;
+  transform: translateY(-50%) rotate(45deg);
+  border-top: 3px solid var(--font-color);
+  border-right: 3px solid var(--font-color);
+  transition: 240ms ease-in-out;
+}
+
+.search-result-list-item ul:hover {
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  transition: 140ms ease-in-out;
+}
+
+.search-result-list-item ul:hover::after {
+  right: 20px;
+  transition: 140ms ease-in-out;
 }
 
 .search-result-list-item li.item-cost {
@@ -146,6 +171,23 @@ iron-list {
   flex: 0 1 auto;
   margin-left: auto;
   text-align: center;
+  padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media (max-width: 767px) {
+  .search-result-list-item ul {
+    padding: 15px 40px 15px 15px;
+  }
+
+  .search-result-list-item ul::after {
+    right: 19px;
+  }
+  .search-result-list-item li.item-cost {
+    font-size: 24px;
+  }
 }
 
 .search-result-list-item h3 {
@@ -165,11 +207,23 @@ iron-list {
   margin: 20px 0px;
 }
 
-a.close-button {
+a.back-button {
   position: absolute;
   display: block;
-  top: 30px;
-  left: 45px;
+  top: 10px;
+  left: 20px;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  a.back-button {
+    left: 20px;
+    top: 3px;
+    height: 30px;
+    width: 30px;
+  }
 }
 
 /* Big picture */
@@ -198,6 +252,7 @@ a.close-button {
 
 .details-content {
   flex: 0 0 50%;
+  position: relative;
 }
 
 google-map {
@@ -230,7 +285,7 @@ google-map {
 
 @media (max-width: 767px) {
   .details-content-inner {
-    padding: 30px 0 0;
+    padding: 45px 0 0;
     height: auto;
     display: block;
   }

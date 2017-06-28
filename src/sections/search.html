@@ -173,6 +173,10 @@
         }
       },
 
+      detached: function() {
+        this.set('selectedResult', null);
+      },
+
       _onSelectResult: function(result, oldValue) {
         console.log("Selected: ", result);
       },
@@ -191,6 +195,7 @@
       _onSearchActive: function(isActive, wasActive) {
         // Runs on page open
         console.log("_onSearchActive()", isActive);
+        this.set('selectedResult', null);
         this.zipcode = window.sessionStorage.getItem('zipcode');
         console.log(this.zipcode);
         if (isActive) {
