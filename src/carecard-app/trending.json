@@ -1,5 +1,22 @@
 [
   {
+    "name": "Aczone",
+    "preset": {
+      "DrugName": "ACZONE       GEL 5%",
+      "GPI": "90051015004020",
+      "Ingredient": false,
+      "Mony": "N",
+      "NDC": "00023367060",
+      "OTC": false,
+      "PackageSize": "60.00",
+      "ProductName": "ACZONE",
+      "Strength": "5",
+      "Type": "Brand",
+      "text": "ACZONE       GEL 5%",
+      "value": "90051015004020"
+    }
+  },
+  {
     "name": "Adderall",
     "preset": {
       "DrugName": "ADDERALL     TAB 10MG",
@@ -68,6 +85,108 @@
     }
   },
   {
+    "name": "Lipitor",
+    "preset": {
+      "DrugName": "LIPITOR      TAB 10MG",
+      "GPI": "39400010100310",
+      "Ingredient": false,
+      "Mony": "O",
+      "NDC": "00071015523",
+      "OTC": false,
+      "PackageSize": "30.00",
+      "ProductName": "LIPITOR",
+      "Strength": "10",
+      "Type": "Brand",
+      "text": "LIPITOR      TAB 10MG",
+      "value": "39400010100310"
+    }
+  },
+  {
+    "name": "Neurontin",
+    "preset": {
+      "DrugName": "NEURONTIN    CAP 100MG",
+      "GPI": "72600030000110",
+      "Ingredient": false,
+      "Mony": "O",
+      "NDC": "00071080324",
+      "OTC": false,
+      "PackageSize": "30.00",
+      "ProductName": "NEURONTIN",
+      "Strength": "100",
+      "Type": "Brand",
+      "text": "NEURONTIN    CAP 100MG",
+      "value": "72600030000110"
+    }
+  },
+  {
+    "name": "Nexium",
+    "preset": {
+      "DrugName": "NEXIUM       GRA 2.5MG DR",
+      "GPI": "49270025103004",
+      "Ingredient": false,
+      "Mony": "N",
+      "NDC": "00186402501",
+      "OTC": false,
+      "PackageSize": "30.00",
+      "ProductName": "NEXIUM",
+      "Strength": "2.5",
+      "Type": "Brand",
+      "text": "NEXIUM       GRA 2.5MG DR",
+      "value": "49270025103004"
+    }
+  },
+  {
+    "name": "Prilosec",
+    "preset": {
+      "DrugName": "PRILOSEC     POW 2.5MG",
+      "GPI": "49270060103020",
+      "Ingredient": false,
+      "Mony": "N",
+      "NDC": "00186062501",
+      "OTC": false,
+      "PackageSize": "30.00",
+      "ProductName": "PRILOSEC",
+      "Strength": "2.5",
+      "Type": "Brand",
+      "text": "PRILOSEC     POW 2.5MG",
+      "value": "49270060103020"
+    }
+  },
+  {
+    "name": "Tamiflu",
+    "preset": {
+      "DrugName": "TAMIFLU      CAP 30MG",
+      "GPI": "12504060200110",
+      "Ingredient": false,
+      "Mony": "O",
+      "NDC": "00004080285",
+      "OTC": false,
+      "PackageSize": "30.00",
+      "ProductName": "TAMIFLU",
+      "Strength": "30",
+      "Type": "Brand",
+      "text": "TAMIFLU      CAP 30MG",
+      "value": "12504060200110"
+    }
+  },
+  {
+    "name": "Viagra",
+    "preset": {
+      "DrugName": "VIAGRA       TAB 25MG",
+      "GPI": "40304070100310",
+      "Ingredient": false,
+      "Mony": "N",
+      "NDC": "00069420030",
+      "OTC": false,
+      "PackageSize": "30.00",
+      "ProductName": "VIAGRA",
+      "Strength": "25",
+      "Type": "Brand",
+      "text": "VIAGRA       TAB 25MG",
+      "value": "40304070100310"
+    }
+  },
+  {
     "name": "Vyvanse",
     "preset": {
       "DrugName": "VYVANSE      CAP 10MG",
@@ -82,6 +201,40 @@
       "Type": "Brand",
       "text": "VYVANSE      CAP 10MG",
       "value": "61100025100110"
+    }
+  },
+  {
+    "name": "Yaz",
+    "preset": {
+      "DrugName": "YAZ          TAB 3-0.02MG",
+      "GPI": "25990002150316",
+      "Ingredient": false,
+      "Mony": "O",
+      "NDC": "50419040503",
+      "OTC": false,
+      "PackageSize": "28.00",
+      "ProductName": "YAZ",
+      "Strength": "0",
+      "Type": "Brand",
+      "text": "YAZ          TAB 3-0.02MG",
+      "value": "25990002150316"
+    }
+  },
+  {
+    "name": "Zithromax",
+    "preset": {
+      "DrugName": "ZITHROMAX    SUS 100/5ML",
+      "GPI": "03400010001920",
+      "Ingredient": false,
+      "Mony": "O",
+      "NDC": "00069311019",
+      "OTC": false,
+      "PackageSize": "15.00",
+      "ProductName": "ZITHROMAX",
+      "Strength": "100",
+      "Type": "Brand",
+      "text": "ZITHROMAX    SUS 100/5ML",
+      "value": "03400010001920"
     }
   }
 ]

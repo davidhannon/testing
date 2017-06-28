@@ -32,6 +32,7 @@
       },
       persistSearch: function(id, selection) {
         window.sessionStorage.setItem("medName", selection.text);
+        console.log(selection);
         window.sessionStorage.setItem("med", JSON.stringify(selection.option));
         this.fire("on-drug-selected", selection);
 

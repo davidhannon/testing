@@ -162,6 +162,7 @@
           window.sessionStorage.setItem("med", null)
         });
       },
+
       _onRouteChange: function(event) {
         this.closeDrawer();
         let {
@@ -174,12 +175,13 @@
           this.set("searchActive", true);
         }
       },
+
       ready: function() {
         window.addEventListener("resize", this.onLayoutChange);
         let elem = document.querySelector("carecard-app");
         elem.async(function() {
           document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
-          document.querySelectorAll("section#discounts table td a").forEach(el => el.addEventListener("click", ev => elem.openCTADialog(ev)));
+          document.querySelectorAll("#topSavings ul li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
           let rxSearch = this.querySelector("carecard-rx-search-input") || null;
           let searchPage = this.querySelector("search-results-page") || null;
           if (rxSearch && searchPage) {
@@ -256,11 +258,13 @@
       _drawerSelected: function() {
         if (!this.$.drawer.persistent) this.$.drawer.close();
       },
+
       persistSearch: function(id, selection) {
         let drugName = selection.text.replace(",", "");
         this.$.searchResultsPage.medName = drugName;
         window.sessionStorage.setItem("medName", drugName);
       },
+
       openSearch: function(ev) {
         let target = ev.target;
         if (target.hasAttribute("med")) {
@@ -271,8 +275,8 @@
           window.sessionStorage.setItem("med", JSON.stringify(preset));
         }
         this.set("categoryData.category", "search");
-
       },
+
       openCTADialog: function(ev) {
         let target = ev.target;
         if (target.hasAttribute("med")) {
@@ -284,16 +288,19 @@
         let cta = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
         cta.open();
       },
+
       showSuccessDialog: function(ev) {
         let dialog = document.querySelector("carecard-success-dialog").querySelector("paper-dialog");
         dialog.open();
       },
+
       onLayoutChange: function(wide) {
         let cta = document.querySelector("carecard-cta-dialog");
         let success = document.querySelector("carecard-success-dialog");
         cta.$.ctaInput.refit();
         success.$.carecardSuccessDialog.refit();
       },
+
       loadPresets: function(event) {
         let {
           response

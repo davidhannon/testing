@@ -178,11 +178,10 @@
       },
 
       _onSelectResult: function(result, oldValue) {
-        console.log("Selected: ", result);
+        // console.log("Selected: ", result);
       },
 
       _searchTermChanged: function(medName) {
-        console.log('_searchTermChange()', medName);
         if (!medName) {
           if (window.sessionStorage.getItem("medName", medName)) {
             this.set('medName', window.sessionStorage.getItem("medName", medName));
@@ -194,14 +193,18 @@
 
       _onSearchActive: function(isActive, wasActive) {
         // Runs on page open
-        console.log("_onSearchActive()", isActive);
+        if (document.querySelector('.full-container')) {
+          document.querySelector('.full-container').scrollTop = 0;
+        }
         this.set('selectedResult', null);
         this.zipcode = window.sessionStorage.getItem('zipcode');
-        console.log(this.zipcode);
+        if (window.sessionStorage.getItem('medName')) {
+          console.log(this.querySelector("carecard-rx-search-input input#input"));
+          console.log(window.sessionStorage.getItem('medName'));
+          this.querySelector("carecard-rx-search-input input#input").value = window.sessionStorage.getItem('medName');
+        }
         if (isActive) {
           this.fetchResults();
-          // this.set("autoLocate", true);
-          // this.requestLocation();
         }
       },
 
@@ -230,7 +233,6 @@
       },
 
       fetchResults() {
-        console.log("Fetching results");
         this.set("isSearching", true);
         this.set('errorMessage', '');
         let component = this;
@@ -247,7 +249,6 @@
           this.set("isSearching", false);
           return;
         }
-        console.log('Zip is: ', zipcode);
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({
             address: zipcode
@@ -269,7 +270,6 @@
 
       updateDrug: function(event) {
         // Main action
-        console.log("running updateDrug()");
         // let map = document.querySelector("google-map");
         this.clearResults();
 
@@ -352,7 +352,6 @@
             return (+rA.Cost <= +rB.Cost) ? -1 : 1;
           }
         });
-        console.log(newResults.slice(0,10));
         this.set('pharmacies', newResults.slice(0,10));
         this.set('isSearching', false);
       },
@@ -368,7 +367,6 @@
         this.$.itemsList.deselectItem(e.model.item);
       },
       updateZip: function(e) {
-        console.log(e.target.value);
         window.sessionStorage.setItem("zipcode", e.target.value);
         this.set('zipcode', e.target.value);
         if (this.zipcode.toString().length === 5) {
