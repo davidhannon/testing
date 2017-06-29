@@ -1,3 +1,4 @@
+require('newrelic');
 const ex = require( "express" );
 const pkg = require( "./package.json" );
 import path from 'path'

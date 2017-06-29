@@ -20,6 +20,7 @@
     "google-auth-library": "^0.10.0",
     "googleapis": "^19.0.0",
     "mailchimp-api-v3": "latest",
+    "newrelic": "^1.40.0",
     "polymer-cli": "^1.2.0",
     "soap-as-promised": "latest",
     "superagent": "latest",
