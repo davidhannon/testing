@@ -15,6 +15,5 @@ gulp.task('default', function() {
       strategy: generateSharedDepsMergeStrategy(3),
       urlMapper: generateCountingSharedBundleUrlMapper('shared/bundle_')
     }))
-    .pipe(project.addCustomElementsEs5Adapter())
     .pipe(gulp.dest('build/'));
 });
