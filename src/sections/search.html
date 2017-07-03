@@ -199,8 +199,6 @@
         this.set('selectedResult', null);
         this.zipcode = window.sessionStorage.getItem('zipcode');
         if (window.sessionStorage.getItem('medName')) {
-          console.log(this.querySelector("carecard-rx-search-input input#input"));
-          console.log(window.sessionStorage.getItem('medName'));
           this.querySelector("carecard-rx-search-input input#input").value = window.sessionStorage.getItem('medName');
         }
         if (isActive) {
@@ -256,8 +254,6 @@
           },
           function(results, status) {
             if (status == 'OK') {
-              console.log(results[0].geometry.location.lat());
-              console.log(results[0].geometry.location.lng());
               let latitude = results[0].geometry.location.lat();
               let longitude = results[0].geometry.location.lng();
               component.queryPricing(latitude, longitude);
