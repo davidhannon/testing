@@ -9,10 +9,15 @@ const api = require( "./api/index" );
 let host = `0.0.0.0`;
 let port = 5010;
 
+app.get('/', function(req, res){
+  res.sendfile('index.html', { root: __dirname + "/build" } );
+});
+
 app.use( '/api/v1', api );
 app.use( "/src", ex.static( "./src" ) );
 app.use( "/bower_components", ex.static( "./bower_components" ) );
 app.use(ex.static(path.join(__dirname, 'public')))
+app.use(ex.static(path.join(__dirname, 'build')))
 app.use( "/", ex.static( "." ) );
 const server = app.listen(process.env.PORT || 5000);
 

@@ -1,0 +1,66 @@
+:host {
+  display: block;
+  font-family: "Montserrat";
+  --secondary-color: #525263;
+
+  --white-color: #fff;
+  --light-blue-color: #04b8ff;
+  --font-color: #0e0048;
+  --primary-color: var(--light-blue-color);
+}
+
+:root * {
+  box-sizing: border-box;
+}
+
+section#about {
+  padding: 20px 20px 70px 20px;
+  text-align: center;
+}
+
+section#about h3 {
+  font-weight: 600;
+  margin: 70px auto 20px auto;
+  max-width: 650px;
+}
+
+section#about h3:nth-of-type(2) {
+  margin-top: 40px auto 20px auto;
+}
+
+section#about span {
+  display: block;
+  margin: 0 auto;
+  max-width: 650px;
+}
+
+section#about ul {
+  display: inline-block;
+}
+
+section#about li {
+  text-align: left;
+}
+
+paper-tabs {
+  border-bottom: 1px solid #EFEFEF;
+  --paper-tabs-selection-bar-color: var(--primary-color);
+  --paper-tabs-content: {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+paper-tab {
+  flex: 0 1 auto;
+  font-weight: 600;
+  --paper-tab-ink: var(--primary-color);
+  --paper-tab-content: {
+    flex: 0 1 auto;
+    font-size: 18px;
+  }
+}
+
+paper-tab.iron-selected {
+  color: var(--primary-color);
+}

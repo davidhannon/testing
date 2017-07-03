@@ -1,0 +1,38 @@
+{
+  "name": "carecard",
+  "description": "Ethershaft&#39;s build of the CareCard MVP",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "app-layout": "PolymerElements/app-layout#^1.0.1",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.8",
+    "paper-fab": "PolymerElements/paper-fab#^1.2.1",
+    "app-route": "PolymerElements/app-route#^1.0.0",
+    "font-roboto": "PolymerElements/font-roboto#^1.0.2",
+    "google-map": "GoogleWebComponents/google-map#^1.2.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "iron-list": "PolymerElements/iron-list#^1.4.5",
+    "paper-input": "^1.1.24",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "paper-autocomplete": "ellipticaljs/paper-autocomplete#^2.5.1",
+    "geo-location": "ebidel/geo-location#^1.0.6",
+    "paper-tabs": "^1.8.0",
+    "gold-phone-input": "^1.1.0",
+    "gold-email-input": "^1.0.9",
+    "iron-elements": "^1.0.10",
+    "paper-elements": "^1.0.7",
+    "paper-ui-elements": "PolymerElements/paper-ui-elements",
+    "iron-form": "^1.1.4",
+    "iron-form-element-behavior": "^1.0.7",
+    "iron-media-query": "^1.0.8",
+    "paper-progress": "^1.0.12",
+    "neon-animation": "^1.2.5"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}

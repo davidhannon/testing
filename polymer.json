@@ -1,18 +1,12 @@
 {
   "entrypoint": "index.html",
   "shell": "src/carecard-app/carecard-app.html",
-  "fragments": [
-    "src/carecard-app/footer.html",
-    "src/sections/features.html",
-    "src/sections/signup.html"
-  ],
   "sources": [
     "src/**/*",
     "images/**/*",
     "bower.json"
   ],
   "includeDependencies": [
-    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
-    "bower_components/bootstrap-grid-only/css/grid12.css"
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
   ]
 }

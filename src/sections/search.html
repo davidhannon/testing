@@ -209,6 +209,7 @@
       },
 
       openCTA: function() {
+        this.set('selectedResult', null);
         let cta = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
         cta.open();
       },
