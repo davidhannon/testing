@@ -1,5 +1,6 @@
 :root * {
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
 }
 
 :host {
@@ -37,15 +38,24 @@ section#discounts .graphic-view img {
 
 @media(min-width: 768px) {
   section#discounts {
+    display: -webkit-box;
+    display: -moz-box;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+       -moz-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+       -moz-box-align: center;
+            align-items: center;
     position: relative;
   }
   section#discounts>div {
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
     min-width: 50%;
-    flex: 1 1 50%;
+    -webkit-box-flex: 1;
+       -moz-box-flex: 1;
+            flex: 1 1 50%;
   }
   section#discounts .graphic-view {
     width: 100%;
@@ -54,6 +64,8 @@ section#discounts .graphic-view img {
     @apply(--shadow-elevation-3dp);
   }
   section#discounts .table-view {
+    min-height: -webkit-min-content;
+    min-height: -moz-min-content;
     min-height: min-content;
   }
   section#discounts .graphic-view img {

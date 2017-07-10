@@ -5,7 +5,7 @@
       <div class="table-view">
         <h2>Trending Discounts</h2>
         <table>
-          <tr>
+          <tbody><tr>
             <th>Drug</th>
             <th>Uses</th>
             <th>Savings</th>
@@ -53,19 +53,19 @@
             <td>up to 73%</td>
             <td><a>Claim Now</a></td>
           </tr>
-        </table>
+        </tbody></table>
       </div>
     </section>
   </template>
-  <script>
-    Polymer({
-      properties: {
-        selectedTab: {
-          type: String,
-          value: 0
-        }
-      },
-      is: 'carecard-trending'
-    });
-  </script>
+  <script>'use strict';
+
+Polymer({
+  properties: {
+    selectedTab: {
+      type: String,
+      value: 0
+    }
+  },
+  is: 'carecard-trending'
+});</script>
 </dom-module>

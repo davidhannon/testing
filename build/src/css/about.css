@@ -10,7 +10,8 @@
 }
 
 :root * {
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
 }
 
 section#about {
@@ -46,17 +47,25 @@ paper-tabs {
   border-bottom: 1px solid #EFEFEF;
   --paper-tabs-selection-bar-color: var(--primary-color);
   --paper-tabs-content: {
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+       -moz-box-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+       -moz-box-pack: center;
+            justify-content: center;
   }
 }
 
 paper-tab {
-  flex: 0 1 auto;
+  -webkit-box-flex: 0;
+     -moz-box-flex: 0;
+          flex: 0 1 auto;
   font-weight: 600;
   --paper-tab-ink: var(--primary-color);
   --paper-tab-content: {
-    flex: 0 1 auto;
+    -webkit-box-flex: 0;
+       -moz-box-flex: 0;
+            flex: 0 1 auto;
     font-size: 18px;
   }
 }

@@ -39,7 +39,7 @@
   <link rel="import" href="../sections/components/carecard-rx-search-input.html">
   <link rel="import" type="css" href="../css/app.css">
   <template>
-    <app-location id="appLocation" route="{{route}}" use-hash-as-path></app-location>
+    <app-location id="appLocation" route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:category" data="{{categoryData}}" tail="{{subRoute}}"></app-route>
 
     <!-- manages page's scroll position -->
@@ -52,25 +52,6 @@
           <carecard-cta-button></carecard-cta-button>
         </paper-menu>
       </app-drawer>
-      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
-        <div id="homePage" name="home">
-          <carecard-splash></carecard-splash>
-          <carecard-map on-cta-click="openSearch"></carecard-map>
-          <div class="split-section">
-            <features-section></features-section>
-            <top-savings on-cta-click="openSearch"></top-savings>
-          </div>
-          <div class="split-section">
-            <div class="card-preview"></div>
-            <cta-section on-cta-click="openCTADialog"></cta-section>
-          </div>
-          <carecard-about></carecard-about>
-        </div>
-        <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
-        <about-page id=aboutPage name="about"></about-page>
-        <faq-page id=faqPage name="faq"></faq-page>
-        <terms-page id=termsPage name="terms"></terms-page>
-      </iron-pages>
       <carecard-footer></carecard-footer>
       <navbar>
         <div class="nav-content">
@@ -108,6 +89,8 @@
   </template>
 
   <script>
+  console.log('IMPORTED');
+  HTMLImports.whenReady(function() {
     Polymer({
 
       is: 'carecard-app',
@@ -124,6 +107,8 @@
         },
 
         route: Object,
+
+        categoryData: Object,
 
         subRoute: Object,
 
@@ -155,7 +140,9 @@
 
       attached: function() {
         this.async(function() {
-          if (!this.route.path) {
+          console.log('attached', this.route);
+          console.log('not route', this.categoryData);
+          if (this.route && !this.route.path) {
             this.set('route.path', '/');
           }
           window.sessionStorage.setItem("medName", "")
@@ -164,6 +151,7 @@
       },
 
       _onRouteChange: function(event) {
+        console.log('route change', this.route);
         this.closeDrawer();
         let {
           id
@@ -296,8 +284,12 @@
       onLayoutChange: function(wide) {
         let cta = document.querySelector("carecard-cta-dialog");
         let success = document.querySelector("carecard-success-dialog");
-        cta.$.ctaInput.refit();
-        success.$.carecardSuccessDialog.refit();
+        if (cta) {
+          cta.$.ctaInput.refit();
+        }
+        if (success) {
+          success.$.carecardSuccessDialog.refit();
+        }
       },
 
       loadPresets: function(event) {
@@ -312,5 +304,6 @@
       }
 
     });
+});
   </script>
 </dom-module>

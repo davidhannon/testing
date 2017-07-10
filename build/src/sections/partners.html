@@ -5,31 +5,27 @@
       <span>We've partnered with over 60,000 pharmacies to bring you the lowest prescription prices. Regardless of your medical background or history. Simply present your carecard to the pharmacist to receive the most savings.</span>
     </div>
     <div class="container">
-      <img src="./graphics/cvs.png"></img>
-      <img src="./graphics/target.png"></img>
-      <img src="./graphics/rite-aid.png"></img>
-      <img src="./graphics/publix.png"></img>
-      <img src="./graphics/kroger.png"></img>
-      <img src="./graphics/safeway.png"></img>
+      <img src="./graphics/cvs.png">
+      <img src="./graphics/target.png">
+      <img src="./graphics/rite-aid.png">
+      <img src="./graphics/publix.png">
+      <img src="./graphics/kroger.png">
+      <img src="./graphics/safeway.png">
     </div>
   </template>
 
-  <script>
-    Polymer({
+  <script>'use strict';
 
-      is: 'partners-section',
+Polymer({
 
-      properties: {
+  is: 'partners-section',
 
-      },
-      observers: [
+  properties: {},
+  observers: [],
 
-      ],
+  _equal: function _equal(value1, value2) {
+    return value1 === value2;
+  }
 
-      _equal: function(value1, value2) {
-        return value1 === value2;
-      }
-
-    });
-  </script>
+});</script>
 </dom-module>

@@ -15,30 +15,25 @@
   <script type="text/javascript" src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <link rel="import" type="css" href="../css/signup.css">
   <template>
-        <iron-ajax id="newSignup"
-       url="/api/v1/signup"
-       handle-as="json"
-       method="post"
-       content-type="application/json"
-       on-response="handleUserSignup"></iron-ajax>
+        <iron-ajax id="newSignup" url="/api/v1/signup" handle-as="json" method="post" content-type="application/json" on-response="handleUserSignup"></iron-ajax>
     <section id="splash2">
           <div class="container-fluid">
               <div class="row">
-                <div class="col-md-12" style="padding:0;">
-                  <div class="col-md-6" style="padding:0;">
+                <div class="col-md-12" style="padding:0">
+                  <div class="col-md-6" style="padding:0">
                     <img id="signup-image" src="./graphics/carecard-form-img.png" alt="CareCard Family" width="100%">
                   </div>
-                  <div class="col-md-6" style="padding:0;"><br><br>
-                    <img src="./graphics/smiley.png" alt="Smiley" width="10%" style="margin-top:15%;margin-left:45%;">
-                    <h2 style="margin-top: 5%; font-size: 2em;">For the entire family...even your pets!</h2><br><br>
+                  <div class="col-md-6" style="padding:0"><br><br>
+                    <img src="./graphics/smiley.png" alt="Smiley" width="10%" style="margin-top:15%;margin-left:45%">
+                    <h2 style="margin-top: 5%; font-size: 2em">For the entire family...even your pets!</h2><br><br>
                     <form id="get-carecard" is="iron-form">
                       <div class="input-container">
-                        <input class="fname inp1" name="firstName" placeholder="First*" required>
-                        <input class="lname inp1" name="lastName" placeholder="Last*" required><br>
-                        <input class="address1 inp2" name="address1" placeholder="Address 1*" required><br>
+                        <input class="fname inp1" name="firstName" placeholder="First*" required="">
+                        <input class="lname inp1" name="lastName" placeholder="Last*" required=""><br>
+                        <input class="address1 inp2" name="address1" placeholder="Address 1*" required=""><br>
                         <input class="address2 inp2" name="address2" placeholder="Address 2"><br>
-                        <input class="email inp2" name="email" placeholder="Email*" required><br>
-                        <input class="zip inp2" name="zipcode" placeholder="Zip*" required><br><br>
+                        <input class="email inp2" name="email" placeholder="Email*" required=""><br>
+                        <input class="zip inp2" name="zipcode" placeholder="Zip*" required=""><br><br>
                         <button type="button" value="Submit" class="btn btn-primary get-carecard-btn" on-click="submitForm" data-target="#carecardOptions">Get my free carecard!</button>
                       </div>
                     </form>
@@ -54,7 +49,7 @@
             <img src="./graphics/x.png" alt="x" width="50px">
           </span>
             <div class="title">
-              <h2><span class='accent'>care</span>card</h2>
+              <h2><span class="accent">care</span>card</h2>
             </div>
           <h2>Select how you'd like to receive your carecard</h2>
           <div class="text-center">
@@ -67,49 +62,42 @@
     </div>
   </template>
 
-  <script>
-    Polymer({
+  <script>"use strict";
 
-      is: 'carecard-signup',
+Polymer({
 
-      properties: {
+  is: 'carecard-signup',
 
-      },
-      observers: [
+  properties: {},
+  observers: [],
 
-      ],
+  _equal: function _equal(value1, value2) {
+    return value1 === value2;
+  },
+  openCTADialog: function openCTADialog() {
+    var searchResults = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
+    searchResults.open();
+  },
+  submitForm: function submitForm(ev) {
+    var form = ev.target.form;
 
-      _equal: function(value1, value2) {
-        return value1 === value2;
-      },
-      openCTADialog: function() {
-        let searchResults = document.querySelector("carecard-cta-dialog").querySelector("paper-dialog");
-        searchResults.open();
-      },
-      submitForm: function(ev) {
-        let {
-          target: {
-            form
-          }
-        } = ev;
-        if (!form.validate()) {
-          return;
-        }
-        let formData = (Array.from(form));
-        let body = {};
-        formData.forEach(input => {
-          body[input.name] = input.value;
-        });
-        this.$.newSignup.body = body;
-        this.$.newSignup.generateRequest();
-      },
-      handleUserSignup: function() {
-        this.showSuccessDialog();
-      },
-      showSuccessDialog: function(ev) {
-        let dialog = document.querySelector("carecard-success-dialog").querySelector("paper-dialog");
-        dialog.open();
-      }
+    if (!form.validate()) {
+      return;
+    }
+    var formData = Array.from(form);
+    var body = {};
+    formData.forEach(function (input) {
+      body[input.name] = input.value;
     });
-  </script>
+    this.$.newSignup.body = body;
+    this.$.newSignup.generateRequest();
+  },
+  handleUserSignup: function handleUserSignup() {
+    this.showSuccessDialog();
+  },
+  showSuccessDialog: function showSuccessDialog(ev) {
+    var dialog = document.querySelector("carecard-success-dialog").querySelector("paper-dialog");
+    dialog.open();
+  }
+});</script>
 </dom-module>
