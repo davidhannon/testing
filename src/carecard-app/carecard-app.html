@@ -1,43 +1,43 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<!--<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">-->
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
+
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="./footer.html">
+<link rel="import" href="../sections/features.html">
+<link rel="import" href="../sections/map.html">
+<link rel="import" href="../sections/cta-section.html">
+<link rel="import" href="../sections/splash.html">
+<link rel="import" href="../sections/top-savings.html">
+<link rel="import" href="../sections/search.html">
+<link rel="import" href="../sections/about-page.html">
+<link rel="import" href="../sections/faq-page.html">
+<link rel="import" href="../sections/terms-page.html">
+<link rel="import" href="../sections/components/carecard-cta-dialog.html">
+<link rel="import" href="../sections/components/carecard-success-dialog.html">
+<link rel="import" href="../sections/components/carecard-cta-button.html">
+<link rel="import" href="../sections/components/carecard-rx-search-input.html">
+
 <dom-module id="carecard-app">
-  <link rel="import" href="../../bower_components/polymer/polymer.html">
-  <link rel="import" href="../../bower_components/app-route/app-location.html">
-  <link rel="import" href="../../bower_components/app-route/app-route.html">
-
-  <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
-  <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
-  <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-  <link href="../../bower_components/iron-icons/iron-icons.html" rel="import">
-
-  <!--<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">-->
-  <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-  <link rel="import" href="../../bower_components/paper-styles/shadow.html">
-
-  <link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-  <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
-  <link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-  <link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
-  <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
-  <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
-  <link rel="import" href="../../bower_components/app-layout/app-scrollpos-control/app-scrollpos-control.html">
-
-  <link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
-  <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-
-  <link rel="import" href="./footer.html">
-  <link rel="import" href="../sections/features.html">
-  <link rel="import" href="../sections/map.html">
-  <link rel="import" href="../sections/cta-section.html">
-  <link rel="import" href="../sections/splash.html">
-  <link rel="import" href="../sections/top-savings.html">
-  <link rel="import" href="../sections/search.html">
-  <link rel="import" href="../sections/about-page.html">
-  <link rel="import" href="../sections/faq-page.html">
-  <link rel="import" href="../sections/terms-page.html">
-  <link rel="import" href="../sections/components/carecard-cta-dialog.html">
-  <link rel="import" href="../sections/components/carecard-success-dialog.html">
-  <link rel="import" href="../sections/components/carecard-cta-button.html">
-  <link rel="import" href="../sections/components/carecard-rx-search-input.html">
-  <link rel="import" type="css" href="../css/app.css">
   <template>
     <app-location id="appLocation" route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:category" data="{{categoryData}}" tail="{{subRoute}}"></app-route>
@@ -52,6 +52,25 @@
           <carecard-cta-button></carecard-cta-button>
         </paper-menu>
       </app-drawer>
+      <iron-pages id="carecardPages" selected="[[categoryData.category]]" attr-for-selected="name" fallback-selection="home" on-iron-select="_onRouteChange">
+        <div id="homePage" name="home">
+          <carecard-splash></carecard-splash>
+          <carecard-map on-cta-click="openSearch"></carecard-map>
+          <div class="split-section">
+            <features-section></features-section>
+            <top-savings on-cta-click="openSearch"></top-savings>
+          </div>
+          <div class="split-section">
+            <div class="card-preview"></div>
+            <cta-section on-cta-click="openCTADialog"></cta-section>
+          </div>
+          <carecard-about></carecard-about>
+        </div>
+        <search-results-page id="searchResultsPage" name="search" should-search="[[searchActive]]"></search-results-page>
+        <about-page id=aboutPage name="about"></about-page>
+        <faq-page id=faqPage name="faq"></faq-page>
+        <terms-page id=termsPage name="terms"></terms-page>
+      </iron-pages>
       <carecard-footer></carecard-footer>
       <navbar>
         <div class="nav-content">
@@ -89,8 +108,6 @@
   </template>
 
   <script>
-  console.log('IMPORTED');
-  HTMLImports.whenReady(function() {
     Polymer({
 
       is: 'carecard-app',
@@ -140,8 +157,6 @@
 
       attached: function() {
         this.async(function() {
-          console.log('attached', this.route);
-          console.log('not route', this.categoryData);
           if (this.route && !this.route.path) {
             this.set('route.path', '/');
           }
@@ -151,7 +166,6 @@
       },
 
       _onRouteChange: function(event) {
-        console.log('route change', this.route);
         this.closeDrawer();
         let {
           id
@@ -167,15 +181,17 @@
       ready: function() {
         window.addEventListener("resize", this.onLayoutChange);
         let elem = document.querySelector("carecard-app");
-        elem.async(function() {
-          document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
-          document.querySelectorAll("#topSavings ul li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
-          let rxSearch = this.querySelector("carecard-rx-search-input") || null;
-          let searchPage = this.querySelector("search-results-page") || null;
-          if (rxSearch && searchPage) {
-            rxSearch.addEventListener("on-drug-selected", (e) => searchPage.updateDrug(e));
-          }
-        });
+        if (elem) {
+          elem.async(function() {
+            document.querySelectorAll(".top-discounts li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
+            document.querySelectorAll("#topSavings ul li").forEach(el => el.addEventListener("click", ev => elem.openSearch(ev)));
+            let rxSearch = this.querySelector("carecard-rx-search-input") || null;
+            let searchPage = this.querySelector("search-results-page") || null;
+            if (rxSearch && searchPage) {
+              rxSearch.addEventListener("on-drug-selected", (e) => searchPage.updateDrug(e));
+            }
+          });
+        }
       },
 
       _equal: function(value1, value2) {
@@ -284,10 +300,10 @@
       onLayoutChange: function(wide) {
         let cta = document.querySelector("carecard-cta-dialog");
         let success = document.querySelector("carecard-success-dialog");
-        if (cta) {
+        if (cta && cta.$.ctaInput) {
           cta.$.ctaInput.refit();
         }
-        if (success) {
+        if (success && success.$.carecardSuccessDialog) {
           success.$.carecardSuccessDialog.refit();
         }
       },
@@ -304,6 +320,5 @@
       }
 
     });
-});
   </script>
 </dom-module>

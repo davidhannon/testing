@@ -23,24 +23,24 @@ paper-autocomplete {
     border: 0;
     line-height: 1.4;
     box-sizing: border-box;
-  }
+  };
   --paper-input-container-focus-color: var(--secondary-color);
   --paper-input-container-color: {
     color: var(--secondary-color);
-  }
+  };
   --paper-input-container-underline: {
     display: none;
-  }
+  };
   --paper-input-container-underline-focus: {
     color: var(--secondary-color);
-  }
+  };
   --paper-input-container-underline-disabled: {
     display: none;
-  }
+  };
   --paper-input-suffix,
   --layout-flex-none {
     margin-top: 0px;
-  }
+  };
 }
 
 paper-input {
@@ -48,14 +48,14 @@ paper-input {
     background-color: var(--input-background-color);
     padding: 10px 20px;
     --secondary-text-color: var(--secondary-color);
-  }
+  };
   --paper-input-suffix,
   --layout-flex-none {
     margin-top: 0px;
-  }
+  };
   --paper-input-container-underline: {
     display: none;
-  }
+  };
 }
 
 :global(.floated-label-placeholder) {

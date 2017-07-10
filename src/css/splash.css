@@ -15,6 +15,33 @@
   --app-primary-color: var(--light-blue-color);
 }
 
+paper-autocomplete {
+  margin: 0 10px;
+  max-width: 500px;
+  width: 80%;
+  flex: 0 1 auto;
+  text-align: left;
+  /*width: auto;*/
+  --paper-input-container-input: {
+    background-color: #FFF;
+    padding: 10px 20px;
+    --secondary-text-color: var(--app-secondary-color);
+  }
+  --paper-input-container-color: {
+    color: var(--app-secondary-color);
+  }
+  --secondary-text-color: var(--app-secondary-color);
+  --paper-input-container-underline: {
+    display: none
+  }
+  --paper-input-container-underline-focus: {
+    display: none
+  }
+  --paper-input-container-underline-disabled: {
+    display: none
+  }
+}
+
 h2 {
   text-align: center;
   font-weight: 600;

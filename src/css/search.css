@@ -6,6 +6,7 @@
   font-family: "Montserrat";
   --app-primary-color: #ee5c56;
   --app-secondary-color: #525262;
+  --light-blue-color: #04b8ff;
   --lighter-blue-color: #34c3fb;
   --section-bg-grey: #f1f1f1;
   display: block;
@@ -58,20 +59,20 @@ carecard-rx-search-input paper-autocomplete {
     background-color: white;
     padding: 10px 20px;
     --secondary-text-color: var(--app-secondary-color);
-  }
+  };
   --paper-input-container-color: {
     color: var(--app-secondary-color);
-  }
+  };
   --secondary-text-color: var(--app-secondary-color);
   --paper-input-container-underline: {
     display: none
-  }
+  };
   --paper-input-container-underline-focus: {
     display: none
-  }
+  };
   --paper-input-container-underline-disabled: {
     display: none
-  }
+  };
 }
 
 .panel-inner {

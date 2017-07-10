@@ -1,9 +1,10 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animation.html">
+
 <dom-module id="carecard-success-dialog">
-  <link rel="import" href="../../../bower_components/polymer/polymer.html">
-  <link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
-  <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
-  <link rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-  <link rel="import" href="../../../bower_components/neon-animation/neon-animation.html">
 
   <link rel="import" type="css" href="./carecard-success-dialog.css">
   <template>
@@ -14,12 +15,12 @@
       <section class="details">
         <h5>Show the carecard to your pharmacist to receive your free savings</h5>
       </section>
-      
+
             <div id="close-dialog" onclick="carecardSuccessDialog.close()">
         <svg viewBox="0 0 100 100" class="octicon octicon-x"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/src/sections/graphics/sprite.octicons.svg#x" class="style-scope catalog-element"></use> </svg>
       </div>
     </paper-dialog>
-    
+
   </template>
   <script>
     Polymer({

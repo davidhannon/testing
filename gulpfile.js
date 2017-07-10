@@ -17,7 +17,10 @@ const HtmlSplitter = require('polymer-build').HtmlSplitter;
 gulp.task('vulc', function() {
   gulp.src('index.html')
     .pipe(vulcanize({
-      dest: 'build/'
+      stripComments: true,
+      inlineScripts: true,
+      inlineCss: true,
+      rewriteUrlsInTemplates: true
     }))
     .pipe(gulp.dest('build/'))
 });
@@ -41,7 +44,11 @@ gulp.task('default', function() {
     // }))
     .pipe(project.bundler({
       sourcemaps: false,
-      stripComments: true
+      stripComments: true,
+      inlineScripts: true,
+      inlineCss: true,
+      rewriteUrlsInTemplates: true
     }))
+    .pipe(gulpif(/\.html$/, htmlMinifier()))
     .pipe(gulp.dest('build/'));
 });
