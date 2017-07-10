@@ -42,17 +42,24 @@ paper-autocomplete {
   }
 }
 
-h2 {
+h1 {
   text-align: center;
   font-weight: 600;
   font-size: 30pt;
-  margin-bottom: .75em;
+  margin-bottom: .12em;
 }
 
 @media (max-width: 767px) {
-  h2 {
+  h1 {
     font-size: 30px;
   }
+}
+
+h2 {
+  text-align: center;
+  font-weight: normal;
+  font-size: 13pt;
+  margin-bottom: 1.3em;
 }
 
 section#splash {

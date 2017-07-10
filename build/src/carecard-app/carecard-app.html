@@ -22135,17 +22135,24 @@ paper-autocomplete {
   }
 }
 
-h2 {
+h1 {
   text-align: center;
   font-weight: 600;
   font-size: 30pt;
-  margin-bottom: .75em;
+  margin-bottom: .12em;
 }
 
 @media (max-width: 767px) {
-  h2 {
+  h1 {
     font-size: 30px;
   }
+}
+
+h2 {
+  text-align: center;
+  font-weight: normal;
+  font-size: 13pt;
+  margin-bottom: 1.3em;
 }
 
 section#splash {
@@ -22287,7 +22294,8 @@ section#splash li:hover {
 
 
     <section id="splash">
-        <h2>Save up to 80% on prescriptions</h2>
+        <h1>Save up to 80% on prescriptions</h1>
+        <h2>Find the lowest price near you for prescriptions at local pharmacies</h2>
           <div class="input-container">
             <div class="search-bar">
               <carecard-rx-search-input></carecard-rx-search-input>
@@ -29577,6 +29585,7 @@ a.back-button {
      -moz-box-flex: 0;
           flex: 0 0 50%;
   position: relative;
+  height: 100%;
 }
 
 google-map {

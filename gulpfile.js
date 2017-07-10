@@ -27,7 +27,7 @@ gulp.task('vulc', function() {
 
 gulp.task('default', function() {
   var processors = [
-    autoprefixer({browsers: ["> 5%", "Firefox < 20"]})
+    autoprefixer({browsers: ["> 1%", "Firefox < 20"]})
   ];
   const sourcesHtmlSplitter = new HtmlSplitter();
   const sourcesStream = project.sources()

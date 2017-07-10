@@ -260,6 +260,7 @@ a.back-button {
 .details-content {
   flex: 0 0 50%;
   position: relative;
+  height: 100%;
 }
 
 google-map {

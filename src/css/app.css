@@ -6,23 +6,23 @@
   };
   --font-color: #0e0048;
   color: var(--font-color);
-}
-
-:root * {
-  box-sizing: border-box;
-}
-
-:host {
-  background-color: #FFF;
-  display: block;
   --white-color: #fff;
   --light-blue-color: #04b8ff;
-  --font-color: #0e0048;
   --app-primary-color: var(--light-blue-color);
   --app-secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
   --section-bg-teal: #e1f3fc;
   --paper-icon-button-ink-color: var(--app-secondary-color);
+}
+
+:root * {
+  box-sizing: border-box;
+  font-family: "Montserrat";
+}
+
+:host {
+  background-color: #FFF;
+  display: block;
   font-family: "Montserrat";
   background-color: transparent;
   overflow-x: hidden;
@@ -217,7 +217,7 @@ a.nav-toggler {
   width: 30px;
 }
 
-a.nav-toggler::after {
+a.nav-toggler:after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -230,7 +230,7 @@ a.nav-toggler::after {
   display: block;
 }
 
-a.nav-toggler::before {
+a.nav-toggler:before {
   position: absolute;
   top: 50%;
   left: 50%;
