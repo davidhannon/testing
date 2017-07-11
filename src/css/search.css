@@ -269,6 +269,10 @@ google-map {
 }
 
 @media (max-width: 767px) {
+  .details-content {
+    height: auto;
+  }
+
   .result-details {
     display: block;
     overflow-y: scroll;

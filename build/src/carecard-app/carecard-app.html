@@ -21984,12 +21984,14 @@ is separate from validation, and `allowed-pattern` does not affect how the input
   -webkit-box-flex: 1;
      -moz-box-flex: 1;
           flex: 1 1 100%;
+  width: 100%;
 }
 
 paper-autocomplete {
   -webkit-box-flex: 1;
      -moz-box-flex: 1;
-          flex: 1 0 auto;
+          flex: 1 1 100%;
+  width: 100%;
 
   --paper-input-container-input: {
     background-color: var(--input-background-color);
@@ -29596,6 +29598,10 @@ google-map {
 }
 
 @media (max-width: 767px) {
+  .details-content {
+    height: auto;
+  }
+
   .result-details {
     display: block;
     overflow-y: scroll;
@@ -29836,7 +29842,7 @@ paper-progress {
       </google-map>
       <div class="details-cta mobile">
         Access your discount through Carecard
-        <a class="button">Get it now!</a>
+        <a class="button" on-click="openCTA">Get it now!</a>
       </div>
     </div>
   </section>
