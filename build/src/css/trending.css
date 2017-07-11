@@ -33,8 +33,7 @@ section#discounts .graphic-view img {
   max-height: 400px;
   width: 100%;
   position: relative;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 
 @media(min-width: 768px) {
@@ -75,8 +74,7 @@ section#discounts .graphic-view img {
     max-height: 580px;
     width: 100%;
     position: relative;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
   }
 }
 

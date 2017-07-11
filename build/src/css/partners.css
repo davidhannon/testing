@@ -111,8 +111,7 @@ h1 {
        -moz-box-flex: 1;
             flex: 1 1 30%;
     width: 30%;
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
     height: auto;
   }
 }
