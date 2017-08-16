@@ -14,6 +14,8 @@ const uglify = require('gulp-uglify');
 const htmlMinifier = require('gulp-html-minifier');
 const HtmlSplitter = require('polymer-build').HtmlSplitter;
 
+
+// UNUSED
 gulp.task('vulc', function() {
   gulp.src('index.html')
     .pipe(vulcanize({
@@ -25,6 +27,7 @@ gulp.task('vulc', function() {
     .pipe(gulp.dest('build/'))
 });
 
+// Primary build task
 gulp.task('default', function() {
   var processors = [
     autoprefixer({browsers: ["> 5%", "Firefox < 20", "Safari >= 9"]})
