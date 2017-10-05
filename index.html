@@ -106,6 +106,15 @@
 
 <body>
   <carecard-app></carecard-app>
+  <!-- Google Tag Manager -->
+  <script>
+    var timerUp = setInterval(function(){
+    if(jQuery('.style-scope.carecard-success-dialog').is(':visible') == true){
+     jQuery('body').append('<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/975259430/?label=pszKCNvw6XUQpo6F0QM&amp;guid=ON&amp;script=0"/>')
+      clearInterval(timerUp);
+    }
+    },500)
+  </script>
 </body>
 
 </html>
