@@ -17,7 +17,6 @@
 
 :root * {
   box-sizing: border-box;
-  font-family: "Montserrat";
 }
 
 :host {

@@ -55,6 +55,7 @@
   </script>
   <!-- End Inspectlet Embed Code -->
   <script src="https://polygit.org/polymer+^1.9.1/webcomponentsjs+^0.7.0/components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -106,14 +107,13 @@
 
 <body>
   <carecard-app></carecard-app>
-  <!-- Google Tag Manager -->
   <script>
-    var timerUp = setInterval(function(){
-    if(jQuery('.style-scope.carecard-success-dialog').is(':visible') == true){
-     jQuery('body').append('<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/975259430/?label=pszKCNvw6XUQpo6F0QM&amp;guid=ON&amp;script=0"/>')
-      clearInterval(timerUp);
-    }
-    },500)
+  var timerUp = setInterval(function(){
+  if(jQuery('.style-scope.carecard-success-dialog').is(':visible') == true){
+   jQuery('body').append('<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/975259430/?label=pszKCNvw6XUQpo6F0QM&amp;guid=ON&amp;script=0"/>');
+    clearInterval(timerUp);
+  }
+  },500);
   </script>
 </body>
 
