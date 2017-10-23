@@ -35,7 +35,7 @@
           <paper-progress indeterminate hidden$="[[!isSearching]]"></paper-progress>
           <div class="search-result-list" hidden$="[[isSearching]]">
             <template is="dom-repeat" items="[[pharmacies]]">
-              <div class="search-result-list-item" on-click="selectPharmacy">
+              <!--<div class="search-result-list-item" on-click="selectPharmacy">
                 <ul>
                   <li>
                     <h3>[[item.PharmacyName]]</h3>
@@ -45,6 +45,19 @@
                     $[[_roundCost(item.Cost)]]
                   </li>
                 </ul>
+              </div>-->
+              <div class="search-result-list-item">
+                <div class="search-result-list-item-inner">
+                  <ul>
+                    <li>
+                      <h3>[[item.PharmacyName]]</h3>
+                    </li>
+                    <li class="item-cost">
+                      $[[_roundCost(item.Cost)]]
+                    </li>
+                  </ul>
+                  <a class="button" on-click="openCTA">Get Free Coupon</a>
+                </div>
               </div>
             </template>
           </div>
@@ -171,7 +184,15 @@
 
         if (rxSearch) {
           rxSearch.addEventListener("on-drug-selected", (e) => this.updateDrug(e));
+          rxSearch.addEventListener("on-suggest-failure", (e) => this.suggestionFailure(e));
         }
+      },
+
+      suggestionFailure(e) {
+        this.clearResults();
+        // WARNING: This may need updating if autocomplete changes...
+        const input = $('#autocompleteInput input')[1].value;
+        this.set("medName", 'Oops, there are no results for "' + input + '"');
       },
 
       detached: function() {

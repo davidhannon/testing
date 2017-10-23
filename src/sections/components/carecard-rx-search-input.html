@@ -26,12 +26,19 @@
       },
 
       updateSource: function(response) {
+        let input = this.querySelector("#med-search");
         if (Array.isArray(response) && response.length > 0) {
+          // Autocomplete results found
+          $(input).removeClass('error')
+        } else {
+          // No autocomplete results found
           let input = this.querySelector("#med-search");
-          let elem = document.querySelector("carecard-app");
-          input.suggestions(response);
+          $(input).addClass('error');
+          this.fire("on-suggest-failure", input.value);
         }
+        input.suggestions(response);
       },
+
       persistSearch: function(id, selection) {
         window.sessionStorage.setItem("medName", selection.text);
         window.sessionStorage.setItem("med", JSON.stringify(selection.option));

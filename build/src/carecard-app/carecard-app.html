@@ -22051,7 +22051,7 @@ paper-input {
 }</style>
     <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float="true" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch" disable-show-clear="true"></paper-autocomplete>
   </template>
-  <script>"use strict";
+  <script>'use strict';
 
 Polymer({
   properties: {
@@ -22069,7 +22069,7 @@ Polymer({
     if (name.length < 3) {
       return false;
     }
-    fetch("/api/v1/drugs?name=" + name).then(function (r) {
+    fetch('/api/v1/drugs?name=' + name).then(function (r) {
       return r.json();
     }).then(function (results) {
       return _this.updateSource(results);
@@ -22077,12 +22077,19 @@ Polymer({
   },
 
   updateSource: function updateSource(response) {
+    var input = this.querySelector("#med-search");
     if (Array.isArray(response) && response.length > 0) {
-      var input = this.querySelector("#med-search");
-      var elem = document.querySelector("carecard-app");
-      input.suggestions(response);
+      // Autocomplete results found
+      $(input).removeClass('error');
+    } else {
+      // No autocomplete results found
+      var _input = this.querySelector("#med-search");
+      $(_input).addClass('error');
+      this.fire("on-suggest-failure", _input.value);
     }
+    input.suggestions(response);
   },
+
   persistSearch: function persistSearch(id, selection) {
     window.sessionStorage.setItem("medName", selection.text);
     window.sessionStorage.setItem("med", JSON.stringify(selection.option));
@@ -29423,23 +29430,27 @@ iron-list {
 }
 
 .search-result-list-item {
-  padding-bottom: 6px;
-  paddi
+  padding-bottom: 18px;
   position: relative;
-  cursor: pointer;
 }
 
 .search-result-list-item.selected {
   background-color: #ededed;
 }
 
-.search-result-list-item ul {
+.search-result-list-item-inner {
   background-color: white;
   -moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
        box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
   -moz-border-radius: 3px;
        border-radius: 3px;
-  padding: 25px 45px 25px 20px;
+  padding: 15px 20px;
+}
+
+.search-result-list-item ul {
+  -webkit-box-align: center;
+     -moz-box-align: center;
+          align-items: center;
   -webkit-box-pack: justify;
      -moz-box-pack: justify;
           justify-content: space-between;
@@ -29448,11 +29459,12 @@ iron-list {
   display: flex;
   list-style: none;
   margin: 0;
+  padding: 0 20px 0 10px;
   width: 100%;
   position: relative;
 }
 
-.search-result-list-item ul::after {
+/*.search-result-list-item ul::after {
   content: '';
   position: absolute;
   display: block;
@@ -29461,21 +29473,16 @@ iron-list {
   height: 12px;
   width: 12px;
   opacity: 0.35;
-  -webkit-transform: translateY(-50%) rotate(45deg);
-     -moz-transform: translateY(-50%) rotate(45deg);
-          transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
   border-top: 3px solid var(--font-color);
   border-right: 3px solid var(--font-color);
-  -moz-transition: 240ms ease-in-out;
   transition: 240ms ease-in-out;
 }
 
 .search-result-list-item ul:hover {
-  -moz-box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-       box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  -moz-transition: 140ms ease-in-out;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
   transition: 140ms ease-in-out;
-}
+}*/
 
 .search-result-list-item ul:hover::after {
   right: 20px;
@@ -29484,9 +29491,9 @@ iron-list {
 }
 
 .search-result-list-item li.item-cost {
-  color: green;
-  font-size: 28px;
-  font-weight: 500;
+  color: #46d276;
+  font-size: 24px;
+  font-weight: 600;
   -webkit-box-flex: 0;
      -moz-box-flex: 0;
           flex: 0 1 auto;
@@ -29506,16 +29513,38 @@ iron-list {
           flex-direction: column;
 }
 
+.search-result-list-item a.button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-border-radius: 6px;
+       border-radius: 6px;
+  border: 0;
+  color: #FFF;
+  text-transform: uppercase;
+  padding: 15px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  background-color: #46d276;
+  color: white;
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.search-result-list-item a.button:hover {
+  background-color: #42c36f;
+}
+
 @media (max-width: 767px) {
   .search-result-list-item ul {
-    padding: 15px 40px 15px 15px;
-  }
-
-  .search-result-list-item ul::after {
-    right: 19px;
+    padding: 0 10px 0 5px;
   }
   .search-result-list-item li.item-cost {
-    font-size: 24px;
+    font-size: 22px;
+  }
+  .search-result-list-item a.button {
+    font-size: 14px;
   }
 }
 
@@ -29524,7 +29553,6 @@ iron-list {
   padding: 0px;
   font-size: 18px;
   font-weight: 500;
-  text-transform: capitalize;;
 }
 
 .search-result-list-item span {
@@ -29791,16 +29819,18 @@ paper-progress {
           <paper-progress indeterminate="" hidden$="[[!isSearching]]"></paper-progress>
           <div class="search-result-list" hidden$="[[isSearching]]">
             <template is="dom-repeat" items="[[pharmacies]]">
-              <div class="search-result-list-item" on-click="selectPharmacy">
-                <ul>
-                  <li>
-                    <h3>[[item.PharmacyName]]</h3>
-                    <span>[[item.Distance]] mi away</span>
-                  </li>
-                  <li class="item-cost">
-                    $[[_roundCost(item.Cost)]]
-                  </li>
-                </ul>
+              <div class="search-result-list-item">
+                <div class="search-result-list-item-inner">
+                  <ul>
+                    <li>
+                      <h3>[[item.PharmacyName]]</h3>
+                    </li>
+                    <li class="item-cost">
+                      $[[_roundCost(item.Cost)]]
+                    </li>
+                  </ul>
+                  <a class="button" on-click="openCTA">Get Free Coupon</a>
+                </div>
               </div>
             </template>
           </div>
@@ -29930,8 +29960,19 @@ Polymer({
       rxSearch.addEventListener("on-drug-selected", function (e) {
         return _this.updateDrug(e);
       });
+      rxSearch.addEventListener("on-suggest-failure", function (e) {
+        return _this.suggestionFailure(e);
+      });
     }
   },
+
+  suggestionFailure: function suggestionFailure(e) {
+    this.clearResults();
+    // WARNING: This may need updating if autocomplete changes...
+    var input = $('#autocompleteInput input')[1].value;
+    this.set("medName", 'Oops, there are no results for "' + input + '"');
+  },
+
 
   detached: function detached() {
     this.set('selectedResult', null);
