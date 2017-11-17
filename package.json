@@ -1,8 +1,10 @@
 {
   "name": "carecard",
-  "node": "8.5.0",
   "version": "1.0.0",
   "description": "Ethershaft&#39;s build of the CareCard MVP",
+  "engines": {
+    "node": "8.5.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
