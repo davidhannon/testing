@@ -95,6 +95,7 @@ section#splash .input-container input[type="button"] {
   letter-spacing: 2.5px;
   background-color: var(--font-color);
   cursor: pointer;
+  margin-bottom: 1px;
 }
 
 section#splash .input-container input[type="button"]:hover {

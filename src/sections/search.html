@@ -407,15 +407,19 @@
           let {
             DrugCost: {
               DrugCost: Costs
-            }
+            },
+            Pharmacy: pharmacy
           } = r;
           let Cost = Costs ? Costs.pop().Copay : false;
-          let Distance = Number(r.Pharmacy.Distance).toFixed(2);
+          let Distance = Number(pharmacy.Distance).toFixed(2);
           if (!Cost) {
             return;
           }
 
+          let PharmacyName = pharmacy.PharmacyName.split('#')[0].trim();
+
           return Object.assign(r.Pharmacy, {
+            PharmacyName,
             Cost,
             Distance
           });

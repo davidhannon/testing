@@ -75,18 +75,16 @@ async function getDrug( DrugName ) {
 
 async function getPharmacies( [ Latitude, Longitude ] ) {
   await clientInitialized;
-  let result;
   let { GetPharmaciesByLatLongResult: response } = await ApiClient.GetPharmaciesByLatLong( { Latitude, Longitude, Distance: 25, MaxPharmacies: 50, "GroupID": "CBS2" }, {}, "tns", BaseURL ).catch( console.error );
 
-  if ( !response ) {
-    result = [ ];
-  } else {
-    let { Pharmacy: pharmacies } = response;
-    pharmacies.forEach( p => p.PharmacyName = p.PharmacyName.toLowerCase( ) );
-    pharmacies.forEach( p => p.Distance = parseFloat( p.Distance ).toFixed( 2 ) );
-    result = pharmacies;
+  if (response) {
+    return response.Pharmacy.map(p => {
+      p.PharmacyName = p.PharmacyName.toLowerCase().split('#')[0].trim();
+      p.Distance = parseFloat(p.Distance).toFixed(2);
+      return p;
+    });
   }
-  return result;
+  return [];
 }
 
 function filterPharmacies( ApiResponse ) {

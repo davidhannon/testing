@@ -178,26 +178,13 @@ span.accent {
   color: var(--app-primary-color);
 }
 
-a.mini-cta {
-  // text-align: center;
-  // height: 40px;
-  // width: 40px;
-  // border-radius: 40px;
-  // box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
-  // background-image: url(../sections/graphics/mini-cta.png);
-  // background-size: cover;
-  // background-position: center;
-  // margin-top: 10px;
-  display: none;
-}
-
 a.mini-cta:hover {
-  // box-shadow: 0 5px 20px 0 rgba(0,0,0,0.2);
   color: #0e0048;
 }
 
 a.mini-cta {
   color: var(--app-primary-color);
+  display: inline-block;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
@@ -207,16 +194,7 @@ a.mini-cta {
 }
 
 .full-cta {
-  display: inline-block;
-}
-
-@media (max-width: 767px) {
-  a.mini-cta {
-    display: inline-block;
-  }
-  .full-cta {
-    display: none;
-  }
+  display: none;
 }
 
 a.nav-toggler {
