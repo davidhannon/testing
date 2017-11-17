@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Ethershaft&#39;s build of the CareCard MVP",
   "engines": {
-    "node": "8.5.0"
+    "node": "8.5.0",
+    "npm": "5.2.0"
   },
   "main": "index.js",
   "scripts": {
