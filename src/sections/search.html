@@ -416,7 +416,7 @@
             return;
           }
 
-          let PharmacyName = pharmacy.PharmacyName.split('#')[0].trim();
+          let PharmacyName = pharmacy.PharmacyName ? pharmacy.PharmacyName.split('#')[0].trim() : '';
 
           return Object.assign(r.Pharmacy, {
             PharmacyName,
