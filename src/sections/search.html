@@ -23,9 +23,30 @@
         <div class="panel-inner">
           <div class="header">
             <label>Results for</label>
-            <carecard-rx-search-input></carecard-rx-search-input>
-            <div class="input-wrapper">
-              <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]"/>
+            <div class="form-wrapper">
+              <div class="input-wrapper search-input">
+                <carecard-rx-search-input></carecard-rx-search-input>
+                <img src="./graphics/search-icon.svg" />
+              </div>
+              <div class="input-wrapper zipcode-input">
+                <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]"/>
+                <img src="./graphics/marker.svg" />
+              </div>
+              <div class="input-wrapper strength-input">
+                <select on-input="updateStrength">
+                  <template is="dom-repeat" items="[[drugOptions]]">
+                    <option selected$="{{selected(item.value, selectedDrugOption)}}" value$="[[item.value]]">{{item.text}}</option>
+                  </template>
+                </select>
+              </div>
+              <div class="input-wrapper quantity-input">
+                <!-- <input on-input="updateQty" placeholder="Quantity" name="quantity" value$="[[quantity]]"/> -->
+                <select on-input="updateQuantity">
+                  <template is="dom-repeat" items="[[quantityOptions]]">
+                    <option selected$="{{selected(item.value, quantity)}}" value$="[[item.value]]">{{item.text}}</option>
+                  </template>
+                </select>
+              </div>
             </div>
           </div>
           <div class="status-bar">
@@ -162,6 +183,22 @@
         zipcode: {
           type: String,
           value: ''
+        },
+        drugOptions: {
+          type: Object,
+          value: []
+        },
+        quantityOptions: {
+          type: Object,
+          value: []
+        },
+        selectedDrugOption: {
+          type: String,
+          value: ''
+        },
+        quantity: {
+          type: Number,
+          value: 30
         }
       },
       observers: [
@@ -186,6 +223,10 @@
           rxSearch.addEventListener("on-drug-selected", (e) => this.updateDrug(e));
           rxSearch.addEventListener("on-suggest-failure", (e) => this.suggestionFailure(e));
         }
+      },
+
+      selected: function(a, b){
+        return a == b;
       },
 
       suggestionFailure(e) {
@@ -288,6 +329,7 @@
       },
 
       updateDrug: function(event) {
+        console.log(event);
         // Main action
         // let map = document.querySelector("google-map");
         this.clearResults();
@@ -295,10 +337,23 @@
         if (event) {
           let {
             detail: {
-              option: drug
+              selection: {
+                option: drug
+              },
+              drugOptions
             }
           } = event;
-          this.set("medName", drug.DrugName);
+          this.set('medName', drug.text);
+          this.set('drugOptions', drugOptions.map(option => ({
+            text: option.DrugName.replace(drug.ProductName, '').trim(),
+            value: option.NDC
+          })));
+          this.set('selectedDrugOption', drug.NDC);
+          this.set('quantity', drug.PackageSize);
+          this.set('quantityOptions', [1, 2, 3].map(count => ({
+            text: `${parseInt(drug.PackageSize)*count} count`,
+            value: parseInt(drug.PackageSize)*count
+          })));
         }
         if (!this.shouldSearch) {
           return false;
@@ -325,22 +380,26 @@
 
       // Still used, main query function
       queryPricing: function(latitude, longitude) {
-        let drug = JSON.parse(window.sessionStorage.getItem('med') || '{}');
+        const drug = JSON.parse(window.sessionStorage.getItem('med') || '{}');
         this.set("loadProgress", 70);
         if (drug) {
-          let {
-            PackageSize: qty,
+          const {
             NDC,
-            Days: days
+            Type
           } = drug;
           let params = new URLSearchParams();
-          params.append("qty", qty)
-          params.append("NDC", NDC)
+          params.append("qty", this.quantity || drug.PackageSize);
+          // params.append("NDC", NDC);
+          params.append("NDC", this.selectedDrugOption || drug.NDC);
           params.append("days", "30");
-          params.append("lng", longitude)
+          params.append("lng", longitude);
           params.append("lat", latitude);
+          params.append("brand", Type === 'Brand');
+          console.log(drug);
           let query = params.toString();
-          fetch(`/api/v1/pricing?${query}`).then(r => r.json()).then(res => this.updatePharmacies(res)).catch(console.error)
+          fetch(`/api/v1/pricing?${query}`).then(r => r.json()).then(res => {
+            this.updatePharmacies(res.details);
+          }).catch(console.error)
         }
       },
 
@@ -371,7 +430,22 @@
             return (+rA.Cost <= +rB.Cost) ? -1 : 1;
           }
         });
-        this.set('pharmacies', newResults.slice(0,10));
+        let chainNames = [];
+        // Get Chains only and remove duplicates
+        const chains = newResults.filter(a => {
+          if (a.Class === 'Chain') {
+            if (chainNames.includes(a.PharmacyName)) {
+              return false;
+            }
+            chainNames.push(a.PharmacyName);
+            return true;
+          } else {
+            return false;
+          }
+        });
+        const nonChains = newResults.filter(a => a.Class !== 'Chain');
+        const results = nonChains[0].Cost < chains[0].Cost ? [nonChains[0], ...chains, ...nonChains.slice(1, nonChains.length)] : [...chains, ...nonChains];
+        this.set('pharmacies', results.slice(0,10));
         this.set('isSearching', false);
       },
 
@@ -382,15 +456,29 @@
         }
         return classes;
       },
+
       _unselect: function(e) {
         this.$.itemsList.deselectItem(e.model.item);
       },
+
       updateZip: function(e) {
         window.sessionStorage.setItem("zipcode", e.target.value);
         this.set('zipcode', e.target.value);
         if (this.zipcode.toString().length === 5) {
           this.fetchResults();
         }
+      },
+
+      updateStrength: function(e) {
+        this.set('selectedDrugOption', e.target.value);
+        console.log(this.selectedDrugOption);
+        this.fetchResults();
+      },
+
+      updateQuantity: function(e) {
+        this.set('quantity', e.target.value);
+        console.log(this.quantity);
+        this.fetchResults();
       }
 
     });

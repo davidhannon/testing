@@ -21981,21 +21981,16 @@ is separate from validation, and `allowed-pattern` does not affect how the input
   display: -webkit-box;
   display: -moz-box;
   display: flex;
-  -webkit-box-flex: 1;
-     -moz-box-flex: 1;
-          flex: 1 1 100%;
   width: 100%;
 }
 
 paper-autocomplete {
-  -webkit-box-flex: 1;
-     -moz-box-flex: 1;
-          flex: 1 1 100%;
   width: 100%;
+  position: relative;
 
   --paper-input-container-input: {
     background-color: var(--input-background-color);
-    padding: 14px 14px;
+    padding: 14px 14px 14px 40px;
 
     -moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
 
@@ -22049,13 +22044,24 @@ paper-input {
 .paper-autocomplete-0 #clear.paper-autocomplete {
   margin-top: 0px;
 }</style>
-    <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float="true" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch" disable-show-clear="true"></paper-autocomplete>
+    <paper-autocomplete class="med" id="med-search" name="medication" text-property="text" value-property="value" placeholder="Type prescription name (ex.Lipitor)" on-input="suggestMeds" query-fn="suggestMeds" no-label-float="true" source="[[medSuggestions]]" on-autocomplete-selected="persistSearch" disable-show-clear="true">
+      <img src="../sections/components/graphics/search-icon.svg">
+    </paper-autocomplete>
+
   </template>
   <script>'use strict';
 
 Polymer({
   properties: {
     medSuggestions: {
+      type: Object,
+      value: []
+    },
+    productDict: {
+      type: Object,
+      value: {}
+    },
+    drugOptions: {
       type: Object,
       value: []
     }
@@ -22072,13 +22078,17 @@ Polymer({
     fetch('/api/v1/drugs?name=' + name).then(function (r) {
       return r.json();
     }).then(function (results) {
+      console.log(results);
       return _this.updateSource(results);
     }).catch(console.error);
   },
 
   updateSource: function updateSource(response) {
+    var drugs = response.drugs,
+        products = response.products;
+
     var input = this.querySelector("#med-search");
-    if (Array.isArray(response) && response.length > 0) {
+    if (Array.isArray(drugs) && drugs.length > 0) {
       // Autocomplete results found
       $(input).removeClass('error');
     } else {
@@ -22087,13 +22097,17 @@ Polymer({
       $(_input).addClass('error');
       this.fire("on-suggest-failure", _input.value);
     }
-    input.suggestions(response);
+    input.suggestions(drugs);
+    this.set('productDict', products);
   },
 
   persistSearch: function persistSearch(id, selection) {
+    var drugOptions = this.productDict[selection.text];
+    this.set('drugOptions', drugOptions);
     window.sessionStorage.setItem("medName", selection.text);
     window.sessionStorage.setItem("med", JSON.stringify(selection.option));
-    this.fire("on-drug-selected", selection);
+    this.fire("on-drug-selected", { selection: selection, drugOptions: drugOptions });
+    // @todo: send the options to the search template
   }
 });</script>
 </dom-module><dom-module id="carecard-splash" assetpath="../sections/">
@@ -22279,6 +22293,33 @@ section#splash li:hover {
   cursor: pointer;
 }
 
+section#splash .input-wrapper {
+  position: relative;
+}
+
+section#splash .search-input {
+  -webkit-box-flex: 1;
+     -moz-box-flex: 1;
+          flex: 1 1 100%;
+  position: relative;
+}
+
+section#splash .input-wrapper.zipcode-input input {
+  padding-left: 40px;
+}
+
+section#splash .input-wrapper.zipcode-input img {
+  position: absolute;
+  left: 20px;
+  top: 22px;
+}
+
+section#splash .search-input img {
+  position: absolute;
+  left: 15px;
+  top: 25px;
+}
+
 @media (max-width: 767px) {
   section#splash {
     padding: 50px 20px;
@@ -22296,6 +22337,10 @@ section#splash li:hover {
     margin: 20px auto;
     width: 100%;
   }
+  section#splash .input-wrapper.zipcode-input img {
+    left: 15px;
+    top: 15px;
+  }
   section#splash paper-autocomplete {
     margin: 20px auto 10px auto;
   }
@@ -22307,9 +22352,13 @@ section#splash li:hover {
         <h2>Find the lowest price near you for prescriptions at local pharmacies</h2>
           <div class="input-container">
             <div class="search-bar">
-              <carecard-rx-search-input></carecard-rx-search-input>
-              <div class="input-wrapper">
+              <div class="search-input">
+                <carecard-rx-search-input></carecard-rx-search-input>
+                <img src="../sections/graphics/search-icon.svg">
+              </div>
+              <div class="input-wrapper zipcode-input">
                 <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]">
+                <img src="../sections/graphics/marker.svg">
               </div>
               <input class="search" type="button" value="Search" on-tap="openSearch">
             </div>
@@ -22321,7 +22370,6 @@ section#splash li:hover {
               <li med="">Yaz,</li>
               <li med="">Lexapro,</li>
               <li med="">Prilosec,</li>
-              <li med="">Viagra,</li>
               <li med="">Vyvanse</li>
             </ul>
           </div>
@@ -29396,7 +29444,7 @@ carecard-rx-search-input paper-autocomplete {
 
 .header {
   text-align: center;
-  padding: 0 15px;
+  padding: 0;
   margin-bottom: 30px;
 }
 
@@ -29405,11 +29453,31 @@ carecard-rx-search-input paper-autocomplete {
   margin-bottom: 15px;
 }
 
+@media (max-width: 767px) {
+  .header label {
+    display: none;
+  }
+}
+
+.form-wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+     -moz-box-pack: justify;
+          justify-content: space-between;
+}
+
 .input-wrapper {
+  -webkit-box-flex: 0;
+     -moz-box-flex: 0;
+          flex: 0 0 49%;
   position: relative;
 }
 
-.input-wrapper input {
+.input-wrapper input,
+.input-wrapper select {
   -moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
        box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
   padding: 16px 14px;
@@ -29420,6 +29488,56 @@ carecard-rx-search-input paper-autocomplete {
   width: 100%;
   margin: 4px 0 0 0;
   display: block;
+}
+
+.input-wrapper.search-input {
+  -webkit-box-flex: 0;
+     -moz-box-flex: 0;
+          flex: 0 0 64%;
+  padding-bottom: 8px;
+  margin-top: -4px;
+}
+
+.input-wrapper.zipcode-input {
+  -webkit-box-flex: 0;
+     -moz-box-flex: 0;
+          flex: 0 0 35%;
+}
+
+.input-wrapper.zipcode-input input {
+  padding-left: 40px;
+}
+
+.input-wrapper.zipcode-input img {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+}
+
+.input-wrapper.search-input img {
+  position: absolute;
+  left: 15px;
+  top: 25px;
+}
+
+.strength-input select,
+.quantity-input select {
+  -moz-box-shadow: none;
+       box-shadow: none;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  color: #999;
+  height: 50px;
+  -moz-border-radius: 0;
+       border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  background-image: url("../sections/graphics/select-background.png");
+  -moz-background-size: 50px 50px;
+       background-size: 50px 50px;
+  background-position: right center;
+  background-repeat: no-repeat;
 }
 
 #medicationName {
@@ -29442,8 +29560,8 @@ iron-list {
   background-color: white;
   -moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
        box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
-  -moz-border-radius: 3px;
-       border-radius: 3px;
+  -moz-border-radius: 8px;
+       border-radius: 8px;
   padding: 15px 20px;
 }
 
@@ -29459,7 +29577,7 @@ iron-list {
   display: flex;
   list-style: none;
   margin: 0;
-  padding: 0 20px 0 10px;
+  padding: 0;
   width: 100%;
   position: relative;
 }
@@ -29491,7 +29609,6 @@ iron-list {
 }
 
 .search-result-list-item li.item-cost {
-  color: #46d276;
   font-size: 24px;
   font-weight: 600;
   -webkit-box-flex: 0;
@@ -29511,29 +29628,46 @@ iron-list {
      -moz-box-orient: vertical;
      -moz-box-direction: normal;
           flex-direction: column;
+  color: #55555F;
+}
+
+.search-result-list-item:first-child li.item-cost {
+  color: #3CCE77;
 }
 
 .search-result-list-item a.button {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  -moz-border-radius: 6px;
-       border-radius: 6px;
-  border: 0;
-  color: #FFF;
+  -moz-border-radius: 5px;
+       border-radius: 5px;
+  border: 1px solid #D8D8D8;
   text-transform: uppercase;
   padding: 15px;
   font-weight: 400;
   letter-spacing: 2.5px;
-  background-color: #46d276;
-  color: white;
   display: block;
   text-align: center;
   margin-top: 15px;
+
+  background-color: white;
+  color: #4F4F4F;
+}
+
+.search-result-list-item:first-child a.button {
+  background-color: #3CCE77;
+  color: white;
+  border-color: #3CCE77;
+}
+
+.search-result-list-item:first-child a.button:hover {
+  background-color: #3BBC6F;
+  border-color: #3BBC6F;
 }
 
 .search-result-list-item a.button:hover {
-  background-color: #42c36f;
+  background-color: white;
+  border-color: #444444;
 }
 
 @media (max-width: 767px) {
@@ -29807,9 +29941,29 @@ paper-progress {
         <div class="panel-inner">
           <div class="header">
             <label>Results for</label>
-            <carecard-rx-search-input></carecard-rx-search-input>
-            <div class="input-wrapper">
-              <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]">
+            <div class="form-wrapper">
+              <div class="input-wrapper search-input">
+                <carecard-rx-search-input></carecard-rx-search-input>
+                <img src="../sections/graphics/search-icon.svg">
+              </div>
+              <div class="input-wrapper zipcode-input">
+                <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]">
+                <img src="../sections/graphics/marker.svg">
+              </div>
+              <div class="input-wrapper strength-input">
+                <select on-input="updateStrength">
+                  <template is="dom-repeat" items="[[drugOptions]]">
+                    <option selected$="{{selected(item.value, selectedDrugOption)}}" value$="[[item.value]]">{{item.text}}</option>
+                  </template>
+                </select>
+              </div>
+              <div class="input-wrapper quantity-input">
+                <select on-input="updateQuantity">
+                  <template is="dom-repeat" items="[[quantityOptions]]">
+                    <option selected$="{{selected(item.value, quantity)}}" value$="[[item.value]]">{{item.text}}</option>
+                  </template>
+                </select>
+              </div>
             </div>
           </div>
           <div class="status-bar">
@@ -29880,6 +30034,8 @@ paper-progress {
 
   <script>'use strict';
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 Polymer({
 
   is: 'search-results-page',
@@ -29936,6 +30092,22 @@ Polymer({
     zipcode: {
       type: String,
       value: ''
+    },
+    drugOptions: {
+      type: Object,
+      value: []
+    },
+    quantityOptions: {
+      type: Object,
+      value: []
+    },
+    selectedDrugOption: {
+      type: String,
+      value: ''
+    },
+    quantity: {
+      type: Number,
+      value: 30
     }
   },
   observers: ['_searchTermChanged(medName)'],
@@ -29964,6 +30136,10 @@ Polymer({
         return _this.suggestionFailure(e);
       });
     }
+  },
+
+  selected: function selected(a, b) {
+    return a == b;
   },
 
   suggestionFailure: function suggestionFailure(e) {
@@ -30066,14 +30242,31 @@ Polymer({
 
 
   updateDrug: function updateDrug(event) {
+    console.log(event);
     // Main action
     // let map = document.querySelector("google-map");
     this.clearResults();
 
     if (event) {
-      var drug = event.detail.option;
+      var _event$detail = event.detail,
+          drug = _event$detail.selection.option,
+          drugOptions = _event$detail.drugOptions;
 
-      this.set("medName", drug.DrugName);
+      this.set('medName', drug.text);
+      this.set('drugOptions', drugOptions.map(function (option) {
+        return {
+          text: option.DrugName.replace(drug.ProductName, '').trim(),
+          value: option.NDC
+        };
+      }));
+      this.set('selectedDrugOption', drug.NDC);
+      this.set('quantity', drug.PackageSize);
+      this.set('quantityOptions', [1, 2, 3].map(function (count) {
+        return {
+          text: parseInt(drug.PackageSize) * count + ' count',
+          value: parseInt(drug.PackageSize) * count
+        };
+      }));
     }
     if (!this.shouldSearch) {
       return false;
@@ -30105,21 +30298,23 @@ Polymer({
     var drug = JSON.parse(window.sessionStorage.getItem('med') || '{}');
     this.set("loadProgress", 70);
     if (drug) {
-      var qty = drug.PackageSize,
-          NDC = drug.NDC,
-          days = drug.Days;
+      var NDC = drug.NDC,
+          Type = drug.Type;
 
       var params = new URLSearchParams();
-      params.append("qty", qty);
-      params.append("NDC", NDC);
+      params.append("qty", this.quantity || drug.PackageSize);
+      // params.append("NDC", NDC);
+      params.append("NDC", this.selectedDrugOption || drug.NDC);
       params.append("days", "30");
       params.append("lng", longitude);
       params.append("lat", latitude);
+      params.append("brand", Type === 'Brand');
+      console.log(drug);
       var query = params.toString();
       fetch('/api/v1/pricing?' + query).then(function (r) {
         return r.json();
       }).then(function (res) {
-        return _this2.updatePharmacies(res);
+        _this2.updatePharmacies(res.details);
       }).catch(console.error);
     }
   },
@@ -30148,7 +30343,24 @@ Polymer({
         return +rA.Cost <= +rB.Cost ? -1 : 1;
       }
     });
-    this.set('pharmacies', newResults.slice(0, 10));
+    var chainNames = [];
+    // Get Chains only and remove duplicates
+    var chains = newResults.filter(function (a) {
+      if (a.Class === 'Chain') {
+        if (chainNames.includes(a.PharmacyName)) {
+          return false;
+        }
+        chainNames.push(a.PharmacyName);
+        return true;
+      } else {
+        return false;
+      }
+    });
+    var nonChains = newResults.filter(function (a) {
+      return a.Class !== 'Chain';
+    });
+    var results = nonChains[0].Cost < chains[0].Cost ? [nonChains[0]].concat(_toConsumableArray(chains), _toConsumableArray(nonChains.slice(1, nonChains.length))) : [].concat(_toConsumableArray(chains), _toConsumableArray(nonChains));
+    this.set('pharmacies', results.slice(0, 10));
     this.set('isSearching', false);
   },
 
@@ -30159,15 +30371,29 @@ Polymer({
     }
     return classes;
   },
+
   _unselect: function _unselect(e) {
     this.$.itemsList.deselectItem(e.model.item);
   },
+
   updateZip: function updateZip(e) {
     window.sessionStorage.setItem("zipcode", e.target.value);
     this.set('zipcode', e.target.value);
     if (this.zipcode.toString().length === 5) {
       this.fetchResults();
     }
+  },
+
+  updateStrength: function updateStrength(e) {
+    this.set('selectedDrugOption', e.target.value);
+    console.log(this.selectedDrugOption);
+    this.fetchResults();
+  },
+
+  updateQuantity: function updateQuantity(e) {
+    this.set('quantity', e.target.value);
+    console.log(this.quantity);
+    this.fetchResults();
   }
 
 });</script>
@@ -33753,7 +33979,11 @@ Polymer({
             <div class="full-cta">
               <carecard-cta-button class="navItem"></carecard-cta-button>
             </div>
-            <a class="mini-cta" on-click="openCTADialog"></a>
+            <a class="mini-cta" on-click="openCTADialog">
+              Free<br>
+              Savings<br>
+              Card
+            </a>
           </div>
         </div>
       </navbar>
@@ -33939,7 +34169,7 @@ Polymer({
     if (target.hasAttribute("med")) {
       var preset = this.presets[target.innerText.replace(',', '')];
       this.persistSearch(0, {
-        text: preset.DrugName
+        text: preset.text
       });
       window.sessionStorage.setItem("med", JSON.stringify(preset));
     }

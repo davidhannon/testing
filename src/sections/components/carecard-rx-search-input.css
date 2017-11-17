@@ -6,17 +6,16 @@
   --input-background-color: #FFF;
   text-align: left;
   display: flex;
-  flex: 1 1 100%;
   width: 100%;
 }
 
 paper-autocomplete {
-  flex: 1 1 100%;
   width: 100%;
+  position: relative;
 
   --paper-input-container-input: {
     background-color: var(--input-background-color);
-    padding: 14px 14px;
+    padding: 14px 14px 14px 40px;
 
     box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
     font-family: inherit;

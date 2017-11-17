@@ -84,7 +84,11 @@
             <div class="full-cta">
               <carecard-cta-button class="navItem"></carecard-cta-button>
             </div>
-            <a class="mini-cta" on-click="openCTADialog"></a>
+            <a class="mini-cta" on-click="openCTADialog">
+              Free<br>
+              Savings<br>
+              Card
+            </a>
           </div>
         </div>
       </navbar>
@@ -273,7 +277,7 @@
         if (target.hasAttribute("med")) {
           let preset = this.presets[target.innerText.replace(',', '')];
           this.persistSearch(0, {
-            text: preset.DrugName
+            text: preset.text
           });
           window.sessionStorage.setItem("med", JSON.stringify(preset));
         }

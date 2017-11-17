@@ -11,9 +11,13 @@
         <h2>Find the lowest price near you for prescriptions at local pharmacies</h2>
           <div class="input-container">
             <div class="search-bar">
-              <carecard-rx-search-input></carecard-rx-search-input>
-              <div class="input-wrapper">
+              <div class="search-input">
+                <carecard-rx-search-input></carecard-rx-search-input>
+                <img src="./graphics/search-icon.svg" />
+              </div>
+              <div class="input-wrapper zipcode-input">
                 <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]"/>
+                <img src="./graphics/marker.svg" />
               </div>
               <input class="search" type="button" value="Search" on-tap="openSearch" />
             </div>
@@ -25,7 +29,6 @@
               <li med>Yaz,</li>
               <li med>Lexapro,</li>
               <li med>Prilosec,</li>
-              <li med>Viagra,</li>
               <li med>Vyvanse</li>
             </ul>
           </div>
