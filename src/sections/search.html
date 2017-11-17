@@ -329,7 +329,6 @@
       },
 
       updateDrug: function(event) {
-        console.log(event);
         // Main action
         // let map = document.querySelector("google-map");
         this.clearResults();
@@ -395,7 +394,6 @@
           params.append("lng", longitude);
           params.append("lat", latitude);
           params.append("brand", Type === 'Brand');
-          console.log(drug);
           let query = params.toString();
           fetch(`/api/v1/pricing?${query}`).then(r => r.json()).then(res => {
             this.updatePharmacies(res.details);
@@ -471,13 +469,11 @@
 
       updateStrength: function(e) {
         this.set('selectedDrugOption', e.target.value);
-        console.log(this.selectedDrugOption);
         this.fetchResults();
       },
 
       updateQuantity: function(e) {
         this.set('quantity', e.target.value);
-        console.log(this.quantity);
         this.fetchResults();
       }
 

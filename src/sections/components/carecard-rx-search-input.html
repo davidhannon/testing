@@ -34,7 +34,6 @@
           return false;
         }
         fetch(`/api/v1/drugs?name=${name}`).then(r => r.json()).then(results => {
-          console.log(results);
           return this.updateSource(results);
         }).catch(console.error);
       },
