@@ -12,7 +12,7 @@
   --app-secondary-color: #525262;
   --section-bg-grey: #f1f1f1;
   --section-bg-teal: #e1f3fc;
-  --paper-icon-button-ink-color: var(--app-secondary-color);
+  --paper-icon-button-ink-color: #525262;
 }
 
 :root * {
@@ -31,7 +31,7 @@
     -webkit-font-smoothing: antialiased;
   };
   --secondary-text-color: #848383;
-  color: var(--app-secondary-color);
+  color: #525262;
   margin: 0;
   height: 100%;
   width: 100%;
@@ -91,7 +91,7 @@ paper-input {
 }
 
 app-toolbar.menu-bar {
-  color: var(--app-primary-color);
+  color: #04b8ff;
   justify-content: space-between;
 }
 
@@ -109,7 +109,7 @@ app-toolbar.menu-bar {
 
 app-drawer {
   --app-drawer-content-container: {
-    /*background-color: var(--app-primary-color);*/
+    /*background-color: #04b8ff;*/
     height: 100vh;
     width: 100vw;
     overflow-x: hidden;
@@ -121,7 +121,7 @@ app-drawer carecard-cta-button {
 }
 
 app-header {
-  background-color: var(--white-color);
+  background-color: #FFF;
 }
 
 /* Navbar */
@@ -169,13 +169,14 @@ a {
 }
 
 a.logo {
+  color: #0e0048;
   font-size: 32px;
   letter-spacing: 1px;
   font-weight: 600;
 }
 
-span.accent {
-  color: var(--app-primary-color);
+a.logo span.accent {
+  color: #04b8ff;
 }
 
 a.mini-cta:hover {
@@ -183,7 +184,7 @@ a.mini-cta:hover {
 }
 
 a.mini-cta {
-  color: var(--app-primary-color);
+  color: #04b8ff;
   display: inline-block;
   font-size: 13px;
   font-weight: 500;
@@ -251,7 +252,7 @@ a.nav-toggler:before {
 }
 
 .drawer a.link:hover {
-  color: var(--app-primary-color);
+  color: #04b8ff;
   cursor: pointer;
 }
 

@@ -81,6 +81,10 @@ section#splash .input-container input {
   font-size: 14px;
 }
 
+section#splash .input-container .search-button-wrapper {
+  flex: 0 0 136px;
+}
+
 section#splash .input-container input[type="button"] {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -90,12 +94,12 @@ section#splash .input-container input[type="button"] {
   color: #FFF;
   text-transform: uppercase;
   padding: 17px 30px;
-  flex: 0 0 100px;
   font-weight: 600;
   letter-spacing: 2.5px;
   background-color: var(--font-color);
   cursor: pointer;
   margin-bottom: 1px;
+  width: 100%;
 }
 
 section#splash .input-container input[type="button"]:hover {
@@ -203,6 +207,10 @@ section#splash .search-input img {
     width: 100%;
   }
   section#splash .search-bar input.search {
+    margin: 0;
+    width: 100%;
+  }
+  section#splash .search-bar .search-button-wrapper {
     margin: 20px auto;
     width: 100%;
   }

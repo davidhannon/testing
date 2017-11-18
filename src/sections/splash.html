@@ -19,7 +19,9 @@
                 <input on-input="updateZip" placeholder="Zipcode" name="zipcode" value$="[[zipcode]]"/>
                 <img src="./graphics/marker.svg" />
               </div>
-              <input class="search" type="button" value="Search" on-tap="openSearch" />
+              <div class="search-button-wrapper">
+                <input class="search" type="button" value="Search" on-tap="openSearch" />
+              </div>
             </div>
             <ul class="top-discounts">
               <label>Top Discounts:</label>

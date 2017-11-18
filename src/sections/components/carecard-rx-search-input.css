@@ -24,6 +24,7 @@ paper-autocomplete {
     border: 0;
     line-height: 1.4;
     box-sizing: border-box;
+    margin: 0;
   };
   --paper-input-container-focus-color: var(--secondary-color);
   --paper-input-container-color: {
