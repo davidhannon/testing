@@ -5,7 +5,7 @@
     -webkit-font-smoothing: antialiased;
   };
   --font-color: #0e0048;
-  color: var(--font-color);
+  color: #0e0048;
   --white-color: #fff;
   --light-blue-color: #04b8ff;
   --app-primary-color: var(--light-blue-color);
@@ -213,8 +213,8 @@ a.nav-toggler:after {
   transform: translateX(-50%) translateY(-50%);
   height: 12px;
   width: 26px;
-  border-top: 2px solid var(--font-color);
-  border-bottom: 2px solid var(--font-color);
+  border-top: 2px solid #0e0048;
+  border-bottom: 2px solid #0e0048;
   content: '';
   display: block;
 }
@@ -226,7 +226,7 @@ a.nav-toggler:before {
   transform: translateX(-50%) translateY(-50%);
   height: 2px;
   width: 26px;
-  background-color: var(--font-color);
+  background-color: #0e0048;
   content: '';
   display: block;
 }
@@ -246,7 +246,7 @@ a.nav-toggler:before {
 .drawer a.link {
   font-weight: 600;
   font-size: 28px;
-  color: var(--font-color);
+  color: #0e0048;
   display: block;
   margin-bottom: 15px;
 }
@@ -276,7 +276,7 @@ a.drawer-close::after {
   transform: translateX(-50%) translateY(-50%) rotate(45deg);
   height: 2px;
   width: 24px;
-  background-color: var(--font-color);
+  background-color: #0e0048;
   content: '';
   display: block;
 }
@@ -288,7 +288,7 @@ a.drawer-close::before {
   transform: translateX(-50%) translateY(-50%) rotate(-45deg);
   height: 2px;
   width: 24px;
-  background-color: var(--font-color);
+  background-color: #0e0048;
   content: '';
   display: block;
 }
@@ -331,7 +331,7 @@ a.drawer-close::before {
 }
 
 .card-preview {
-  background-color: var(--font-color);
+  background-color: #0e0048;
   background-size: cover;
   background-position: center;
   padding-bottom: 45%;
