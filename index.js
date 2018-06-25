@@ -11,7 +11,7 @@ let port = 5010;
 
 app.use( '/api/v1', api );
 app.use( "/src", ex.static( path.join(__dirname, "build/src") ) );
-app.use( "/bower_components", ex.static( "/bower_components" ) );
+app.use( "/bower_components", ex.static( "build/bower_components" ) );
 app.use(ex.static(path.join(__dirname, '/public')))
 app.use( "/build", ex.static( "./build" ) );
 // app.use( "/", ex.static( "." ) );
