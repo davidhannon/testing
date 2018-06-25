@@ -29,7 +29,8 @@
     "iron-form-element-behavior": "^1.0.7",
     "iron-media-query": "^1.0.8",
     "paper-progress": "^1.0.12",
-    "neon-animation": "^1.2.5"
+    "neon-animation": "^1.2.5",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0",
