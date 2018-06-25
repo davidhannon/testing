@@ -12,7 +12,7 @@
     "dev": "babel-node dev.js",
     "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "bower install"
+    "postinstall": "bower install && gulp"
   },
   "author": "Martial James Jefferson <martial.jefferson@gmail.com>",
   "license": "ISC",
