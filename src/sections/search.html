@@ -262,7 +262,11 @@
         this.set('selectedResult', null);
         this.zipcode = window.sessionStorage.getItem('zipcode');
         if (window.sessionStorage.getItem('medName')) {
-          this.querySelector("carecard-rx-search-input input#input").value = window.sessionStorage.getItem('medName');
+          if (this.querySelector("#autocompleteInput input")) {
+            this.querySelector("#autocompleteInput input").value = window.sessionStorage.getItem('medName');
+          } else if (this.querySelector("carecard-rx-search-input input#input-2")) {
+            this.querySelector("carecard-rx-search-input input#input-2").value = window.sessionStorage.getItem('medName');
+          }
         }
         if (isActive) {
           this.fetchResults();

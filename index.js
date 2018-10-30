@@ -9,6 +9,17 @@ const api = require( "./api/index" );
 let host = `0.0.0.0`;
 let port = 5010;
 
+const ensureSecure = (req, res, next) => {
+  if (!req.hostname.includes('www.takecardcard.com')) {
+    return next();
+  }
+  if (req.headers['x-forwarded-proto'] === 'https') {
+    return next();
+  }
+  res.redirect(`https://${req.hostname}${req.url}`);
+};
+
+app.use(ensureSecure)
 app.use( '/api/v1', api );
 app.use( "/src", ex.static( path.join(__dirname, "build/src") ) );
 app.use( "/bower_components", ex.static(path.join(__dirname, 'build/bower_components')));
